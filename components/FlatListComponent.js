@@ -3,6 +3,7 @@ import { RefreshControl, StyleSheet, View, StatusBar, FlatList, Text, Switch, Al
 import { ButtonGroup } from '@rneui/themed';
 import { supabase } from '../lib/supabase';
 import AddBisogno from '../components/AddBisogno';
+import EditBisogno from '../components/EditBisogno';
 import Snackbar from '../components/Snackbar';
 import ElevatedView from 'react-native-elevated-view';
 
@@ -13,8 +14,10 @@ const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
     const [enabledStates, setEnabledStates] = useState({});
     const [selectedIndex, setSelectedIndex] = useState(1);
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible1, setModalVisible1] = useState(false);
     const [user, setUser] = useState({});
     const [bisogni, setBisogni] = useState([]);
+    const [bisogno, setBisogno] = useState({});
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [loading, setLoading] = useState(true);
@@ -118,6 +121,10 @@ const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
         setModalVisible(false);
         fetchBisogni();
     };
+    const handleModalClose1 = () => {
+        setModalVisible1(false);
+        fetchBisogni();
+    };
 
     const onPress = async (id, nome) => {
         if (!user.id) {
@@ -190,32 +197,38 @@ const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
         );
     }
 
+    const selectBisogno = (bisogno) => {
+        setModalVisible1(true);
+        setBisogno(bisogno);
+    };
+
 
     return (
         <View>
-            <ButtonGroup
-                buttons={['Tutti', 'Abilitati', 'Disabilitati']}
-                selectedIndex={selectedIndex}
-                onPress={(value) => setSelectedIndex(value)}
-                containerStyle={{ marginBottom: 20 }}
-                selectedButtonStyle={{ backgroundColor: '#800080' }}
-                selectedTextStyle={{ color: '#fff' }}
-                innerBorderStyle={{ width: 1 }}
-                outerBorderStyle={{ width: 1 }}
-                buttonStyle={{ backgroundColor: '#600080' }}
-                buttonContainerStyle={{ backgroundColor: '#600080' }}
-            />
-
+            {/*<ButtonGroup*/}
+            {/*    buttons={['Tutti', 'Abilitati', 'Disabilitati']}*/}
+            {/*    selectedIndex={selectedIndex}*/}
+            {/*    onPress={(value) => setSelectedIndex(value)}*/}
+            {/*    containerStyle={{ marginBottom: 20 }}*/}
+            {/*    selectedButtonStyle={{ backgroundColor: '#800080' }}*/}
+            {/*    selectedTextStyle={{ color: '#fff' }}*/}
+            {/*    innerBorderStyle={{ width: 1 }}*/}
+            {/*    outerBorderStyle={{ width: 1 }}*/}
+            {/*    buttonStyle={{ backgroundColor: '#600080' }}*/}
+            {/*    buttonContainerStyle={{ backgroundColor: '#600080' }}*/}
+            {/*/>*/}
+            <Text>{ user.id}</Text>
 
             <FlatList
-                data={formatData(filterData(), numColumns)}
+                data={formatData(bisogni, numColumns)}
                 numColumns={numColumns}
                 renderItem={({ item, index }) => (
                     <Item
                         key={item.id}
                         nome={item.nome}
                         id={item.id}
-                        onPress={() => onPress(item.id, item.nome)}
+                        onPress={() => selectBisogno(item)}
+                        //onPress={() => onPress(item.id, item.nome)}
                         isEnabled={enabledStates[item.id]}
                         toggleSwitch={() => toggleSwitch(item.id)}
                         index={index}
@@ -237,6 +250,16 @@ const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
                 onAdd={fetchBisogni}
                 userId={session.user.id}
             />
+
+            {Object.keys(bisogno).length > 0 && (
+                <EditBisogno
+                    visible={modalVisible1}
+                    onClose={handleModalClose1}
+                    onSave={fetchBisogni}
+                    bisogno={bisogno}
+                />
+            )}
+
             <Snackbar
                 isVisible={snackbarVisible}
                 message={snackbarMessage}

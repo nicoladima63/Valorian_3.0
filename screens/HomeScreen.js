@@ -24,8 +24,10 @@ const HomeScreen = ({ route, navigation }) => {
             <FAButton
                 onPress={() => flatListRef.current.handleAddNeed()}
                 title=""
-                icon="plus" />
+                icon="plus"
+            />
             <View style={{ backgroundColor: theme.colors.background }}>
+
                 <FlatListComponent
                     navigation={navigation}
                     session={session}

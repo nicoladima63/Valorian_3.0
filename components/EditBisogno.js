@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, Button, Modal, TextInput } from 'react-native';
 
-const EditBisogno = ({ visible, onClose, bisogno, onSave }) => {
-    const [nome, setNome] = useState(bisogno.nome);
+const EditBisogno = ({ visible, onClose, bisogno, onSave,userId }) => {
+    const [nome, setNome] = useState(bisogno.nome.toString());
     const [importanza, setImportanza] = useState(bisogno.importanza.toString());
     const [tolleranza, setTolleranza] = useState(bisogno.tolleranza.toString());
 
@@ -21,7 +21,7 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave }) => {
         <Modal
             visible={visible}
             animationType="slide"
-            transparent={true}
+            transparent={false}
             onRequestClose={onClose}
         >
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -30,7 +30,7 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave }) => {
                     <TextInput
                         value={nome}
                         onChangeText={setNome}
-                        placeholder="Nome"
+                        placeholder="Nome del bisogno"
                     />
                     <TextInput
                         value={importanza}

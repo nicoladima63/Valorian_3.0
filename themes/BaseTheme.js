@@ -6,7 +6,7 @@ export const BaseTheme = (colors) => ({
         backgroundColor: colors.background,
     },
     content: {
-        flex:1,
+        //flex:1,
         //flexDirection: 'row',
         //alignItems: 'center',
         //justifyContent: 'space-between'

@@ -12,7 +12,7 @@ import { useTheme } from '../context/ThemeContext';
 import ColorPicker from 'react-native-wheel-color-picker';
 import Color from 'color';
 
-const AddBisogno = ({ visible, onClose, onAdd, userId, isTestPhase }) => {
+const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
     const [nome, setNome] = useState('');
     const [importanza, setImportanza] = useState(1); // Cambiato da '' a 0
     const [tolleranza, setTolleranza] = useState(1);

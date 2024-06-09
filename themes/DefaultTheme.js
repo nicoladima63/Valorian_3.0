@@ -5,6 +5,7 @@ const DefaultColors = {
     secondary: '#faad29', // Giallo
     inactive: '#85a290',
     background: '#fff', // Crema per lo sfondo
+    backgroundStatusBar: '#dedede', // Crema per lo sfondo
     card: '#e5dac6', // Crema per le card
     text: '#3b283b', // Viola scuro per il testo
     border: '#3b0458',

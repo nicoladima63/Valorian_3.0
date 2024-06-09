@@ -50,7 +50,7 @@ export default function App() {
                 <SafeAreaView style={{ flex: 1 }}>
                     <StatusBar
                         barStyle={isDarkTheme ? 'light-content' : 'dark-content'}
-                        backgroundColor={isDarkTheme ? DarkTheme.colors.background : DefaultTheme.colors.background}
+                        backgroundColor={isDarkTheme ? DarkTheme.colors.backgroundStatusBar : DefaultTheme.colors.backgroundStatusBar}
                     />
                     <AuthProvider>
                         <NavigationContainer theme={isDarkTheme ? DarkTheme : DefaultTheme}>
