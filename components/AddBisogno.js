@@ -67,7 +67,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId, isTestPhase }) => {
         };
 
         try {
-            await BisController.createBisogno(insert);
+           const {data,error}= await BisController.createBisogno(insert);
 
             if (error) {
                 console.error('Error adding need:', error);
@@ -127,7 +127,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId, isTestPhase }) => {
     };
 
     const handleSelectCategory = async (category) => {
-        // Verifica se la categoria è già stata associata
+        // Verifica se la categoria ï¿½ giï¿½ stata associata
         setSelectedCategories((prevSelected) =>
             isCategorySelected
                 ? prevSelected.filter((cat) => cat !== category)
@@ -135,17 +135,17 @@ const AddBisogno = ({ visible, onClose, onAdd, userId, isTestPhase }) => {
         );
     };
 
-    const associaBisInCat = () => {
+    const associaBisInCat =async () => {
         const isCategorySelected = selectedCategories.includes(category);
         try {
             // Rimuovi l'associazione precedente per questa categoria
-            await supabase
+            const {data,error}=await supabase
                 .from('bisincat')
                 .delete()
                 .eq('bisognoid', bisogno.id)
                 .eq('categoriaid', category.id);
 
-            // Se la categoria non era già associata, aggiungi la nuova associazione
+            // Se la categoria non era giï¿½ associata, aggiungi la nuova associazione
             if (!isCategorySelected) {
                 await supabase
                     .from('bisincat')

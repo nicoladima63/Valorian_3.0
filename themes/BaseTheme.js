@@ -42,6 +42,9 @@ export const BaseTheme = (colors) => ({
         marginTop: 5,
         marginLeft: 10,
     },
+    linkText: {
+        color: colors.link,
+    },
     // stayElevated
     stayElevated: {
         margin: 4,
@@ -86,7 +89,7 @@ export const BaseTheme = (colors) => ({
     Logincontainer: {
         flex: 1,
         alignItems: "center",
-        paddingTop: 70,
+        paddingTop: 50,
         backgroundColor: colors.background
     },
     Loginimage: {

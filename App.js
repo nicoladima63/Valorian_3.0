@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen'; 
+import RegisterScreen from './screens/RegisterScreen';
 import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
 import { Tabs } from './navigation/Tabs';
@@ -38,44 +38,10 @@ function AuthLoadingScreen({ navigation }) {
 
 export default function App() {
     const [isDarkTheme, setIsDarkTheme] = useState(false);
-    const [appState, setAppState] = useState(AppState.currentState);
-    const [isForeground, setIsForeground] = useState(true);
-
-    useEffect(() => {
-        const handleAppStateChange = (nextAppState) => {
-            if (appState.match(/inactive|background/) && nextAppState === 'active') {
-                console.log('App has come to the foreground!');
-                setIsForeground(true);
-                // Riavvia i processi che sono stati sospesi
-                supabase.auth.startAutoRefresh();
-                // Riavvia altre attivit� necessarie
-            } else if (nextAppState.match(/inactive|background/)) {
-                console.log('App is going to the background!');
-                setIsForeground(false);
-                // Sospendi i processi non essenziali
-                supabase.auth.stopAutoRefresh();
-                // Sospendi altre attivit� non necessarie
-                cleanUpMemory();
-            }
-            setAppState(nextAppState);
-        };
-
-        const subscription = AppState.addEventListener('change', handleAppStateChange);
-
-        return () => {
-            subscription.remove();
-        };
-    }, [appState]);
 
     const appContext = {
         isDarkTheme,
         setIsDarkTheme,
-        isForeground, // aggiungi isForeground al contesto dell'app
-    };
-
-    const cleanUpMemory = () => {
-        // Esempio di funzione per pulire risorse di memoria non necessarie
-        console.log('Cleaning up memory...');
     };
 
     return (

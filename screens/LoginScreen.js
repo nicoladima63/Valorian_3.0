@@ -78,6 +78,7 @@ export default function LoginScreen({ navigation }) {
         }
 
         setLoading(true);
+
         const { error } = await supabase.auth.signInWithPassword({
             email: email,
             password: password,
@@ -101,7 +102,7 @@ export default function LoginScreen({ navigation }) {
         <TouchableWithoutFeedback onPress={handlePressEmptySpace}>
             <View style={theme.Logincontainer}>
                 <Spinner
-                    visible={loading} // Visualizza lo spinner quando loading è true
+                    visible={loading} // Visualizza lo spinner quando loading ï¿½ true
                     textContent={'Loading...'}
                     textStyle={theme.spinnerTextStyle}
                 />
@@ -124,6 +125,7 @@ export default function LoginScreen({ navigation }) {
                     {emailError ? <Text style={theme.errorText}>{emailError}</Text> : null}
                     <Input
                         //style={theme.Logininput}
+                        label="Password"
                         placeholder='password'
                         secureTextEntry={!showPassword}
                         value={password}
@@ -151,7 +153,7 @@ export default function LoginScreen({ navigation }) {
                     </View>
                     <View>
                         <Pressable onPress={() => Alert.alert("Forget Password!")}>
-                            <Text style={theme.LoginforgetText}>Password dimenticata?</Text>
+                            <Text style={theme.linkText}>Password dimenticata?</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -169,7 +171,7 @@ export default function LoginScreen({ navigation }) {
 
                 <Pressable onPress={() => navigation.navigate('Register')}>
                     <Text style={theme.LoginfooterText}>Non hai un Account?
-                        <Text style={theme.Loginsignup}>  Registrati</Text>
+                        <Text style={theme.linkText}>  Registrati</Text>
                     </Text>
                 </Pressable>
 
