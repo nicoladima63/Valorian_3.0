@@ -185,8 +185,8 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
             onRequestClose={handleClose}
             background={theme.colors.background}
         >
-            <View style={styles.container}>
-                <Text style={styles.title}>Nuovo Bisogno</Text>
+            <View style={theme.container}>
+                <Text style={theme.title}>Nuovo Bisogno</Text>
                 <Text style={{textAlign: 'center', marginBottom:8} }>Nome del bisogno</Text>
                 <TextInput
                     style={[styles.input, errors.nome && styles.inputError]}

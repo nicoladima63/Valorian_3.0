@@ -217,7 +217,6 @@ const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
             {/*    buttonStyle={{ backgroundColor: '#600080' }}*/}
             {/*    buttonContainerStyle={{ backgroundColor: '#600080' }}*/}
             {/*/>*/}
-            <Text>{ user.id}</Text>
 
             <FlatList
                 data={formatData(bisogni, numColumns)}
