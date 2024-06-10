@@ -2,7 +2,9 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
+import LandingScreen from '../screens/LandingScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import SettingsPage from '../screens/SettingsPage';
 import Bisogni from '../screens/BisogniList';
 import Calendar from '../screens/Calendario';
 import Associazione from '../screens/Associazione';
@@ -43,12 +45,22 @@ export const Tabs = () => {
             })}
         >
             <Tab.Screen
-                name="Home"
-                component={HomeScreen}
+                name="Landing"
+                component={LandingScreen}
                 options={{
                     tabBarLabel: 'Home',
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => <FontAwesome name="home" size={size} color={color} />,
+                    tabBarLabelStyle: { marginBottom: 8 }
+                }}
+            />
+            <Tab.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{
+                    tabBarLabel: 'Bisogni',
+                    headerShown: false,
+                    tabBarIcon: ({ color, size }) => <FontAwesome name="list" size={size} color={color} />,
                     tabBarLabelStyle: { marginBottom: 8 }
                 }}
             />
@@ -63,30 +75,10 @@ export const Tabs = () => {
                 }}
             />
             <Tab.Screen
-                name="Associazione"
-                component={Associazione}
+                name="Impostazioni"
+                component={SettingsPage}
                 options={{
-                    tabBarLabel: 'Associazione',
-                    headerShown: false,
-                    tabBarIcon: ({ color, size }) => <FontAwesome name="users" size={size} color={color} />,
-                    tabBarLabelStyle: { marginBottom: 8 }
-                }}
-            />
-            <Tab.Screen
-                name="Gestione Bisogni"
-                component={Bisogni}
-                options={{
-                    tabBarLabel: 'Gestione Bisogni',
-                    headerShown: false,
-                    tabBarIcon: ({ color, size }) => <FontAwesome name="list" size={size} color={color} />,
-                    tabBarLabelStyle: { marginBottom: 8 }
-                }}
-            />
-            <Tab.Screen
-                name="Settings"
-                component={SettingsScreen}
-                options={{
-                    tabBarLabel: 'Settings',
+                    tabBarLabel: 'Impostazioni',
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => <FontAwesome name="cog" size={size} color={color} />,
                     tabBarLabelStyle: { marginBottom: 8 }

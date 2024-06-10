@@ -1,9 +1,9 @@
 import { BaseTheme } from './BaseTheme';
 
 const DarkColors = {
-    primary: '#faad29', // Giallo
-    secondary: '#faad29', // Giallo
-    inactive: '#85a290',
+    primary: '#dedede', // Giallo
+    secondary: '#f2f2f2', // Giallo
+    inactive: 'grey',
     background: '#3b0458', // Viola scuro per lo sfondo
     card: '#3b0458', // Viola scuro per le card
     text: '#e5dac6', // Crema per il testo

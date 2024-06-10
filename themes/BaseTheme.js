@@ -22,12 +22,19 @@ export const BaseTheme = (colors) => ({
         height: 160,
         width: 170
     },
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 10,
+        color: colors.text
+    },
+
     title: {
         fontSize: 20,
         fontWeight: "bold",
-        textTransform: "uppercase",
-        textAlign: "center",
-        color: colors.text
+        color: colors.text,
+        marginLeft: 15,
+
     },
     paragrafo: {
         fontSize: 16,
@@ -55,12 +62,12 @@ export const BaseTheme = (colors) => ({
     },
     //TOPBAR
     topBarContainer: {
-        padding: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 20,
-        backgroundColor:colors.background
+    //    padding: 10,
+    //    flexDirection: 'row',
+    //    alignItems: 'center',
+    //    justifyContent: 'space-between',
+    //    marginTop: 20,
+    //    backgroundColor:colors.background
     },
     topBarTitle: {
         fontSize: 20,

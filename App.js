@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { AppState, StatusBar, SafeAreaView } from 'react-native';
+import { AppState, StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import LandingScreen from './screens/LandingScreen';
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -27,7 +28,7 @@ function AuthLoadingScreen({ navigation }) {
 
     useEffect(() => {
         if (session) {
-            navigation.replace('Home');
+            navigation.replace('Landing');
         } else {
             navigation.replace('Login');
         }
@@ -47,7 +48,6 @@ export default function App() {
     return (
         <AppContext.Provider value={appContext}>
             <ThemeProvider>
-                <SafeAreaView style={{ flex: 1 }}>
                     <StatusBar
                         barStyle={isDarkTheme ? 'light-content' : 'dark-content'}
                         backgroundColor={isDarkTheme ? DarkTheme.colors.backgroundStatusBar : DefaultTheme.colors.backgroundStatusBar}
@@ -59,6 +59,11 @@ export default function App() {
                                     name='AuthLoading'
                                     component={AuthLoadingScreen}
                                     options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name='Landing'
+                                    component={LandingScreen}
+                                    options={{ headerShown: false, title: 'Landing' }}
                                 />
                                 <Stack.Screen
                                     name='Home'
@@ -98,7 +103,6 @@ export default function App() {
                             </Stack.Navigator>
                         </NavigationContainer>
                     </AuthProvider>
-                </SafeAreaView>
             </ThemeProvider>
         </AppContext.Provider>
     );

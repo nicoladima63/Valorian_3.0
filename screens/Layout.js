@@ -1,12 +1,12 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import TopBar from '../components/TopBar';
-import { Ionicons } from '@expo/vector-icons';
+import styles from '../themes/style';
 
-const Layout = ({ children, navigation, showTopBar }) => {
-    const { session } = useAuth();
+const Layout = ({ children, navigation, showTopBar,
+    header, leftSide, rightSide, footer, fab }) => {
     const { theme } = useTheme();
 
     const navigateToSettings = () => {
@@ -16,12 +16,19 @@ const Layout = ({ children, navigation, showTopBar }) => {
 
 
     return (
-        <View style={theme.container}>
-            {showTopBar && <TopBar navigation={navigation} />}
-            <View style={theme.content}>
-                {children}
+        <SafeAreaView style={[styles.container, backgroundColor = theme.colors.background]}>
+            {header && <View style={[styles.header, backgroundColor = theme.colors.background]}>{header}{showTopBar && <TopBar navigation={navigation} />}</View>}
+            <View style={styles.content}>
+                {leftSide && <View style={styles.leftSide}>{leftSide}</View>}
+                <View style={[styles.mainContent, backgroundColor = theme.colors.background]}>
+                    {children}
+                </View>
+                {rightSide && <View style={styles.rightSide}>{rightSide}</View>}
             </View>
-        </View>
+            {footer && <View style={styles.footer}>{footer}</View>}
+            {fab && <View style={styles.fab}>{fab}</View>
+            }
+        </SafeAreaView>
     );
 };
 

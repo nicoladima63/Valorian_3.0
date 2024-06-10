@@ -4,10 +4,10 @@ const DefaultColors = {
     primary: '#3b0458', // Viola scuro
     secondary: '#faad29', // Giallo
     inactive: '#85a290',
-    background: '#fff', // Crema per lo sfondo
-    backgroundStatusBar: '#dedede', // Crema per lo sfondo
+    background: '#f2f2f2', // Crema per lo sfondo
+    backgroundStatusBar: '#ffffff', // Crema per lo sfondo
     card: '#e5dac6', // Crema per le card
-    text: '#3b283b', // Viola scuro per il testo
+    text: '#00000090', 
     border: '#3b0458',
     notification: '#85a290',
     grey: '#f8f8f8',

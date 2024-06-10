@@ -87,7 +87,7 @@ export default function Avatar({ url, size = 150, onUpload }) {
 
     return (
         <View style={styles.container}>
-            <View style={theme.avatarContainer}>
+            <View style={styles.avatarContainer}>
                 {avatarUrl ? (
                     <Image
                         source={{ uri: avatarUrl }}
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     avatarContainer: {
-        marginRight: 10,
+        marginLeft: 90,
     },
     avatar: {
         borderRadius: 5,

@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { supabase } from '../lib/supabase';
 
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import { useNavigationState } from '@react-navigation/native';
 
@@ -13,6 +13,7 @@ const TopBar = ({ navigation }) => {
     const { session } = useAuth();
     const [avatarUrl, setAvatarUrl] = useState(null);
     const [loading, setLoading] = useState(false);
+    const logo = require("../assets/images/logo.png")
 
     useEffect(() => {
         if (session) {
@@ -80,9 +81,10 @@ const TopBar = ({ navigation }) => {
     };
 
     return (
-        <View style={theme.topBarContainer}>
+        <View style={theme.topBarContainerx, flexdirection= 'row', justifyContent= 'space-between'}>
+            {/*<Text style={theme.title}>{routeName}</Text>*/}
+            <Image source={logo} style={{width: 30, height: 30}} resizeMode='stretch'  />
 
-            <Text style={theme.title}>{routeName}</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Account')}>
                 <Avatar
                     rounded
