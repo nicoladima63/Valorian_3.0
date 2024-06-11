@@ -50,7 +50,7 @@ export default function App() {
             <ThemeProvider>
                     <StatusBar
                         barStyle={isDarkTheme ? 'light-content' : 'dark-content'}
-                        backgroundColor={isDarkTheme ? DarkTheme.colors.backgroundStatusBar : DefaultTheme.colors.backgroundStatusBar}
+                    backgroundColor={isDarkTheme ? DarkTheme.colors.statusBarBackground : DefaultTheme.colors.statusBarBackground}
                     />
                     <AuthProvider>
                         <NavigationContainer theme={isDarkTheme ? DarkTheme : DefaultTheme}>

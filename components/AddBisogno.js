@@ -1,30 +1,26 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as CatController from '../controllers/categorieController';
 import * as BisController from '../controllers/bisogniController';
 import {
-    View, Text, TextInput, StyleSheet,
-    Modal, Pressable, TouchableOpacity, Button,
-    ActivityIndicator, FlatList
+    View, Text, TextInput, StyleSheet, Modal, Pressable, TouchableOpacity, FlatList
 } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
 import Slider from '@react-native-community/slider';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { useTheme } from '../context/ThemeContext';
-import ColorPicker from 'react-native-wheel-color-picker';
 import Color from 'color';
 
-const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
+const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
     const [nome, setNome] = useState('');
     const [importanza, setImportanza] = useState(1); // Cambiato da '' a 0
     const [tolleranza, setTolleranza] = useState(1);
     const [colore, setColore] = useState('');
-    const [colorPickerVisible, setColorPickerVisible] = useState(false);
+
     const [loading, setLoading] = useState(false);
     const { theme } = useTheme();
     const [errors, setErrors] = useState({});
     const [isFormValid, setIsFormValid] = useState(false);
     const [categorie, setCategorie] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [refreshing, setRefreshing] = useState(false);
 
     const importanzaRef = useRef(null);
     const tolleranzaRef = useRef(null);
@@ -62,12 +58,12 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
 
         setLoading(true);
         const insert = {
-            nome, importanza, tolleranza, colore:'', soddisfattoil: new Date(),
+            nome, importanza, tolleranza, colore: '', soddisfattoil: new Date(),
             creatoil: new Date(), enabled: true, uuid: userId
         };
 
         try {
-           const {data,error}= await BisController.createBisogno(insert);
+            const { data, error } = await BisController.createBisogno(insert);
 
             if (error) {
                 console.error('Error adding need:', error);
@@ -135,11 +131,11 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
         );
     };
 
-    const associaBisInCat =async () => {
+    const associaBisInCat = async () => {
         const isCategorySelected = selectedCategories.includes(category);
         try {
             // Rimuovi l'associazione precedente per questa categoria
-            const {data,error}=await supabase
+            const { data, error } = await supabase
                 .from('bisincat')
                 .delete()
                 .eq('bisognoid', bisogno.id)
@@ -159,6 +155,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
         }
 
     }
+
     const CategoryItem = ({ categoria, isSelected, onSelect, colore }) => {
         const backgroundColorWithOpacity = Color(colore).alpha(0.5).rgb().string();
         return (
@@ -175,8 +172,6 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
         );
     };
 
-
-
     return (
         <Modal
             visible={visible}
@@ -185,9 +180,9 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
             onRequestClose={handleClose}
             background={theme.colors.background}
         >
-            <View style={theme.container}>
+            <View style={[theme.container, { backgroundColor: theme.colors.contentContainer }]}>
                 <Text style={theme.title}>Nuovo Bisogno</Text>
-                <Text style={{textAlign: 'center', marginBottom:8} }>Nome del bisogno</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Nome del bisogno</Text>
                 <TextInput
                     style={[styles.input, errors.nome && styles.inputError]}
                     placeholder="esempio pizza o corsa"
@@ -198,12 +193,12 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
                     onSubmitEditing={() => importanzaRef.current.focus()}
                     blurOnSubmit={false}
                 />
-                <Text style={{textAlign: 'center', marginBottom:8} }>Importanza del bisogno da 1 a 10</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Importanza del bisogno da 1 a 10</Text>
                 <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{importanza}</Text>
                 <View >
                     <Slider
                         //style={[styles.input, errors.importanza && styles.inputError]}
-                        style={{  height: 60 }}
+                        style={{ height: 60 }}
                         minimumValue={1}
                         maximumValue={10}
                         step={1}
@@ -211,7 +206,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
                         onValueChange={setImportanza}
 
                     />
-                    
+
                 </View>
                 <Text style={{ textAlign: 'center', marginBottom: 8 }}>Ogni quanto devi soddifarlo (giorni)</Text>
                 <TextInput
@@ -248,23 +243,6 @@ const AddBisogno = ({ visible, onClose, onAdd, userId}) => {
                     contentContainerStyle={styles.grid}
                 />
 
-
-                {/*<View style={[styles.colorInput, { backgroundColor: colore || '#fff' }, errors.colore && styles.inputError]}></View>*/}
-                {/*<Text style={styles.colorInputText}>{'Seleziona il colore qui sotto'}</Text>*/}
-
-                {/*<View style={styles.colorPickerContainer}>*/}
-                {/*    <ColorPicker style={styles.colorPicker}*/}
-                {/*        swatchesOnly={true}*/}
-                {/*        swatches={true}*/}
-                {/*        sliderHidden={true}*/}
-                {/*        color={colore}*/}
-                {/*        onColorChange={(colore) => onColorChange(colore)}*/}
-                {/*        onColorChangeComplete={colore => setColore(colore)}*/}
-                {/*        //thumbSize={10000}*/}
-                {/*        noSnap={true}*/}
-                {/*        row={false}*/}
-                {/*    />*/}
-                {/*</View>*/}
 
                 <View style={styles.buttonContainer}>
                     <Pressable style={styles.button} onPress={handleClose}>

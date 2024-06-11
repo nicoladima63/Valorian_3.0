@@ -1,52 +1,175 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { View, Text, Button, Modal, TextInput, StyleSheet,Pressable } from 'react-native';
+﻿import React, { useState, useEffect, useRef } from 'react';
+import * as CatController from '../controllers/categorieController';
+import * as BisController from '../controllers/bisogniController';
+import {
+    View, Text, TextInput, StyleSheet, Modal, Pressable, TouchableOpacity, FlatList
+} from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import Slider from '@react-native-community/slider';
 import Spinner from 'react-native-loading-spinner-overlay';
-
-
+import Color from 'color';
 
 const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
-    const [nome, setNome] = useState(bisogno.nome.toString());
+    const [nome, setNome] = useState(bisogno.nome);
     const [importanza, setImportanza] = useState(bisogno.importanza);
     const [tolleranza, setTolleranza] = useState(bisogno.tolleranza);
-    const [errors, setErrors] = useState({});
+    const [colore, setColore] = useState('');
 
+    const [loading, setLoading] = useState(false);
     const { theme } = useTheme();
-
+    const [errors, setErrors] = useState({});
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [categorie, setCategorie] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
     const importanzaRef = useRef(null);
     const tolleranzaRef = useRef(null);
 
-    const handleSave = () => {
-        const updatedBisogno = {
-            ...bisogno,
-            nome,
-            importanza: parseInt(importanza),
-            tolleranza: parseInt(tolleranza),
-        };
-        onSave(updatedBisogno);
-        onClose();
+    useEffect(() => {
+        if (!visible) {
+            resetForm();
+        }
+    }, [visible]);
+
+    useEffect(() => {
+        loadCategorie();
+    }, []);
+    const loadCategorie = async () => {
+        try {
+            const data = await CatController.getCategorie();
+            setCategorie(data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
     };
-    const handleClose = () => {
-        //resetForm();
-        onClose();
+
+    const onColorChange = colore => {
+        setColore(colore);
     };
+
     const handleSubmit = async () => {
-        return;
+        validateForm();
+
+        // Wait for the validation state to update
+        if (!Object.keys(errors).length === 0) {
+            setLoading(false);
+            return;
+        }
+
+        setLoading(true);
+        const insert = {
+            nome, importanza, tolleranza, colore: '', soddisfattoil: new Date(),
+            creatoil: new Date(), enabled: true, uuid: userId
+        };
+
+        try {
+            const { data, error } = await BisController.createBisogno(insert);
+
+            if (error) {
+                console.error('Error adding need:', error);
+                alert('Errore nell\'aggiungere il bisogno.');
+            } else {
+                onAdd();
+                handleClose();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Errore durante la chiamata API.');
+        } finally {
+            setLoading(false);
+        }
     };
+
     const validateForm = () => {
         let errors = {};
+
+        // Validate name field 
         if (!nome) {
             errors.nome = 'Nome richiesto.';
         }
+
+        // Validate importanza field 
         if (!importanza) {
             errors.importanza = 'Importanza richiesta.';
         }
+
+        // Validate tolleranza field 
         if (!tolleranza) {
             errors.tolleranza = 'Tolleranza richiesta.';
         }
+
+        // Validate colore field 
+        if (!colore) {
+            errors.colore = 'Colore richiesto.';
+        }
+
+        // Set the errors and update form validity 
         setErrors(errors);
+        //setIsFormValid(Object.keys(errors).length === 0);
+    };
+
+    const resetForm = () => {
+        setNome('');
+        setImportanza('');
+        setTolleranza('');
+        setColore('');
+        setErrors({});
+        setIsFormValid(false);
+    };
+
+    const handleClose = () => {
+        resetForm();
+        onClose();
+    };
+
+    const handleSelectCategory = async (category) => {
+        // Verifica se la categoria � gi� stata associata
+        setSelectedCategories((prevSelected) =>
+            isCategorySelected
+                ? prevSelected.filter((cat) => cat !== category)
+                : [...prevSelected, category]
+        );
+    };
+
+    const associaBisInCat = async () => {
+        const isCategorySelected = selectedCategories.includes(category);
+        try {
+            // Rimuovi l'associazione precedente per questa categoria
+            const { data, error } = await supabase
+                .from('bisincat')
+                .delete()
+                .eq('bisognoid', bisogno.id)
+                .eq('categoriaid', category.id);
+
+            // Se la categoria non era gi� associata, aggiungi la nuova associazione
+            if (!isCategorySelected) {
+                await supabase
+                    .from('bisincat')
+                    .insert([{ bisognoid: selectedNeed.id, categoriaid: category.id }]);
+            }
+
+            // Aggiorna lo stato delle categorie selezionate
+        } catch (error) {
+            console.error('Errore nell\'aggiornamento delle associazioni', error);
+            Alert.alert('Errore nell\'aggiornamento delle associazioni');
+        }
+
+    }
+
+    const CategoryItem = ({ categoria, isSelected, onSelect, colore }) => {
+        const backgroundColorWithOpacity = Color(colore).alpha(0.5).rgb().string();
+        return (
+            <TouchableOpacity
+                style={[
+                    styles.categoryItem,
+                    { backgroundColor: backgroundColorWithOpacity },
+                    isSelected ? styles.selected : null,
+                ]}
+                onPress={() => onSelect(categoria)}
+            >
+                <Text style={styles.categoryText}>{categoria.nome}</Text>
+            </TouchableOpacity>
+        );
     };
 
     return (
@@ -57,14 +180,14 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
             onRequestClose={onClose}
             background={theme.colors.background}
         >
-            <View style={theme.container}>
+            <View style={[theme.container, { backgroundColor: theme.colors.contentContainer }]}>
                 <Text style={theme.title}>Modifica Bisogno</Text>
-                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Nome del bisogno</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8, marginTop:20 }}>Nome del bisogno</Text>
                 <TextInput
                     style={[styles.input, errors.nome && styles.inputError]}
                     placeholder="esempio pizza o corsa"
                     aria-label="Nome"
-                    value={nome}
+                    value={bisogno.nome}
                     onChangeText={setNome}
                     returnKeyType="next"
                     onSubmitEditing={() => importanzaRef.current.focus()}
@@ -103,17 +226,39 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                     maxLength={3}
                 />
                 <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona la o le categorie da associare al bisogno</Text>
-                <Button title="Salva" onPress={handleSave} />
+
+                <FlatList
+                    data={categorie}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => (
+                        <CategoryItem
+                            categoria={item}
+                            isSelected={selectedCategories.includes(item)}
+                            onSelect={handleSelectCategory}
+                            colore={item.colore}
+                        />
+                    )}
+                    numColumns={2}
+                    columnWrapperStyle={styles.row}
+                    contentContainerStyle={styles.grid}
+                />
+
+
                 <View style={styles.buttonContainer}>
                     <Pressable style={styles.button} onPress={handleClose}>
                         <Text style={styles.text}>Annulla</Text>
                     </Pressable>
                     <Pressable style={styles.button} onPress={handleSubmit}>
-                        <Text style={styles.text}>Aggiungi</Text>
+                        <Text style={styles.text}>Aggiorna</Text>
                     </Pressable>
                 </View>
 
             </View>
+            <Spinner
+                visible={loading}
+                textContent={'Loading...'}
+                textStyle={styles.spinnerTextStyle}
+            />
         </Modal>
     );
 };

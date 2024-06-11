@@ -52,6 +52,24 @@ export const BaseTheme = (colors) => ({
     linkText: {
         color: colors.link,
     },
+    //FAB
+    fab: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+        backgroundColor: colors.primary,
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+    },
+    fabText: {
+        color: 'white',
+        fontSize: 24,
+    },
+
     // stayElevated
     stayElevated: {
         margin: 4,

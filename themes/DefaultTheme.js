@@ -1,18 +1,36 @@
 import { BaseTheme } from './BaseTheme';
 
 const DefaultColors = {
-    primary: '#3b0458', // Viola scuro
-    secondary: '#faad29', // Giallo
-    inactive: '#85a290',
-    background: '#f2f2f2', // Crema per lo sfondo
-    backgroundStatusBar: '#ffffff', // Crema per lo sfondo
-    card: '#e5dac6', // Crema per le card
-    text: '#00000090', 
-    border: '#3b0458',
+    background: '#f8f8fa',
+    logoBackground: '#21262c',
+
+    safeAreaBackground: '#ffffff',
+    statusBarBackground: '#ffffff',
+
+    headerBackground: '#ffffff',
+    headerTitle: '#595b5f',
+    headerText: '#8e929b',
+
+    contentContainer: '#ffffff',
+    contentTitle: '#58595b',
+    contentText: '#8e929b',
+    contentBox: '#f8f8fa',
+    contentBoxBorder: '#e9e9eb',
+
+    footer: '#ffffff',
+    footerText: '#8e929b',
+
+    primary: '#a497ef',
+    secondary: '#f2f2f2',
+    inactive: '#c9d2d9',
+
+    errorBackground: '#3d1515',
+    errorText: '#f47265',
+
+    card: '#3b0458',
+    border: '#e5dac6',
     notification: '#85a290',
     grey: '#f8f8f8',
-    white: '#ffffff',
-    link: '#6495ed',
 };
 
 const DefaultTheme = {

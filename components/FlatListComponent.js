@@ -3,12 +3,9 @@ import { RefreshControl, StyleSheet, View, StatusBar, FlatList, Text, Switch, Al
 import { ButtonGroup } from '@rneui/themed';
 import { supabase } from '../lib/supabase';
 import AddBisogno from '../components/AddBisogno';
-import EditBisogno from '../components/EditBisogno';
 import Snackbar from '../components/Snackbar';
 import ElevatedView from 'react-native-elevated-view';
 
-const numColumns = 3;
-const WIDTH = Dimensions.get('window').width;
 
 const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
     const [enabledStates, setEnabledStates] = useState({});
@@ -154,27 +151,19 @@ const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
     };
 
     const Item = ({ nome, isEnabled, toggleSwitch, onPress, empty }) => {
-        if (empty) {
-            return <View style={[styles.item, styles.itemInvisible]} />;
-        }
         return (
             <ElevatedView elevation={4} style={styles.stayElevated}>
-
-                <View style={[styles.item, !isEnabled && styles.itemDisabled]}>
-                    <Pressable onPress={onPress} style={styles.topSection}>
-                        <Text style={styles.text}>{nome}</Text>
-                    </Pressable>
-                    <View style={styles.divider} />
-                    <View style={styles.bottomSection}>
-                        <Switch
-                            onValueChange={toggleSwitch}
-                            trackColor={{ false: '#767577', true: '#81b0ff' }}
-                            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-                            ios_backgroundColor="#3e3e3e"
-                            value={isEnabled}
-                        />
-                    </View>
-                </View>
+                <Pressable onPress={onPress} style={styles.pressable}>
+                    <Text style={styles.text}>{nome}</Text>
+                </Pressable>
+                <Switch
+                    onValueChange={toggleSwitch}
+                    trackColor={{ false: '#767577', true: '#81b0ff' }}
+                    thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                    ios_backgroundColor="#3e3e3e"
+                    value={isEnabled}
+                    style={styles.switch}
+                />
             </ElevatedView>
         );
     };
@@ -204,30 +193,15 @@ const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
 
 
     return (
-        <View>
-            {/*<ButtonGroup*/}
-            {/*    buttons={['Tutti', 'Abilitati', 'Disabilitati']}*/}
-            {/*    selectedIndex={selectedIndex}*/}
-            {/*    onPress={(value) => setSelectedIndex(value)}*/}
-            {/*    containerStyle={{ marginBottom: 20 }}*/}
-            {/*    selectedButtonStyle={{ backgroundColor: '#800080' }}*/}
-            {/*    selectedTextStyle={{ color: '#fff' }}*/}
-            {/*    innerBorderStyle={{ width: 1 }}*/}
-            {/*    outerBorderStyle={{ width: 1 }}*/}
-            {/*    buttonStyle={{ backgroundColor: '#600080' }}*/}
-            {/*    buttonContainerStyle={{ backgroundColor: '#600080' }}*/}
-            {/*/>*/}
-
+        <>
             <FlatList
-                data={formatData(bisogni, numColumns)}
-                numColumns={numColumns}
+                data={bisogni}
                 renderItem={({ item, index }) => (
                     <Item
                         key={item.id}
                         nome={item.nome}
                         id={item.id}
                         onPress={() => selectBisogno(item)}
-                        //onPress={() => onPress(item.id, item.nome)}
                         isEnabled={enabledStates[item.id]}
                         toggleSwitch={() => toggleSwitch(item.id)}
                         index={index}
@@ -273,7 +247,7 @@ const FlatListComponent = forwardRef(({ navigation, session }, ref) => {
                 actionTextStyle={{}}
                 onDismiss={() => setSnackbarVisible(false)}
             />
-        </View>
+        </>
     );
 });
 
@@ -286,14 +260,25 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
     stayElevated: {
-        //width: 120,
-        //height: 120,
+        height: 80,
         margin: 4,
         backgroundColor: 'white',
         borderRadius: 4,
-        height: WIDTH / numColumns - 25,
-        width: WIDTH / numColumns - 25,
-        flex: 1
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center', // Allinea verticalmente gli elementi
+        padding: 10,
+    },
+    text: {
+        fontSize: 16,
+        color: 'black',
+    },
+    pressable: {
+        flex: 1,
+        justifyContent: 'center', // Centra verticalmente il testo
+    },
+    switch: {
+        marginLeft: 10, // Aggiunge uno spazio tra il testo e lo switch
     },
     container: {
         flex: 1,
@@ -302,9 +287,15 @@ const styles = StyleSheet.create({
     item: {
         margin: 0,
         flex: 1,
-        // Subtract margin to keep square shape
-
     },
+    box: {
+        height: 80,
+        flex: 1,
+        marginBottom: 30,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+
     itemInvisible: {
         backgroundColor: 'transparent',
         borderWidth: 0,
@@ -388,7 +379,14 @@ const styles = StyleSheet.create({
         fontSize: 30,
         boxSshadow: '2px 2px 3px #999',
         zIndex: 1,
-    }
+    },
+    box: {
+        //width: 250,
+        height: 80,
+        flex: 1,
+        marginBottom: 10,
+    },
+
 });
 
 export default FlatListComponent;

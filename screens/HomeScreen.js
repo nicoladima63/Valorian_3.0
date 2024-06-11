@@ -1,40 +1,48 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-import { View, Text, FlatList, Pressable, Modal, StyleSheet, Button } from 'react-native';
+import { View, Text, Pressable, Modal, StyleSheet, Button } from 'react-native';
 import Layout from './Layout';
-import FlatListComponent from '../components/FlatListComponent';
+import SectionListComponent from '../components/SectionListComponent';
 
 const HomeScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
     const { session } = useAuth(); // Accedi ai dati della sessione
     const flatListRef = useRef(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [fabAction, setFabAction] = useState(() => { });
 
-    if (!session) {
-        return <Text>Loading session data...</Text>; // O qualsiasi UI di caricamento
-    }
+    useEffect(() => {
+        if (!session) {
+            setLoading(true);
+        } else {
+            setLoading(false);
+        }
+    }, [session]);
+
+    const handleFabPressHome = () => {
+        if (fabAction) {
+            fabAction();
+        }
+    };
 
     return (
         <Layout
             navigation={navigation}
             showTopBar={false}
             header={<Text style={theme.headerTitle}>Valorian</Text>}
-            //footer={<Text>Another Footer</Text>}
-            fab={<Text style={theme.fabText}>+</Text>}
+            fab={<Text>+</Text>}
+            fabAction={handleFabPressHome}
         >
-            <View style={{ backgroundColor: theme.colors.background, flex: 1 }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 ,marginBottom:20}}>
+            <View style={theme.content}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8, marginBottom: 20 }}>
                     <Text style={theme.contentTitle}>Bisogni</Text>
                     <Pressable onPress={() => setModalVisible(true)}>
                         <Text style={theme.contentTitle}>Aiuto</Text>
                     </Pressable>
                 </View>
-                <FlatListComponent
-                    navigation={navigation}
-                    session={session}
-                    ref={flatListRef}
-                />
+                <SectionListComponent session={session} setFabAction={setFabAction} />
             </View>
 
             <Modal

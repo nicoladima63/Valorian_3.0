@@ -19,18 +19,6 @@ const SettingsScreen = ({ navigation }) => {
             //footer={<Text>Another Footer</Text>}
             fab={<Text style={styles.fabText}>+</Text>}
         >
-            <View>
-                <Text>Main Content</Text>
-                <ScrollView style={styles.content} >
-                    <View style={[styles.box, styles.box1]} />
-                    <View style={[styles.box, styles.box2]} />
-                    <View style={[styles.box, styles.box3]} />
-                    <View style={[styles.box, styles.box2]} />
-                    <View style={[styles.box, styles.box3]} />
-                    <View style={[styles.box, styles.box4]} />
-                    <View style={[styles.box, styles.box5]} />
-                </ScrollView>
-            </View>
 
             <ElevatedView elevation={4} style={theme.stayElevated}>
                 <TouchableOpacity style={{
@@ -54,6 +42,19 @@ const SettingsScreen = ({ navigation }) => {
             <ElevatedView elevation={4} style={theme.stayElevated}>
                 <Button onPress={() => navigation.navigate('Categorie')} title="Categorie" />
             </ElevatedView>
+
+            <View>
+                <Text>Main Content</Text>
+                <ScrollView style={styles.content} >
+                    <View style={[styles.box, styles.box1]} />
+                    <View style={[styles.box, styles.box2]} />
+                    <View style={[styles.box, styles.box3]} />
+                    <View style={[styles.box, styles.box2]} />
+                    <View style={[styles.box, styles.box3]} />
+                    <View style={[styles.box, styles.box4]} />
+                    <View style={[styles.box, styles.box5]} />
+                </ScrollView>
+            </View>
 
         </Layout >
     )

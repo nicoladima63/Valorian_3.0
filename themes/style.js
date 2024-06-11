@@ -61,12 +61,10 @@ export default StyleSheet.create({
     mainContent: {
         flex: 1,
         marginTop: 8,
-        //backgroundColor: '#f2f2f2',
-
-    //    flexWrap: 'wrap',
-    //    flexDirection: 'column',
-    //    alignContent: 'stretch',
-    //    paddingHorizontal: 10,
+        flexWrap: 'wrap',
+        flexDirection: 'column',
+        alignContent: 'stretch',
+        paddingHorizontal: 10,
     },
     rightSide: {
         width: 80,
@@ -81,8 +79,8 @@ export default StyleSheet.create({
     },
     fab: {
         position: 'absolute',
-        bottom: 70,
-        right: 30,
+        bottom: 20,
+        right: 20,
         backgroundColor: '#6200ee',
         width: 56,
         height: 56,
@@ -103,11 +101,10 @@ export default StyleSheet.create({
 
     },
     box: {
-        height: 60,
+        //width: 250,
+        height: 80,
         flex: 1,
-        marginBottom: 4,
-        marginHorizontal: 8,
-        borderRadius:4
+        marginBottom: 10,
     },
     box1: {
         backgroundColor: 'orangered',

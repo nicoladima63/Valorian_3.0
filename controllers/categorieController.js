@@ -70,3 +70,17 @@ export const deleteCategoria = async (id) => {
         throw error;
     }
 };
+
+export const getBisInCat = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('bisincat')
+            .select('*');
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error fetching bisincat:', error);
+        throw error;
+    }
+};
+
