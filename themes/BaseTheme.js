@@ -6,11 +6,20 @@ export const BaseTheme = (colors) => ({
         backgroundColor: colors.background,
     },
     content: {
-        //flex:1,
+        flex:1,
         //flexDirection: 'row',
         //alignItems: 'center',
         //justifyContent: 'space-between'
         padding:8,
+    },
+    contentTitle: {
+        fontSize: 18,
+        color: colors.contentTitle,
+        marginLeft: 10,
+    },
+    contentText: {
+        fontSize: 14,
+        color: colors.contentText
     },
     containerBorder: {
         borderWidth: 1,
@@ -23,10 +32,10 @@ export const BaseTheme = (colors) => ({
         width: 170
     },
     headerTitle: {
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: 'bold',
-        marginLeft: 10,
-        color: colors.text
+        //marginLeft: 10,
+        color: colors.headerTitle
     },
 
     title: {

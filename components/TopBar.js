@@ -3,12 +3,12 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { supabase } from '../lib/supabase';
 
-import { TouchableOpacity, View, Image } from 'react-native';
+import { TouchableOpacity, View, Image,Text } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import { useNavigationState } from '@react-navigation/native';
 
 const TopBar = ({ navigation }) => {
-    const { toggleTheme, theme } = useTheme();
+    const {  theme } = useTheme();
     const routeName = useNavigationState(state => state.routes[state.index].name);
     const { session } = useAuth();
     const [avatarUrl, setAvatarUrl] = useState(null);
@@ -81,11 +81,11 @@ const TopBar = ({ navigation }) => {
     };
 
     return (
-        <View style={theme.topBarContainerx, flexdirection= 'row', justifyContent= 'space-between'}>
-            {/*<Text style={theme.title}>{routeName}</Text>*/}
-            <Image source={logo} style={{width: 30, height: 30}} resizeMode='stretch'  />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: theme.colors.background, height: 60 }}>
+            <Image source={logo} style={{ width: 30, height: 30, marginLeft: 20 }} resizeMode='stretch' />
+            <Text style={[theme.headerTitle, { marginLeft: 10, color: theme.colors.headerTitle}]}>{routeName}</Text>
 
-            <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ marginRight: 20 }}>
                 <Avatar
                     rounded
                     source={avatarUrl ? { uri: avatarUrl } : require('../assets/icon.png')}

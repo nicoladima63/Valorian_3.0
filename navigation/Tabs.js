@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import LandingScreen from '../screens/LandingScreen';
+import LandingPage from '../screens/LandingPage';
 import SettingsScreen from '../screens/SettingsScreen';
 import SettingsPage from '../screens/SettingsPage';
 import Bisogni from '../screens/BisogniList';
@@ -46,7 +47,7 @@ export const Tabs = () => {
         >
             <Tab.Screen
                 name="Landing"
-                component={LandingScreen}
+                component={LandingPage}
                 options={{
                     tabBarLabel: 'Home',
                     headerShown: false,

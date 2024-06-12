@@ -30,18 +30,19 @@ const HomeScreen = ({ route, navigation }) => {
     return (
         <Layout
             navigation={navigation}
-            showTopBar={false}
-            header={<Text style={theme.headerTitle}>Valorian</Text>}
+            showTopBar={true}
+            header={<Text style={theme.headerTitle}></Text>}
             fab={<Text>+</Text>}
             fabAction={handleFabPressHome}
         >
-            <View style={theme.content}>
+            <View style={theme.contentx}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8, marginBottom: 20 }}>
                     <Text style={theme.contentTitle}>Bisogni</Text>
                     <Pressable onPress={() => setModalVisible(true)}>
                         <Text style={theme.contentTitle}>Aiuto</Text>
                     </Pressable>
                 </View>
+
                 <SectionListComponent session={session} setFabAction={setFabAction} />
             </View>
 
