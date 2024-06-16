@@ -14,6 +14,7 @@ export const createBisogno = async (bisogno) => {
         const { data, error } = await supabase
             .from('bisogni')
             .insert([{ ...bisogno, uuid: user.id }]);
+        console.log('createBisogno: data:',data)
         if (error) throw error;
         return data;
     } catch (error) {

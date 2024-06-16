@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import LandingScreen from '../screens/LandingScreen';
+//import LandingScreen from '../screens/LandingScreen';
 import LandingPage from '../screens/LandingPage';
 import SettingsScreen from '../screens/SettingsScreen';
 import SettingsPage from '../screens/SettingsPage';

@@ -9,7 +9,7 @@ export const createCategoria = async (category) => {
         if (error) throw error;
         return data;
     } catch (error) {
-        console.error('Error creating category:', error);
+        console.error('Errore in createCategoria:', error);
         throw error;
     }
 };
@@ -23,7 +23,7 @@ export const getCategorie = async () => {
         if (error) throw error;
         return data;
     } catch (error) {
-        console.error('Error fetching categorie:', error);
+        console.error(' Errore in getCategorie:', error);
         throw error;
     }
 };
@@ -36,7 +36,7 @@ export const getCategoria = async (id) => {
         if (error) throw error;
         return data;
     } catch (error) {
-        console.error('Error fetching categorie:', error);
+        console.error('Errore in getCategoria:', error);
         throw error;
     }
 };
@@ -79,8 +79,74 @@ export const getBisInCat = async () => {
         if (error) throw error;
         return data;
     } catch (error) {
-        console.error('Error fetching bisincat:', error);
+        console.error('contrtoller- Errore nel recupero di bisincat :', error);
         throw error;
+    }
+};
+export const getAssociazioni = async (bisogno) => {
+    try {
+        const { data, error } = await supabase
+            .from('bisincat')
+            .select('categoriaid')
+            .eq('bisognoid', bisogno.id);
+        console.log('getAssociazioni controller:',data)
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Errore in getAssociazioni:', error);
+        throw error;
+    }
+};
+
+export const deleteAssociazioni = async (bisognoid) => {
+    try {
+        const { data, error } = await supabase
+            .from('bisincat')
+            .delete()
+            .eq('bisognoid', bisognoid);
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Errore in DeleteAssociazioni:', error);
+        throw error;
+    }
+};
+
+export const createAssociazioni = async (bisognoid, categorie) => {
+    try {
+        const { data, error } = await supabase
+            .from('bisincat')
+            .insert(categorie.map(cat => ({
+                bisognoid: bisognoid,
+                categoriaid: cat.id
+            })));
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Errore in CreateAssociazioni:', error);
+        throw error;
+    }
+};
+export const updateAssociazioni = async (bisognoid, categorie) => {
+    try {
+        // Cancella le associazioni esistenti
+        await deleteAssociazioni(bisognoid);
+
+        // Crea le nuove associazioni
+        const data = await createAssociazioni(bisognoid, categorie);
+        return data;
+    } catch (error) {
+        console.error('Errore in updateAssociazioni:', error);
+        throw error;
+    }
+};
+
+export const aggiornaAssociazioni = async (bisognoid, nuoveCategorie) => {
+    try {
+        const result = await updateAssociazioni(bisognoid, nuoveCategorie);
+        console.log('Associazioni aggiornate:', result);
+    } catch (error) {
+        console.error('Errore in aggiornaAssociazioni:', error);
     }
 };
 

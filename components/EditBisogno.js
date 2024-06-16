@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import * as CatController from '../controllers/categorieController';
 import * as BisController from '../controllers/bisogniController';
+import BisInCat from './BisInCat';
 import {
     View, Text, TextInput, StyleSheet, Modal, Pressable, TouchableOpacity, FlatList
 } from 'react-native';
@@ -8,6 +9,31 @@ import { useTheme } from '../context/ThemeContext';
 import Slider from '@react-native-community/slider';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Color from 'color';
+
+const CategoryItem = ({ categoria, isSelected, onSelect, colore }) => {
+    const backgroundColorWithOpacity = Color(colore).alpha(0.5).rgb().string();
+    return (
+        <TouchableOpacity
+            style={[
+                styles.categoryItem,
+                { backgroundColor: backgroundColorWithOpacity },
+                isSelected ? styles.selected : null,
+            ]}
+            onPress={() => onSelect(categoria)}
+        >
+            <Text style={styles.categoryText}>{categoria.nome}</Text>
+        </TouchableOpacity>
+    );
+};
+
+const NeedItem = ({ need, isSelected, onSelect, style }) => (
+    <TouchableOpacity
+        style={[styles.needItem, isSelected ? styles.selectedNeed : null, style]}
+        onPress={() => onSelect(need)}
+    >
+        <Text style={styles.needText}>{need.nome}</Text>
+    </TouchableOpacity>
+);
 
 const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
     const [nome, setNome] = useState(bisogno.nome);
@@ -156,21 +182,36 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
 
     }
 
-    const CategoryItem = ({ categoria, isSelected, onSelect, colore }) => {
-        const backgroundColorWithOpacity = Color(colore).alpha(0.5).rgb().string();
-        return (
-            <TouchableOpacity
-                style={[
-                    styles.categoryItem,
-                    { backgroundColor: backgroundColorWithOpacity },
-                    isSelected ? styles.selected : null,
-                ]}
-                onPress={() => onSelect(categoria)}
-            >
-                <Text style={styles.categoryText}>{categoria.nome}</Text>
-            </TouchableOpacity>
-        );
+    const handleAssociate = async () => {
+        alert('bisogno', selectedNeed.nome)
+        try {
+            const { data, error } = await supabase
+                .from('bisincat')
+                .insert(selectedCategories.map(cat => ({
+                    bisognoid: selectedNeed.id,
+                    categoriaid: cat.id
+                })));
+
+            if (error) {
+                throw error;
+            }
+
+            Alert.alert(
+                'Association Successful',
+                `Need: ${selectedNeed.nome}\nCategories: ${selectedCategories.map(cat => cat.nome).join(', ')}`,
+                [{ text: 'OK', onPress: () => resetSelections() }]
+            );
+        } catch (error) {
+            console.error('Errore nell\'associazione dei bisogni alle categorie', error);
+            Alert.alert('Errore nell\'associazione dei bisogni alle categorie');
+        }
     };
+
+    const resetSelections = () => {
+        setSelectedCategories([]);
+        setSelectedNeed(null);
+    };
+
 
     return (
         <Modal
@@ -182,7 +223,7 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
         >
             <View style={[theme.container, { backgroundColor: theme.colors.contentContainer }]}>
                 <Text style={theme.title}>Modifica Bisogno</Text>
-                <Text style={{ textAlign: 'center', marginBottom: 8, marginTop:20 }}>Nome del bisogno</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8, marginTop:20 }}>Nome</Text>
                 <TextInput
                     style={[styles.input, errors.nome && styles.inputError]}
                     placeholder="esempio pizza o corsa"
@@ -193,7 +234,7 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                     onSubmitEditing={() => importanzaRef.current.focus()}
                     blurOnSubmit={false}
                 />
-                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Importanza del bisogno da 1 a 10</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Importanza da 1 a 10</Text>
                 <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{bisogno.importanza}</Text>
                 <View >
                     <Slider
@@ -204,15 +245,14 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                         step={1}
                         value={bisogno.importanza}
                         onValueChange={setImportanza}
-
                     />
 
                 </View>
-                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Ogni quanto devi soddifarlo (giorni)</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Ogni quanto lo soddifi (giorni)</Text>
                 <TextInput
                     ref={tolleranzaRef}
                     style={[styles.input, errors.tolleranza && styles.inputError]}
-                    placeholder="quanti giorni riesci a stare senza"
+                    placeholder="numero di giorni"
                     value={bisogno.tolleranza}
                     onChangeText={(text) => {
                         const numericValue = parseInt(text);
@@ -225,25 +265,11 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                     keyboardType="numeric"
                     maxLength={3}
                 />
-                <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona la o le categorie da associare al bisogno</Text>
-
-                <FlatList
-                    data={categorie}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => (
-                        <CategoryItem
-                            categoria={item}
-                            isSelected={selectedCategories.includes(item)}
-                            onSelect={handleSelectCategory}
-                            colore={item.colore}
-                        />
-                    )}
-                    numColumns={2}
-                    columnWrapperStyle={styles.row}
-                    contentContainerStyle={styles.grid}
-                />
-
-
+                {loading ? (
+                    <p>Loading...</p>
+                ) : (
+                    <BisInCat bisogno={bisogno} />
+                )}
                 <View style={styles.buttonContainer}>
                     <Pressable style={styles.button} onPress={handleClose}>
                         <Text style={styles.text}>Annulla</Text>

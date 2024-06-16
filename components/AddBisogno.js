@@ -48,33 +48,50 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
     };
 
     const handleSubmit = async () => {
+        setLoading(true); // Inizia il caricamento
         validateForm();
 
-        // Wait for the validation state to update
-        if (!Object.keys(errors).length === 0) {
+        // Aspetta un attimo per l'aggiornamento dello stato di validazione
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        // Verifica se ci sono errori
+        if (Object.keys(errors).length !== 0) {
             setLoading(false);
             return;
         }
 
-        setLoading(true);
         const insert = {
-            nome, importanza, tolleranza, colore: '', soddisfattoil: new Date(),
-            creatoil: new Date(), enabled: true, uuid: userId
+            nome,
+            importanza,
+            tolleranza,
+            colore: '',
+            soddisfattoil: new Date(),
+            creatoil: new Date(),
+            enabled: true,
+            uuid: userId
         };
 
         try {
-            const { data, error } = await BisController.createBisogno(insert);
-
-            if (error) {
+            const data = await BisController.createBisogno(insert);
+            console.log('data di createBisogno',data.error)
+            if (data.error) {
                 console.error('Error adding need:', error);
                 alert('Errore nell\'aggiungere il bisogno.');
+                setLoading(false);
+                return;
+            }
+
+            const data2 = await CatController.aggiornaAssociazioni(data.id, selectedCategories);
+            if (error) {
+                console.error('Error updating associations:', data2.error);
+                alert('Errore nell\'aggiornare le associazioni.');
             } else {
                 onAdd();
                 handleClose();
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Errore durante la chiamata API.');
+            alert('Errore durante la chiamata API.', error);
         } finally {
             setLoading(false);
         }
@@ -123,7 +140,9 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
     };
 
     const handleSelectCategory = async (category) => {
-        // Verifica se la categoria � gi� stata associata
+        // Verifica se la categoria è già stata associata
+        const isCategorySelected = selectedCategories.includes(category);
+
         setSelectedCategories((prevSelected) =>
             isCategorySelected
                 ? prevSelected.filter((cat) => cat !== category)

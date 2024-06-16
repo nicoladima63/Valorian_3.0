@@ -131,6 +131,7 @@ const CategorySelector = ({ navigation }) => {
 
         return background;
     };
+
     const handleSelectCategory = async (category) => {
         // Verifica se la categoria è già stata associata
         const isCategorySelected = selectedCategories.includes(category);

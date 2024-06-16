@@ -1,6 +1,6 @@
 // BisogniList.js
-import React, { useState, useEffect } from 'react';
-import { View, Text, SectionList, Pressable } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { RefreshControl, View, Text, SectionList, Pressable } from 'react-native';
 import * as BisogniController from '../controllers/bisogniController';
 import * as CategorieController from '../controllers/categorieController';
 import { useTheme } from '../context/ThemeContext';
@@ -27,11 +27,12 @@ const BisogniList = ({ session, setFabAction }) => {
     const [loading, setLoading] = useState(false);
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        setLoading(true);
-
         const fetchData = async () => {
+            setLoading(true);
+
             const fetchedBisogni = await BisogniController.getBisogni();
             const fetchedCategorie = await CategorieController.getCategorie();
             const fetchedBisInCat = await CategorieController.getBisInCat();
@@ -39,10 +40,11 @@ const BisogniList = ({ session, setFabAction }) => {
             setBisogni(fetchedBisogni);
             setCategorie(fetchedCategorie);
             setBisInCat(fetchedBisInCat);
+
+            setLoading(false);
         };
 
         fetchData();
-        setLoading(false);
     }, []);
 
     const transformData = (categorie, bisogni, productsInCategories) => {
@@ -102,6 +104,15 @@ const BisogniList = ({ session, setFabAction }) => {
         }
     }, [setFabAction]);
 
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        getCategorie().then(() => {
+            setRefreshing(false);
+        });
+    }, []);
+
+
+
     return (
         <>
             <SectionList
@@ -122,6 +133,13 @@ const BisogniList = ({ session, setFabAction }) => {
                 renderSectionHeader={({ section: { title, color } }) => (
                     <Text style={{ fontSize: 18, backgroundColor: color, padding: 8, borderRadius: 4 }}>{title}</Text>
                 )}
+                //refreshControl={
+                //    <RefreshControl
+                //        refreshing={refreshing}
+                //        onRefresh={onRefresh}
+                //    />
+                //}
+
             />
             <AddBisogno
                 visible={modalVisibleAdd}
@@ -141,7 +159,7 @@ const BisogniList = ({ session, setFabAction }) => {
             )}
             <Spinner
                 visible={loading}
-                textContent={'Loading...'}
+                textContent={'Caricamento dati in corso...'}
                 textStyle={styles.spinnerTextStyle}
             />
             <Snackbar

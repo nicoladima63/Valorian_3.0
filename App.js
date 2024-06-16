@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { AppState, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import LandingScreen from './screens/LandingScreen';
+import WelcomePage from './screens/WelcomePage';
 import LandingPage from './screens/LandingPage';
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -28,11 +29,18 @@ function AuthLoadingScreen({ navigation }) {
     const { session } = useAuth();
 
     useEffect(() => {
-        if (session) {
-            navigation.replace('Landing');
-        } else {
-            navigation.replace('Login');
-        }
+        const checkWelcomePage = async () => {
+            const hasSeenWelcome = await AsyncStorage.getItem('hasSeenWelcome');
+            if (!hasSeenWelcome) {
+                navigation.replace('WelcomePage');
+            } else if (session) {
+                navigation.replace('Home');
+            } else {
+                navigation.replace('Login');
+            }
+        };
+
+        checkWelcomePage();
     }, [session, navigation]);
 
     return null;
@@ -62,9 +70,9 @@ export default function App() {
                                 options={{ headerShown: false }}
                             />
                             <Stack.Screen
-                                name='Landing2'
-                                component={LandingScreen}
-                                options={{ headerShown: false, title: 'Landing' }}
+                                name='WelcomePage'
+                                component={WelcomePage}
+                                options={{ headerShown: false, title: 'Welcome' }}
                             />
                             <Stack.Screen
                                 name='Landing'
