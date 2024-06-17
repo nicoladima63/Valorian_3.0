@@ -87,7 +87,7 @@ export default function LoginScreen({ navigation }) {
         if (error) {
             Alert.alert(error.message);
         } else {
-            navigation.replace('Main');
+            navigation.replace('Tabs');
         }
         setLoading(false);
     }

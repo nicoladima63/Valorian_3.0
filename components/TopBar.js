@@ -2,30 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { supabase } from '../lib/supabase';
-
-import { TouchableOpacity, View, Image,Text } from 'react-native';
+import { TouchableOpacity, View, Image, Text } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import { useNavigationState } from '@react-navigation/native';
 
 const TopBar = ({ navigation }) => {
-    const {  theme } = useTheme();
+    const { theme } = useTheme();
     const routeName = useNavigationState(state => state.routes[state.index].name);
     const { session } = useAuth();
+    const [username, setUsername] = useState('')
     const [avatarUrl, setAvatarUrl] = useState(null);
     const [loading, setLoading] = useState(false);
-    const logo = require("../assets/images/logo.png")
+    const logo = require("../assets/images/logo.png");
 
     useEffect(() => {
         if (session) {
-            fetchProfile();
+            getProfile();
         }
     }, [session]);
 
-    useEffect(() => {
-        if (avatarUrl) {
-            downloadImage(avatarUrl);
-        }
-    }, [avatarUrl]);
+    //useEffect(() => {
+    //    if (avatarUrl) {
+    //        downloadImage(avatarUrl);
+    //    }
+    //}, [avatarUrl]);
 
     const fetchProfile = async () => {
         try {
@@ -44,15 +44,41 @@ const TopBar = ({ navigation }) => {
                 setAvatarUrl(data.avatar_url);
             }
         } catch (error) {
-            //console.error('TopBar Error fetching profile:', error.message);
+            console.error('TopBar Error fetching profile:', error.message);
         } finally {
             setLoading(false);
         }
     };
 
+    async function getProfile() {
+        try {
+            setLoading(true)
+            if (!session?.user) throw new Error('No user on the session!')
+
+            const { data, error, status } = await supabase
+                .from('profiles')
+                .select(`username, avatar_url`)
+                .eq('id', session?.user.id)
+                .single()
+            if (error && status !== 406) {
+                throw error
+            }
+
+            if (data) {
+                setUsername(data.username)
+                setAvatarUrl(data.avatar_url)
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                Alert.alert(error.message)
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
     const downloadImage = async (path) => {
         try {
-            //console.log('Downloading image from path:', path);
+            console.log('Downloading image from path:', path);
             const { data, error } = await supabase.storage
                 .from('avatars')
                 .download(path);
@@ -62,28 +88,30 @@ const TopBar = ({ navigation }) => {
             }
 
             if (!data) {
-                //console.error('TopBar Error downloading image: Data is null');
+                console.error('TopBar Error downloading image: Data is null');
                 return;
             }
 
-            const fr = new FileReader();
-            fr.onload = () => {
-                setAvatarUrl(fr.result);
-                //console.log('Image successfully read:', fr.result);
+            // Convert the blob to base64
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64data = reader.result;
+                setAvatarUrl(base64data);
+                //console.log('Image successfully read:', base64data);
             };
-            fr.onerror = (err) => {
-                //console.error('TopBar Error reading file:', err);
+            reader.onerror = (err) => {
+                console.error('TopBar Error reading file:', err);
             };
-            fr.readAsDataURL(data);
+            reader.readAsDataURL(data);
         } catch (error) {
-            //console.error('TopBar Error downloading image:', error.message);
+            console.error('TopBar Error downloading image:', error.message);
         }
     };
 
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: theme.colors.background, height: 60 }}>
             <Image source={logo} style={{ width: 30, height: 30, marginLeft: 20 }} resizeMode='stretch' />
-            <Text style={[theme.headerTitle, { marginLeft: 10, color: theme.colors.headerTitle}]}>{routeName}</Text>
+            <Text style={[theme.headerTitle, { marginLeft: 10, color: theme.colors.headerTitle }]}>{routeName}</Text>
 
             <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ marginRight: 20 }}>
                 <Avatar

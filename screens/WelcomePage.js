@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button,Switch } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-
-const WelcomePage = () => {
+import Layout from './Layout';
+import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
+const WelcomePage = ({ navigation}) => {
     const [showNextTime, setShowNextTime] = useState(true);
-    const navigation = useNavigation();
-
+    const { theme } = useTheme();
     const handleStart = async () => {
         try {
             if (!showNextTime) {
@@ -15,10 +15,17 @@ const WelcomePage = () => {
         } catch (e) {
             console.error(e);
         }
-        navigation.replace('Landing'); 
+        navigation.replace('Tabs'); 
     };
 
     return (
+        <Layout
+            navigation={navigation}
+            showTopBar={true}
+            //header={<Text style={theme.headerTitle}></Text>}
+            //fab={<Text>+</Text>}
+            //fabAction={handleFabPressHome}
+        >
         <View style={styles.container}>
             <Text style={styles.title}>Benvenuto in Valorian!</Text>
             <Text style={styles.paragraph}>
@@ -46,8 +53,10 @@ const WelcomePage = () => {
                 <Text style={styles.label}>Mostra la prossima volta</Text>
             </View>
             <Button title="Inizia" onPress={handleStart} />
-        </View>
+            </View>
+        </Layout>
     );
+
 };
 
 const styles = StyleSheet.create({

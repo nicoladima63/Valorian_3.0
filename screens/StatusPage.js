@@ -57,6 +57,12 @@ const LandingPage = ({ navigation }) => {
     const [satisfactionIndex, setSatisfactionIndex] = useState(0);
 
     useEffect(() => {
+        if (!session) {
+            navigation.replace('Login');
+        }
+    }, [session]);
+
+    useEffect(() => {
         const calculateSatisfactionIndex = () => {
             if (needsData.length === 0) return 0;
 
@@ -276,11 +282,12 @@ const LandingPage = ({ navigation }) => {
             navigation={navigation}
             showTopBar={true}
             header={<Text style={theme.headerTitle}>Benvenuto in Valorian!</Text>}
+            //fab={<Text>+</Text>}
+            //fabAction={handleFabPressHome}
         >
             <View style={theme.content}>
                 <Text style={theme.contentTitle}>Ecco come stai:</Text>
                 <Text style={theme.contentTitle}>Livello di benessere:</Text>
-                <Text style={theme.contentTitle}>Indice di soddisfazione: {satisfactionIndex}</Text>
 
                 <EChartsComponent option={option1} height={300} />
 

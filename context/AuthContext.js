@@ -1,5 +1,5 @@
-// AuthContext.js
-import React, { createContext, useContext, useState, useEffect } from 'react';
+// context/AuthContext.js
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 const AuthContext = createContext();
@@ -8,42 +8,24 @@ export const AuthProvider = ({ children }) => {
     const [session, setSession] = useState(null);
 
     useEffect(() => {
-        const fetchSession = async () => {
+        const getSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             setSession(session);
         };
 
-        fetchSession();
+        getSession();
 
-        const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
         });
 
         return () => {
-            //data.unsubscribe();
+            authListener?.unsubscribe();
         };
     }, []);
 
-    const signInWithEmail = async (email, password) => {
-        const { data, error } = await supabase.auth.signInWithPassword(email, password);
-
-        if (error) {
-            console.error('Login Error:', error.message);
-            alert(error.message);
-            return null;
-        } else {
-            setSession(data.session);
-            return data.session;
-        }
-    };
-
-    const handleLogout = async () => {
-        await supabase.auth.signOut();
-        setSession(null);
-    };
-
     return (
-        <AuthContext.Provider value={{ session, signInWithEmail, handleLogout }}>
+        <AuthContext.Provider value={{ session }}>
             {children}
         </AuthContext.Provider>
     );

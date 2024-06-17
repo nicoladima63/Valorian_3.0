@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import WelcomePage from './screens/WelcomePage';
-import LandingPage from './screens/LandingPage';
+import StatusPage from './screens/StatusPage';
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -21,7 +21,6 @@ import DefaultTheme from './themes/DefaultTheme';
 
 import { AppContext } from './context/AppContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { supabase } from './lib/supabase';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,7 +33,7 @@ function AuthLoadingScreen({ navigation }) {
             if (!hasSeenWelcome) {
                 navigation.replace('WelcomePage');
             } else if (session) {
-                navigation.replace('Home');
+                navigation.replace('Tabs');
             } else {
                 navigation.replace('Login');
             }
@@ -53,6 +52,7 @@ export default function App() {
         isDarkTheme,
         setIsDarkTheme,
     };
+
 
     return (
         <AppContext.Provider value={appContext}>
@@ -75,19 +75,20 @@ export default function App() {
                                 options={{ headerShown: false, title: 'Welcome' }}
                             />
                             <Stack.Screen
-                                name='Landing'
-                                component={LandingPage}
-                                options={{ headerShown: false, title: 'Landing' }}
+                                name='StatusPage'
+                                component={StatusPage}
+                                options={{ headerShown: false, title: 'Il tuo stato' }}
                             />
                             <Stack.Screen
                                 name='Home'
                                 component={HomeScreen}
                                 options={{ headerShown: false, title: 'Home' }}
                             />
+
                             <Stack.Screen
                                 name='Settings'
                                 component={SettingsScreen}
-                                options={{ headerShown: true, title: 'Settings' }}
+                                options={{ headerShown: true, title: 'Impostazioni' }}
                             />
                             <Stack.Screen
                                 name='Login'
@@ -110,7 +111,7 @@ export default function App() {
                                 options={{ headerShown: true, title: 'Categorie' }}
                             />
                             <Stack.Screen
-                                name="Main"
+                                name="Tabs"
                                 component={Tabs}
                                 options={{ headerShown: false }}
                             />

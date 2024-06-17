@@ -3,12 +3,12 @@ import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 //import LandingScreen from '../screens/LandingScreen';
-import LandingPage from '../screens/LandingPage';
-import SettingsScreen from '../screens/SettingsScreen';
+import StatusPage from '../screens/StatusPage';
+//import SettingsScreen from '../screens/SettingsScreen';
 import SettingsPage from '../screens/SettingsPage';
 import Bisogni from '../screens/BisogniList';
 import Calendar from '../screens/Calendario';
-import Associazione from '../screens/Associazione';
+//import Associazione from '../screens/Associazione';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useTheme } from '../context/ThemeContext';
@@ -46,8 +46,8 @@ export const Tabs = () => {
             })}
         >
             <Tab.Screen
-                name="Landing"
-                component={LandingPage}
+                name="StatusPage"
+                component={StatusPage}
                 options={{
                     tabBarLabel: 'Home',
                     headerShown: false,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from "../lib/supabase"; // Import Supabase client
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 
 import Layout from './Layout';
 import Avatar from "./Avatar";
@@ -12,82 +13,72 @@ import {
     Text, ActivityIndicator, TextInput
 } from "react-native";
 
-export default function AccountScreen() {
-    const navigation = useNavigation();
-    const [session, setSession] = useState(null);
-    const [user, setUser] = useState(null); // Store user data
-    const [loading, setLoading] = useState(true); // Loading state
+export default function AccountScreen({ navigation}) {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
     const { theme } = useTheme();
-
-    const [username, setUsername] = useState(""); // Username state
-    const [website, setWebsite] = useState(""); // Website state
-    const [avatarUrl, setAvatarUrl] = useState(""); // Avatar URL state
+    const { session } = useAuth();
+    const [username, setUsername] = useState(""); 
+    const [website, setWebsite] = useState('')
+    const [avatarUrl, setAvatarUrl] = useState("");
 
     useEffect(() => {
-        const getSession = async () => {
-            const { data: { session }, error } = await supabase.auth.getSession();
-            if (error) {
-                console.error("Error getting session:", error);
-                return;
-            }
-            setSession(session);
-            if (session && session.user) {
-                fetchUser(session.user.id);
-            }
-        };
-        getSession();
-    }, []);
+        if (session) getProfile()
+        console.log(session)
 
-    const fetchUser = async (userId) => {
+    }, [session])
+    async function getProfile() {
         try {
-            setLoading(true);
-            const { data, error, status } = await supabase
-                .from("profiles")
+            setLoading(true)
+            if (!session?.user) throw new Error('No user on the session!')
+            let { data, error, status } = await supabase
+                .from('profiles')
                 .select(`username, website, avatar_url`)
-                .eq("id", userId)
-                .single();
-
+                .eq('id', session?.user.id)
+                .single()
             if (error && status !== 406) {
-                throw error;
+                throw error
             }
 
             if (data) {
-                setUser(data);
-                setUsername(data.username);
-                setWebsite(data.website);
-                setAvatarUrl(data.avatar_url);
+                setUsername(data.username)
+                setWebsite(data.website)
+                setAvatarUrl(data.avatar_url)
             }
         } catch (error) {
-            console.error('Error fetching user profile:', error);
+            if (error instanceof Error) {
+                Alert.alert(error.message)
+            }
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
-
-    const updateProfile = async ({ username, website, avatar_url }) => {
+    }
+    async function updateProfile({username,website,avatar_url}) {
         try {
-            setLoading(true);
+            setLoading(true)
+            if (!session?.user) throw new Error('No user on the session!')
+
             const updates = {
-                id: user?.id,
+                id: session?.user.id,
                 username,
                 website,
                 avatar_url,
                 updated_at: new Date(),
-            };
-
-            const { error } = await supabase.from("profiles").upsert(updates);
-
-            if (error) {
-                throw error;
             }
 
-            Alert.alert("Profile updated successfully!");
+            let { error } = await supabase.from('profiles').upsert(updates)
+
+            if (error) {
+                throw error
+            }
         } catch (error) {
-            Alert.alert("Error updating profile:", error.message);
+            if (error instanceof Error) {
+                Alert.alert(error.message)
+            }
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     return (
         <>
@@ -108,7 +99,7 @@ export default function AccountScreen() {
                             marginTop: 16,
                         alignSelf: 'center',
                     }}>
-                        Bentornato, {username}
+                            Bentornato, {username},{session?.user.id}
                     </Text>
 
                     <View style={[styles.verticallySpaced, styles.mt20]}>
@@ -118,7 +109,8 @@ export default function AccountScreen() {
                             editable={false}
                             style={styles.input}
                         />
-                    </View>
+                        </View>
+
                     <View style={[styles.verticallySpaced, styles.mt20]}>
                         <TextInput
                             style={styles.input}
