@@ -127,8 +127,8 @@ export const BaseTheme = (colors) => ({
         backgroundColor: colors.background
     },
     Loginimage: {
-        height: 160,
-        width: 170
+        height: 120,
+        width: 140
     },
     Logintitle: {
         fontSize: 30,

@@ -5,7 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 
 import {
     View, Text, Alert, Pressable, Image,
-    Switch, TextInput, TouchableWithoutFeedback, Keyboard
+    Switch, ScrollView, TouchableWithoutFeedback, Keyboard
 } from 'react-native';
 import { Input, Icon } from '@rneui/themed';
 import * as SecureStore from 'expo-secure-store';
@@ -109,7 +109,7 @@ export default function LoginScreen({ navigation }) {
                 <Image source={logo} style={theme.Loginimage} resizeMode='contain' />
                 <Text style={theme.Logintitle}>Valorian</Text>
                 <Text style={theme.LoginSubtitle}>login</Text>
-                <View style={theme.LogininputView}>
+                <ScrollView style={theme.LogininputView}>
                     <Input
                         //style={theme.Logininput}
                         label="Email"
@@ -145,7 +145,7 @@ export default function LoginScreen({ navigation }) {
                         autoCapitalize="none"
                     />
                     {passwordError ? <Text style={theme.errorText}>{passwordError}</Text> : null}
-                </View>
+                </ScrollView>
                 <View style={theme.LoginrememberView}>
                     <View style={theme.Loginswitch}>
                         <Switch value={click} onValueChange={setClick} trackColor={{ true: "green", false: "gray" }} />

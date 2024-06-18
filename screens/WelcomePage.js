@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     title: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
     },
     paragraph: {
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'center',
         marginBottom: 10,
     },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
     label: {
         margin: 8,
-        fontSize: 16,
+        fontSize: 14,
     },
 });
 

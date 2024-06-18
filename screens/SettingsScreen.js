@@ -3,13 +3,16 @@ import { AppContext } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import Layout from './Layout';
 import styles from '../themes/style';
-import { View, Text, TouchableOpacity, Button, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Button, ScrollView, PixelRatio } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import ElevatedView from 'react-native-elevated-view';
+import { RFValue } from "react-native-responsive-fontsize";
+
 
 const SettingsScreen = ({ navigation }) => {
     const { toggleTheme, theme } = useTheme();
-    const { isDarkTheme, setIsDarkTheme } = React.useContext(AppContext)
+    const { isDarkTheme, setIsDarkTheme } = React.useContext(AppContext);
+    const fontSizeScaler = (size) => size * PixelRatio.getFontScale();
 
     return (
         <Layout
@@ -45,14 +48,15 @@ const SettingsScreen = ({ navigation }) => {
 
             <View>
                 <Text>Main Content</Text>
+                <Text style={{fontSize:RFValue(16)}}>
+                    Testo RFValue(16)
+                </Text>
+                <Text style={{ fontSize: fontSizeScaler(16)}}>
+                    Testo fontSizeScaler(16)
+                </Text>
+                
                 <ScrollView style={styles.content} >
-                    <View style={[styles.box, styles.box1]} />
-                    <View style={[styles.box, styles.box2]} />
-                    <View style={[styles.box, styles.box3]} />
-                    <View style={[styles.box, styles.box2]} />
-                    <View style={[styles.box, styles.box3]} />
-                    <View style={[styles.box, styles.box4]} />
-                    <View style={[styles.box, styles.box5]} />
+
                 </ScrollView>
             </View>
 

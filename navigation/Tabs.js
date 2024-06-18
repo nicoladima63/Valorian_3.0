@@ -12,6 +12,7 @@ import Calendar from '../screens/Calendario';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useTheme } from '../context/ThemeContext';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -77,7 +78,7 @@ export const Tabs = () => {
             />
             <Tab.Screen
                 name="Impostazioni"
-                component={SettingsPage}
+                component={SettingsScreen}
                 options={{
                     tabBarLabel: 'Impostazioni',
                     headerShown: false,

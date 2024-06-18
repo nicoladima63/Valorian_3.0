@@ -223,11 +223,12 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                         step={1}
                         value={importanza}
                         onValueChange={setImportanza}
+                        renderStepNumber={ true}
 
                     />
 
                 </View>
-                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Ogni quanto devi soddifarlo (giorni)</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Ogni quanto hai bisogno di soddifarlo (in giorni)</Text>
                 <TextInput
                     ref={tolleranzaRef}
                     style={[styles.input, errors.tolleranza && styles.inputError]}
@@ -244,7 +245,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                     keyboardType="numeric"
                     maxLength={3}
                 />
-                <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona la o le categorie da associare al bisogno</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
 
                 <FlatList
                     data={categorie}
