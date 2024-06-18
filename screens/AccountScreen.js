@@ -24,8 +24,6 @@ export default function AccountScreen({ navigation}) {
 
     useEffect(() => {
         if (session) getProfile()
-        console.log(session)
-
     }, [session])
     async function getProfile() {
         try {
@@ -99,7 +97,7 @@ export default function AccountScreen({ navigation}) {
                             marginTop: 16,
                         alignSelf: 'center',
                     }}>
-                            Bentornato, {username},{session?.user.id}
+                            Bentornato, {username}
                     </Text>
 
                     <View style={[styles.verticallySpaced, styles.mt20]}>

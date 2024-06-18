@@ -13,7 +13,6 @@ const DarkColors = {
     headerText: '#d1d1d1', // Light Gray (testo)
 
     contentContainer: '#110c2a', // Midnight Purple
-    //contentContainer: '#0d1017', // Charcoal Black
     contentTitle: '#ffffff', // White (evidente)
     contentText: '#d1d1d1', // Light Gray (testo)
     contentBox: '#21262c', // Charcoal Grey
@@ -24,7 +23,10 @@ const DarkColors = {
 
     primary: '#a497ef', // Light Purple
     secondary: '#f2f2f2', // White Smoke
+    cancel: '#c9d2d9',
     inactive: '#c9d2d9', // Light Slate Gray
+    buttontext: '#ffffff',
+    link:'#a497ef',
 
     errorBackground: '#3d1515', // Dark Red
     errorText: '#ff6f61', // Light Coral (più visibile per errore)

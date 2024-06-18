@@ -26,14 +26,6 @@ const CategoryItem = ({ categoria, isSelected, onSelect, colore }) => {
     );
 };
 
-const NeedItem = ({ need, isSelected, onSelect, style }) => (
-    <TouchableOpacity
-        style={[styles.needItem, isSelected ? styles.selectedNeed : null, style]}
-        onPress={() => onSelect(need)}
-    >
-        <Text style={styles.needText}>{need.nome}</Text>
-    </TouchableOpacity>
-);
 
 const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
     const [nome, setNome] = useState(bisogno.nome);
@@ -74,6 +66,7 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
     };
 
     const handleSubmit = async () => {
+        setLoading(true); // Inizia il caricamento
         validateForm();
 
         // Wait for the validation state to update
@@ -149,7 +142,9 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
     };
 
     const handleSelectCategory = async (category) => {
-        // Verifica se la categoria � gi� stata associata
+        // Verifica se la categoria è già stata associata
+        const isCategorySelected = selectedCategories.includes(category);
+
         setSelectedCategories((prevSelected) =>
             isCategorySelected
                 ? prevSelected.filter((cat) => cat !== category)
@@ -234,7 +229,7 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                     onSubmitEditing={() => importanzaRef.current.focus()}
                     blurOnSubmit={false}
                 />
-                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Importanza da 1 a 10</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Definisci quanto sia importante per te (da 1 a 10)</Text>
                 <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{bisogno.importanza}</Text>
                 <View >
                     <Slider
@@ -242,13 +237,16 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                         style={{ height: 60 }}
                         minimumValue={1}
                         maximumValue={10}
+                        lowerLimit={1}
                         step={1}
                         value={bisogno.importanza}
                         onValueChange={setImportanza}
+                        renderStepNumber={true}
+
                     />
 
                 </View>
-                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Ogni quanto lo soddifi (giorni)</Text>
+                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Ogni quanto hai bisogno di soddifarlo (in giorni)</Text>
                 <TextInput
                     ref={tolleranzaRef}
                     style={[styles.input, errors.tolleranza && styles.inputError]}
@@ -265,12 +263,15 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                     keyboardType="numeric"
                     maxLength={3}
                 />
+                <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
+
                 {loading ? (
                     <p>Loading...</p>
                 ) : (
                     <BisInCat bisogno={bisogno} />
                 )}
-                <View style={styles.buttonContainer}>
+
+                <View style={theme.buttonContainer2}>
                     <Pressable style={styles.button} onPress={handleClose}>
                         <Text style={styles.text}>Annulla</Text>
                     </Pressable>

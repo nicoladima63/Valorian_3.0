@@ -31,7 +31,7 @@ const HomeScreen = ({ route, navigation }) => {
         <Layout
             navigation={navigation}
             showTopBar={true}
-            header={<Text style={theme.headerTitle}>{ session.user.id}</Text>}
+            header={<Text style={theme.headerTitle}></Text>}
             fab={<Text>+</Text>}
             fabAction={handleFabPressHome}
         >

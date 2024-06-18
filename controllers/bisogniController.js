@@ -9,12 +9,17 @@ const getCurrentUser = async () => {
 
 // Create a new bisogno
 export const createBisogno = async (bisogno) => {
+    console.log('createBisogno: bisogno:', bisogno)  
+
     try {
-        const user = await getCurrentUser();
+        //const user = await getCurrentUser();
         const { data, error } = await supabase
             .from('bisogni')
-            .insert([{ ...bisogno, uuid: user.id }]);
-        console.log('createBisogno: data:',data)
+            .insert(bisogno )
+            .select();
+        //    .insert([{ ...bisogno, uuid: user.id }]);
+        console.log('createBisogno: data:', data)  
+
         if (error) throw error;
         return data;
     } catch (error) {

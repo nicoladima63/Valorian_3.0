@@ -15,6 +15,7 @@ import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
 import { Tabs } from './navigation/Tabs';
 
+
 import { ThemeProvider } from './context/ThemeContext';
 import DarkTheme from './themes/DarkTheme';
 import DefaultTheme from './themes/DefaultTheme';

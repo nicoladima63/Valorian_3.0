@@ -6,11 +6,11 @@ export const BaseTheme = (colors) => ({
         backgroundColor: colors.background,
     },
     content: {
-        flex:1,
+        flex: 1,
         //flexDirection: 'row',
         //alignItems: 'center',
         //justifyContent: 'space-between'
-        padding:8,
+        padding: 8,
     },
     contentTitle: {
         fontSize: 18,
@@ -25,7 +25,7 @@ export const BaseTheme = (colors) => ({
         borderWidth: 1,
         borderColor: colors.border,
         borderRadius: 5,
-        marginTop:10
+        marginTop: 10
     },
     image: {
         height: 160,
@@ -52,14 +52,28 @@ export const BaseTheme = (colors) => ({
         //textAlign: "center",
         color: colors.text
     },
+    paragraph: {
+        fontSize: 14,
+        textAlign: 'center',
+        marginBottom: 10,
+        lineHeight: 20,
+    },
+
     errorText: {
         color: 'red',
         fontSize: 12,
         marginTop: 5,
         marginLeft: 10,
+
     },
     linkText: {
         color: colors.link,
+    },
+    mt20: {
+        marginTop: 20
+    },
+    mb20: {
+        marginBottom: 20
     },
     //FAB
     fab: {
@@ -78,7 +92,53 @@ export const BaseTheme = (colors) => ({
         color: 'white',
         fontSize: 24,
     },
+    //BUTTON
+    buttonContainer1: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 40,
+        position: 'absolute',
+        bottom: 10,
+        width:'50%'
+    },
 
+    buttonContainer2: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        //alignItems: 'center',
+        marginBottom: 40,
+        position: 'absolute',
+        bottom: 10,
+        width: '50%'
+
+    },
+    buttonCancel: {
+        flex: 1,
+        height: 45,
+        backgroundColor: colors.cancel,
+        padding: 10,
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    buttonSubmit: {
+        flex: 1,
+        height: 45,
+        backgroundColor: colors.primary,
+        padding: 10,
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    buttonText: {
+        backgroundColor: colors.buttonText,
+        fontSize: 16,
+    },
     // stayElevated
     stayElevated: {
         margin: 4,
@@ -87,14 +147,47 @@ export const BaseTheme = (colors) => ({
         //flex: 1,
         padding: 8,
     },
+    //MODAL
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalText: {
+        fontSize: 16,
+        marginBottom: 20,
+    },
+    closeButton: {
+        padding: 10,
+        backgroundColor: '#2196F3',
+        borderRadius: 5,
+    },
+    closeButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    infoIcon: {
+        marginRight: 10,
+    },
+    checkIcon: {
+        marginLeft: 10,
+    },
+
     //TOPBAR
     topBarContainer: {
-    //    padding: 10,
-    //    flexDirection: 'row',
-    //    alignItems: 'center',
-    //    justifyContent: 'space-between',
-    //    marginTop: 20,
-    //    backgroundColor:colors.background
+        //    padding: 10,
+        //    flexDirection: 'row',
+        //    alignItems: 'center',
+        //    justifyContent: 'space-between',
+        //    marginTop: 20,
+        //    backgroundColor:colors.background
     },
     topBarTitle: {
         fontSize: 20,
@@ -106,7 +199,7 @@ export const BaseTheme = (colors) => ({
     topBarAvatarContainer: {
         marginRight: 20,
     },
-    buttonContainer: {
+    topButtonContainer: {
         marginTop: 50,
         flexDirection: 'row',
         alignItems: 'center',
@@ -123,19 +216,19 @@ export const BaseTheme = (colors) => ({
     Logincontainer: {
         flex: 1,
         alignItems: "center",
-        paddingTop: 50,
+        paddingTop: 20,
         backgroundColor: colors.background
     },
     Loginimage: {
-        height: 120,
-        width: 140
+        height: 100,
+        width: 100
     },
     Logintitle: {
-        fontSize: 30,
+        fontSize: 22,
         fontWeight: "bold",
         textTransform: "uppercase",
         textAlign: "center",
-        paddingVertical: 40,
+        paddingVertical: 20,
         color: colors.primary
     },
     LoginSubtitle: {
@@ -147,10 +240,13 @@ export const BaseTheme = (colors) => ({
         color: colors.secondary
     },
     LogininputView: {
-        gap: 15,
+        //gap: 15,
         width: "100%",
         paddingHorizontal: 40,
-        marginBottom: 5
+        marginBottom: 5,
+        marginTop: 10,
+        flex: 1
+
     },
     Logininput: {
         height: 50,
@@ -165,8 +261,8 @@ export const BaseTheme = (colors) => ({
         paddingHorizontal: 50,
         justifyContent: "space-between",
         alignItems: "center",
-        flexDirection: "row",
-        marginBottom: 8
+        flexDirection: "column",
+        marginBottom: 8,
     },
     Loginswitch: {
         flexDirection: "row",
@@ -197,6 +293,7 @@ export const BaseTheme = (colors) => ({
         fontWeight: "bold"
     },
     LoginbuttonView: {
+        flex: 1,
         width: "100%",
         paddingHorizontal: 50
     },

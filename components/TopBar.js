@@ -10,7 +10,6 @@ const TopBar = ({ navigation }) => {
     const { theme } = useTheme();
     const routeName = useNavigationState(state => state.routes[state.index].name);
     const { session } = useAuth();
-    const [username, setUsername] = useState('')
     const [avatarUrl, setAvatarUrl] = useState(null);
     const [loading, setLoading] = useState(false);
     const logo = require("../assets/images/logo.png");
@@ -21,51 +20,22 @@ const TopBar = ({ navigation }) => {
         }
     }, [session]);
 
-    //useEffect(() => {
-    //    if (avatarUrl) {
-    //        downloadImage(avatarUrl);
-    //    }
-    //}, [avatarUrl]);
-
-    const fetchProfile = async () => {
-        try {
-            setLoading(true);
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('avatar_url')
-                .eq('id', session.user.id)
-                .single();
-
-            if (error) {
-                throw error;
-            }
-
-            if (data) {
-                setAvatarUrl(data.avatar_url);
-            }
-        } catch (error) {
-            console.error('TopBar Error fetching profile:', error.message);
-        } finally {
-            setLoading(false);
+    useEffect(() => {
+        if (avatarUrl) {
+            downloadImage(avatarUrl);
         }
-    };
+    }, [avatarUrl]);
 
     async function getProfile() {
         try {
             setLoading(true)
             if (!session?.user) throw new Error('No user on the session!')
-
-            const { data, error, status } = await supabase
+            let { data, error, status } = await supabase
                 .from('profiles')
-                .select(`username, avatar_url`)
+                .select(` avatar_url`)
                 .eq('id', session?.user.id)
                 .single()
-            if (error && status !== 406) {
-                throw error
-            }
-
             if (data) {
-                setUsername(data.username)
                 setAvatarUrl(data.avatar_url)
             }
         } catch (error) {
@@ -76,37 +46,27 @@ const TopBar = ({ navigation }) => {
             setLoading(false)
         }
     }
-    const downloadImage = async (path) => {
+
+    async function downloadImage(path) {
         try {
-            console.log('Downloading image from path:', path);
-            const { data, error } = await supabase.storage
-                .from('avatars')
-                .download(path);
+            const { data, error } = await supabase.storage.from('avatars').download(path);
 
             if (error) {
                 throw error;
             }
 
-            if (!data) {
-                console.error('TopBar Error downloading image: Data is null');
-                return;
-            }
-
-            // Convert the blob to base64
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64data = reader.result;
-                setAvatarUrl(base64data);
-                //console.log('Image successfully read:', base64data);
+            const fr = new FileReader();
+            fr.readAsDataURL(data);
+            fr.onload = () => {
+                setAvatarUrl(fr.result);
             };
-            reader.onerror = (err) => {
-                console.error('TopBar Error reading file:', err);
-            };
-            reader.readAsDataURL(data);
         } catch (error) {
-            console.error('TopBar Error downloading image:', error.message);
+            if (error instanceof Error) {
+                console.log('Error downloading image: ', error.message);
+            }
         }
-    };
+    }
+
 
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: theme.colors.background, height: 60 }}>
@@ -116,7 +76,7 @@ const TopBar = ({ navigation }) => {
             <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ marginRight: 20 }}>
                 <Avatar
                     rounded
-                    source={avatarUrl ? { uri: avatarUrl } : require('../assets/icon.png')}
+                    source={avatarUrl ? { uri: avatarUrl } : require('../assets/images/avatar.png')}
                     size="small"
                 />
             </TouchableOpacity>

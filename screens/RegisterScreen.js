@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
-
 import { useTheme } from '../context/ThemeContext';
 
 import {
-    View, Text, Alert,  Pressable, Image,
-     TextInput, TouchableWithoutFeedback, Keyboard
+    View, Text, Alert, Pressable, Image,
+    Switch, ScrollView, TouchableWithoutFeedback, Keyboard,
+    KeyboardAvoidingView, Platform
 } from 'react-native';
 import { Input, Icon } from '@rneui/themed';
 
@@ -18,13 +18,15 @@ export default function RegisterScreen({ navigation }) {
     const { theme } = useTheme();
 
     const [loading, setLoading] = useState(false);
-
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
     const passwordRef = useRef(null); // Riferimento al TextInput della password
 
     const logo = require("../assets/images/logo.png")
+    //const facebook = require("../assets/images/react-logo.png")
+    //const linkedin = require("../assets/images/react-logo.png")
+    //const tiktok = require("../assets/images/react-logo.png")
 
 
     const handlePressEmptySpace = () => {
@@ -76,15 +78,15 @@ export default function RegisterScreen({ navigation }) {
 
     return (
         <TouchableWithoutFeedback onPress={handlePressEmptySpace}>
-            <View style={theme.Logincontainer}>
-                <Spinner
-                    visible={loading} // Visualizza lo spinner quando loading è true
-                    textContent={'Loading...'}
-                    textStyle={theme.spinnerTextStyle}
-                />
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={theme.Logincontainer}>
                 <Image source={logo} style={theme.Loginimage} resizeMode='contain' />
-                <Text style={theme.Logintitle}>Valorian</Text>
-                <Text style={theme.LoginSubtitle}>Nuovo Utente</Text>
+                <Text style={theme.Logintitle}>Nuovo Account</Text>
+                {/*<Text style={theme.LoginSubtitle}>Nuovo Utente</Text>*/}
                 <View style={theme.LogininputView}>
                     <Input
                         //style={theme.Logininput}
@@ -102,8 +104,8 @@ export default function RegisterScreen({ navigation }) {
                     />
                     {emailError ? <Text style={theme.errorText}>{emailError}</Text> : null}
                     <Input
-                        ref={passwordRef} // Associa il riferimento
-                        //style={theme.Logininput}
+                        ref={passwordRef}
+                        label="Password"
                         placeholder='password'
                         secureTextEntry={!showPassword}
                         value={password}
@@ -127,24 +129,31 @@ export default function RegisterScreen({ navigation }) {
                 </View>
 
                 <View style={theme.LoginbuttonView}>
-                    <CustomButton title="Registrati" onPress={signUpWithEmail} />
+                    <CustomButton title="Registrati" onPress={()=>signUpWithEmail()} />
+                    <Pressable onPress={() => navigation.navigate('Login')}>
+                        <Text style={[theme.text, theme.mt20]}>Hai un Account?
+                            <Text style={theme.linkText}>  Accedi</Text>
+                        </Text>
+                    </Pressable>
                 </View>
 
-                <View style={theme.LoginmediaIcons}>
-                    <Text source='{facebook}' style={theme.Loginicons} />
-                    <Text source='{tiktok}' style={theme.Loginicons} />
-                    <Text source='{linkedin}' style={theme.Loginicons} />
-                </View>
 
-                <Pressable onPress={() => navigation.navigate('Login')}>
-                    <Text style={theme.LoginfooterText}>Hai un Account?
-                        <Text style={theme.Loginsignup}>  Accedi</Text>
-                    </Text>
-                </Pressable>
+                {/*<Text style={theme.LoginoptionsText}>Oppure entra con</Text>*/}
+                {/*<View style={theme.LoginmediaIcons}>*/}
+                {/*    <Image source={facebook} style={theme.Loginicons} />*/}
+                {/*    <Image source={tiktok} style={theme.Loginicons} />*/}
+                {/*    <Image source={linkedin} style={theme.Loginicons} />*/}
+                {/*</View>*/}
 
-            </View>
+                <Spinner
+                    visible={loading} // Visualizza lo spinner quando loading è true
+                    textContent={'Loading...'}
+                    textStyle={theme.spinnerTextStyle}
+                />
+
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
     );
 }
-
-

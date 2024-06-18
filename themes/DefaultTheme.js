@@ -22,7 +22,10 @@ const DefaultColors = {
 
     primary: '#a497ef',
     secondary: '#f2f2f2',
+    cancel: '#c9d2d9',
     inactive: '#c9d2d9',
+    buttontext: '#ffffff',
+    link: '#a497ef',
 
     errorBackground: '#3d1515',
     errorText: '#f47265',

@@ -20,7 +20,8 @@ export const AuthProvider = ({ children }) => {
         });
 
         return () => {
-            authListener?.unsubscribe();
+            //authListener?.unsubscribe();
+            authListener.subscription.unsubscribe()
         };
     }, []);
 

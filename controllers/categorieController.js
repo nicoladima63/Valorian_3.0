@@ -5,7 +5,8 @@ export const createCategoria = async (category) => {
     try {
         const { data, error } = await supabase
             .from('categorie')
-            .insert([category]);
+            .insert( category )
+            .select();
         if (error) throw error;
         return data;
     } catch (error) {

@@ -9,30 +9,30 @@ import Layout from './Layout';
 // Funzione immaginaria per ottenere i dati dei bisogni dal controller
 const fetchNeedsData = async () => {
     //esempio a zero
-    return [
-        { name: 'Sport', daysSatisfied: -6, tolerance: 10 },    // Sport non soddisfatto per nessuno dei giorni consentiti
-        { name: 'Pizza', daysSatisfied: -4, tolerance: 4 },     // Pizza non soddisfatta per nessuno dei giorni consentiti
-        { name: 'Cinema', daysSatisfied: -5, tolerance: 5 },    // Cinema non soddisfatto per nessuno dei giorni consentiti
-        { name: 'Pollo', daysSatisfied: -1, tolerance: 3 },     // Pollo non soddisfatto per nessuno dei giorni consentiti
-        { name: 'Amici', daysSatisfied: 0, tolerance: 5 },     // Amici non soddisfatti per nessuno dei giorni consentiti
-        { name: 'Sesso', daysSatisfied: 0, tolerance: 4 },     // Sesso non soddisfatto per nessuno dei giorni consentiti
-        { name: 'Leggere', daysSatisfied: 3, tolerance: 3 },   // Leggere non soddisfatto per nessuno dei giorni consentiti
-        { name: 'nuotare', daysSatisfied: 2, tolerance: 2 },   // Nuotare non soddisfatto per nessuno dei giorni consentiti
-        { name: 'Cinema', daysSatisfied: 1, tolerance: 1 }     // Cinema non soddisfatto per nessuno dei giorni consentiti
-    ];
+    //return [
+    //    { name: 'Sport', daysSatisfied: -6, tolerance: 10 },    // Sport non soddisfatto per nessuno dei giorni consentiti
+    //    { name: 'Pizza', daysSatisfied: -4, tolerance: 4 },     // Pizza non soddisfatta per nessuno dei giorni consentiti
+    //    { name: 'Cinema', daysSatisfied: -5, tolerance: 5 },    // Cinema non soddisfatto per nessuno dei giorni consentiti
+    //    { name: 'Pollo', daysSatisfied: -1, tolerance: 3 },     // Pollo non soddisfatto per nessuno dei giorni consentiti
+    //    { name: 'Amici', daysSatisfied: 0, tolerance: 5 },     // Amici non soddisfatti per nessuno dei giorni consentiti
+    //    { name: 'Sesso', daysSatisfied: 0, tolerance: 4 },     // Sesso non soddisfatto per nessuno dei giorni consentiti
+    //    { name: 'Leggere', daysSatisfied: 3, tolerance: 3 },   // Leggere non soddisfatto per nessuno dei giorni consentiti
+    //    { name: 'nuotare', daysSatisfied: 2, tolerance: 2 },   // Nuotare non soddisfatto per nessuno dei giorni consentiti
+    //    { name: 'Cinema', daysSatisfied: 1, tolerance: 1 }     // Cinema non soddisfatto per nessuno dei giorni consentiti
+    //];
 
     //esempio al 50
-    //return [
-    //    { name: 'Sport', daysSatisfied: 5, tolerance: 10 },    // Sport soddisfatto per metà dei giorni consentiti
-    //    { name: 'Pizza', daysSatisfied: 2, tolerance: 4 },     // Pizza soddisfatta per metà dei giorni consentiti
-    //    { name: 'Cinema', daysSatisfied: 2, tolerance: 5 },    // Cinema soddisfatto per metà dei giorni consentiti
-    //    { name: 'Pollo', daysSatisfied: 2, tolerance: 3 },     // Pollo soddisfatto per metà dei giorni consentiti
-    //    { name: 'Amici', daysSatisfied: 2, tolerance: 5 },     // Amici soddisfatti per metà dei giorni consentiti
-    //    { name: 'Sesso', daysSatisfied: 2, tolerance: 4 },     // Sesso soddisfatto per metà dei giorni consentiti
-    //    { name: 'Leggere', daysSatisfied: 1, tolerance: 3 },   // Leggere soddisfatto per un terzo dei giorni consentiti
-    //    { name: 'nuotare', daysSatisfied: 1, tolerance: 2 },   // Nuotare soddisfatto per metà dei giorni consentiti
-    //    { name: 'Cinema', daysSatisfied: 1, tolerance: 1 }     // Cinema soddisfatto per l'unico giorno consentito
-    //];
+    return [
+        { name: 'Sport', daysSatisfied: 5, tolerance: 10 },    // Sport soddisfatto per metà dei giorni consentiti
+        { name: 'Pizza', daysSatisfied: 2, tolerance: 4 },     // Pizza soddisfatta per metà dei giorni consentiti
+        { name: 'Cinema', daysSatisfied: 2, tolerance: 5 },    // Cinema soddisfatto per metà dei giorni consentiti
+        { name: 'Pollo', daysSatisfied: 2, tolerance: 3 },     // Pollo soddisfatto per metà dei giorni consentiti
+        { name: 'Amici', daysSatisfied: 2, tolerance: 5 },     // Amici soddisfatti per metà dei giorni consentiti
+        { name: 'Sesso', daysSatisfied: 2, tolerance: 4 },     // Sesso soddisfatto per metà dei giorni consentiti
+        { name: 'Leggere', daysSatisfied: 1, tolerance: 3 },   // Leggere soddisfatto per un terzo dei giorni consentiti
+        { name: 'nuotare', daysSatisfied: 1, tolerance: 2 },   // Nuotare soddisfatto per metà dei giorni consentiti
+        { name: 'Cinema', daysSatisfied: 1, tolerance: 1 }     // Cinema soddisfatto per l'unico giorno consentito
+    ];
 
 
     // Esempio di dati simulati 100
@@ -281,7 +281,7 @@ const LandingPage = ({ navigation }) => {
         <Layout
             navigation={navigation}
             showTopBar={true}
-            header={<Text style={theme.headerTitle}>Benvenuto in Valorian!</Text>}
+            header={<Text style={theme.headerTitle}></Text>}
             //fab={<Text>+</Text>}
             //fabAction={handleFabPressHome}
         >

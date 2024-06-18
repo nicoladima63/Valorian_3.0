@@ -29,12 +29,15 @@ const BisogniList = ({ session, setFabAction }) => {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [refreshing, setRefreshing] = useState(false);
 
+
+    //const  fetchedCategorie=async() => await CategorieController.getCategorie();
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
 
             const fetchedBisogni = await BisogniController.getBisogni();
-            const fetchedCategorie = await CategorieController.getCategorie();
+            fetchedCategorie =  await CategorieController.getCategorie();
             const fetchedBisInCat = await CategorieController.getBisInCat();
 
             setBisogni(fetchedBisogni);
@@ -48,6 +51,11 @@ const BisogniList = ({ session, setFabAction }) => {
     }, []);
 
     const transformData = (categorie, bisogni, productsInCategories) => {
+        console.log('bisogni:', bisogni);
+        if (!bisogni) {
+            return;
+        };
+
         return categorie.map(categoria => ({
             title: categoria.nome,
             color: categoria.colore,
@@ -62,7 +70,7 @@ const BisogniList = ({ session, setFabAction }) => {
     };
 
     const DATA = transformData(categorie, bisogni, bisInCat);
-
+    console.log('data:', DATA);
     const getBisogni = async () => {
         const fetchedBisogni = await BisogniController.getBisogni();
         setBisogni(fetchedBisogni);
@@ -106,12 +114,16 @@ const BisogniList = ({ session, setFabAction }) => {
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        getCategorie().then(() => {
+        fetchedCategorie().then(() => {
             setRefreshing(false);
         });
     }, []);
 
-
+    const renderEmptyComponent = () => (
+        <View style={theme.content}>
+            <Text style={theme.text}>Nessun bisogno inserito. Clicca sul pulsante + in basso a destra</Text>
+        </View>
+    );
 
     return (
         <>
@@ -133,12 +145,13 @@ const BisogniList = ({ session, setFabAction }) => {
                 renderSectionHeader={({ section: { title, color } }) => (
                     <Text style={{ fontSize: 18, backgroundColor: color, padding: 8, borderRadius: 4 }}>{title}</Text>
                 )}
-                //refreshControl={
-                //    <RefreshControl
-                //        refreshing={refreshing}
-                //        onRefresh={onRefresh}
-                //    />
-                //}
+                ListEmptyComponent={renderEmptyComponent}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
 
             />
             <AddBisogno

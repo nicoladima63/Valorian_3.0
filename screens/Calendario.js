@@ -1,24 +1,31 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as Controller from '../controllers/bisogniController';
-
-import { ScrollView, RefreshControl, View, Text, StyleSheet, Button, Alert } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
+import { ScrollView, RefreshControl, View, Text, StyleSheet, Alert } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
 import 'dayjs/locale/it';
 import dayjs from 'dayjs';
 import Layout from './Layout';
+import CustomText from '../components/CustomTextComponent';
+import { GestureHandlerRootView, PanGestureHandler, State as GestureState } from 'react-native-gesture-handler';
 
 export default function CalendarPage({ navigation }) {
     const [bisogni, setBisogni] = useState([]);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [refreshing, setRefreshing] = useState(false);
+    const { theme } = useTheme();
 
     useEffect(() => {
         loadBisogni();
     }, []);
 
+    useEffect(() => {
+        console.log("Current date changed to:", currentDate);
+    }, [currentDate]);
+
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        fetchBisogni().then(() => {
+        loadBisogni().then(() => {
             setRefreshing(false);
         });
     }, []);
@@ -33,20 +40,20 @@ export default function CalendarPage({ navigation }) {
     }
 
     const handlePrevMonth = () => {
-        setCurrentDate(dayjs(currentDate).subtract(1, 'month').toDate());
+        setCurrentDate(prevDate => dayjs(prevDate).subtract(1, 'month').toDate());
     };
 
     const handleNextMonth = () => {
-        setCurrentDate(dayjs(currentDate).add(1, 'month').toDate());
+        setCurrentDate(prevDate => dayjs(prevDate).add(1, 'month').toDate());
     };
 
-    const handleSwipe = (direction) => {
-        if (direction === 'LEFT') {
+    const onSwipeEnd = useCallback((date) => {
+        if (date > currentDate) {
             handleNextMonth();
-        } else if (direction === 'RIGHT') {
+        } else if (date < currentDate) {
             handlePrevMonth();
         }
-    };
+    }, [currentDate]);
 
     const renderHeader = (date) => {
         const monthName = date.toLocaleString('default', { month: 'long' });
@@ -78,7 +85,14 @@ export default function CalendarPage({ navigation }) {
     };
 
     return (
-        <Layout navigation={navigation} showTopBar={true}>
+        <Layout
+            navigation={navigation}
+            showTopBar={false}
+            header={<Text style={theme.headerTitle}></Text>}
+        >
+            <CustomText style={theme.headerTitle}>Calendario delle soddisfazioni</CustomText>
+            <CustomText style={theme.title}>{renderHeader(currentDate)}</CustomText>
+
             <ScrollView
                 style={styles.container}
                 refreshControl={
@@ -95,11 +109,9 @@ export default function CalendarPage({ navigation }) {
                     locale="it"
                     weekStartsOn={1}  // Imposta il primo giorno della settimana a lunedì
                     eventCellStyle={eventCellStyle} // Applica lo stile personalizzato agli eventi
-                    currentDate={currentDate}
-                    onSwipeHorizontal={handleSwipe} // Gestisce lo swipe orizzontale
-                    // theme={darkTheme}  // Opzionale: tema scuro
-                    cellHeight={100}
-                    renderHeader={renderHeader}
+                    currentDate={currentDate} // Usa lo stato aggiornato
+                    swipeEnabled={true} // Abilita lo swipe nativo del calendario
+                    onSwipeEnd={onSwipeEnd} // Gestisce l'evento di fine swipe
                 />
             </ScrollView>
         </Layout>
