@@ -28,10 +28,6 @@ const StyleComponent = () => {
                         <Text style={styles.text}>Valorian</Text>
                         <Text style={styles.text}>nicoladimartino@gmail.com</Text>
                     </View>
-                    <View style={styles.articleMiddle}>
-                        <Text style={styles.text}>Valorian</Text>
-                        <Text style={styles.text}>nicoladimartino@gmail.com</Text>
-                    </View>
                     <View style={styles.articleBottom}>
                         <Text style={styles.text}>Valorian</Text>
                         <Text style={styles.text}>nicoladimartino@gmail.com</Text>
@@ -79,12 +75,12 @@ const StyleComponent = () => {
 
 const styles = StyleSheet.create({
     safeAreaViewx: {
-        backgroundColor: '#1c1c1c  ',
+        backgroundColor: '#0d1017  ',
         marginTop: 60,
     },
     container: {
         flex: 1,
-        backgroundColor: '#1c1c1c  ',
+        backgroundColor: '#1C1C1C  ',
     },
     header: {
         flex: 0.1,
@@ -92,7 +88,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     headerTitle: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 40,
         color: '#dedede',
@@ -103,7 +99,7 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 1,
-        backgroundColor: '#1c1c1c',
+        backgroundColor: '#0d1017',
         position: 'relative',
     },
     article: {
@@ -177,7 +173,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
     },
-    text: { color: '#a9a9a9' },
+    text: { color: '#E3E3E3' },
     mt10: { marginTop: 10 },
     mb10: { marginBottom: 10 },
     ml10: { marginLeft: 10 },
