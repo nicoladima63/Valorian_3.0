@@ -151,7 +151,7 @@ const BisogniList = ({ session, setFabAction }) => {
 
             await BisogniController.updateBisogno(id, dataToUpdate); // Aggiorna il bisogno usando l'id e l'oggetto filtrato
             const dettaglio = {
-                bisognoid:bisogno.id,
+                bisognoid: bisogno.id,
                 soddisfattoil: new Date(),
             }
             await DettagliController.createDettaglio(dettaglio); // crea il dettagli usando l'id e l'oggetto filtrato
@@ -205,18 +205,17 @@ const BisogniList = ({ session, setFabAction }) => {
                     sections={DATA}
                     keyExtractor={(item, index) => item.uniqueKey}
                     renderItem={({ item }) => (
-                        <Pressable onPress={() => updateBisogno(item)} >
-                            <View style={styles.contentArticle}>
+                        <View style={styles.contentArticle}>
+                            <Pressable onPress={() => updateBisogno(item)}>
                                 <View style={styles.checkTextContainer}>
                                     <Icon name="check" size={18} color="#aaaaaa" style={styles.checkIcon} />
                                     <Text style={styles.articleText}>{item.nome}</Text>
                                 </View>
-
-                                <Pressable onPress={() => selectBisogno(item)} >
-                                    <Icon name="angle-right" size={24} color="#E3E3E3" style={styles.angleRightIcon} />
-                                </Pressable>
-                            </View>
-                        </Pressable>
+                            </Pressable>
+                            <Pressable onPress={() => selectBisogno(item)}>
+                                <Icon name="angle-right" size={24} color="#E3E3E3" style={styles.angleRightIcon} />
+                            </Pressable>
+                        </View>
                     )}
                     renderSectionHeader={({ section: { title, color } }) => (
                         <Text style={[styles.articleTitle, { color: color }]}>{title}</Text>
@@ -237,7 +236,7 @@ const BisogniList = ({ session, setFabAction }) => {
             <View style={styles.articleBottom}>
                 <View style={styles.checkTextContainer}>
                     <Icon name="info-circle" size={18} color="#2ECC71" style={styles.checkIcon} />
-                    <Text style={styles.articleText}>Tocca il box per soddisfare. Tocca la freccia per modificare</Text>
+                    <Text style={styles.articleText}>Tocca il nome per soddisfare. Tocca la freccia per modificare</Text>
                 </View>
 
             </View>
@@ -358,7 +357,7 @@ const styles = StyleSheet.create({
         marginRight: 20, // Spazio tra il testo e l'icona angle-right
     },
     angleRightIcon: {
-        // Nessun margine sinistro necessario per l'icona angle-right
+        width: 44,
     },
 
 
