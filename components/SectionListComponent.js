@@ -134,7 +134,7 @@ const BisogniList = ({ session, setFabAction }) => {
         setModalVisibleEdit(false);
         getBisogni();
     };
-    select
+
 
     const updateBisogno = async (bisogno) => {
         setLoading(true);
