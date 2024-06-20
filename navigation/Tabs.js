@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 //import LandingScreen from '../screens/LandingScreen';
 import StatusPage from '../screens/StatusPage';
-//import SettingsScreen from '../screens/SettingsScreen';
+import WelcomePageTest from '../screens/WelcomePage-test';
 import SettingsPage from '../screens/SettingsPage';
 import Bisogni from '../screens/BisogniList';
 import Calendar from '../screens/Calendario';
@@ -81,6 +81,16 @@ export const Tabs = () => {
                 component={SettingsScreen}
                 options={{
                     tabBarLabel: 'Impostazioni',
+                    headerShown: false,
+                    tabBarIcon: ({ color, size }) => <FontAwesome name="cog" size={size} color={color} />,
+                    tabBarLabelStyle: { marginBottom: 8 }
+                }}
+            />
+            <Tab.Screen
+                name="WelcomePageTest"
+                component={WelcomePageTest}
+                options={{
+                    tabBarLabel: 'WelcomePageTest',
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => <FontAwesome name="cog" size={size} color={color} />,
                     tabBarLabelStyle: { marginBottom: 8 }

@@ -137,13 +137,14 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
 
         try {
             const { data, error } = await BisController.createBisogno(insert);
-            console.log('data di createBisogno', data);
+            console.log('risposta inserimento', data);
             if (error) {
                 console.error('Error adding need:', error);
                 alert('Errore nell\'aggiungere il bisogno.');
                 setLoading(false);
                 return;
             }
+
 
             const updateResult = await CatController.aggiornaAssociazioni(data.id, selectedCategories);
             if (updateResult.error) {

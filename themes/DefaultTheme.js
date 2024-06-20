@@ -20,7 +20,7 @@ const DefaultColors = {
     footer: '#ffffff',
     footerText: '#8e929b',
 
-    primary: '#a497ef',
+    primary: '#D8BFD8',
     secondary: '#f2f2f2',
     cancel: '#c9d2d9',
     inactive: '#c9d2d9',

@@ -21,7 +21,7 @@ const DarkColors = {
     footer: '#161b21', // Dark Slate Blue
     footerText: '#d1d1d1', // Light Gray (testo)
 
-    primary: '#a497ef', // Light Purple
+    primary: '#D8BFD8', // Light Purple
     secondary: '#f2f2f2', // White Smoke
     cancel: '#c9d2d9',
     inactive: '#c9d2d9', // Light Slate Gray
