@@ -134,7 +134,7 @@ const BisogniList = ({ session, setFabAction }) => {
         setModalVisibleEdit(false);
         getBisogni();
     };
-
+    select
 
     const updateBisogno = async (bisogno) => {
         setLoading(true);
@@ -146,15 +146,16 @@ const BisogniList = ({ session, setFabAction }) => {
             const { id, nome, soddisfattoil, colore } = updatedBisogno;
             const dataToUpdate = { nome, soddisfattoil, colore };
 
-            // Log dei dati che vengono inviati al controller
-            console.log('Dati inviati per l\'aggiornamento:', JSON.stringify(dataToUpdate));
 
             await BisogniController.updateBisogno(id, dataToUpdate); // Aggiorna il bisogno usando l'id e l'oggetto filtrato
+
+            // Crea il dettaglio
             const dettaglio = {
                 bisognoid: bisogno.id,
                 soddisfattoil: new Date(),
-            }
-            await DettagliController.createDettaglio(dettaglio); // crea il dettagli usando l'id e l'oggetto filtrato
+            };
+            await DettagliController.createDettaglio(dettaglio); // crea il dettaglio
+
             setSnackbarMessage(`Bisogno "${nome}" aggiornato`);
             setSnackbarVisible(true);
 

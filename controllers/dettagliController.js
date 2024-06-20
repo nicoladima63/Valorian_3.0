@@ -15,8 +15,7 @@ export const createDettaglio = async (dettaglio) => {
         const user = await getCurrentUser();
         const { data, error } = await supabase
             .from('dettagli')
-            .insert([{ ...dettaglio, uuid: user.id }])
-            select();
+            .insert([{ ...dettaglio, uuid: user.id }]);
         if (error) throw error;
         return data;
     } catch (error) {
