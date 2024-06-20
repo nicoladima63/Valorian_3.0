@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { RefreshControl, View, Text, SectionList, Pressable, StyleSheet } from 'react-native';
 import * as BisogniController from '../controllers/bisogniController';
 import * as CategorieController from '../controllers/categorieController';
+import * as DettagliController from '../controllers/dettagliController';
 import { useTheme } from '../context/ThemeContext';
 import AddBisogno from '../components/AddBisogno';
 import EditBisogno from '../components/EditBisogno';
@@ -149,7 +150,11 @@ const BisogniList = ({ session, setFabAction }) => {
             console.log('Dati inviati per l\'aggiornamento:', JSON.stringify(dataToUpdate));
 
             await BisogniController.updateBisogno(id, dataToUpdate); // Aggiorna il bisogno usando l'id e l'oggetto filtrato
-
+            const dettaglio = {
+                bisognoid:bisogno.id,
+                soddisfattoil: new Date(),
+            }
+            await DettagliController.createDettaglio(dettaglio); // crea il dettagli usando l'id e l'oggetto filtrato
             setSnackbarMessage(`Bisogno "${nome}" aggiornato`);
             setSnackbarVisible(true);
 
