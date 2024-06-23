@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import WelcomePage from './screens/WelcomePage';
 import StatusPage from './screens/StatusPage';
 import HomeScreen from './screens/HomeScreen';
+import HelpHomeScreen from './screens/HelpHomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
@@ -15,10 +16,8 @@ import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
 import { Tabs } from './navigation/Tabs';
 
-
 import { ThemeProvider } from './context/ThemeContext';
-import DarkTheme from './themes/DarkTheme';
-import DefaultTheme from './themes/DefaultTheme';
+import { DefaultTheme, DarkTheme } from './themes/theme';
 
 import { AppContext } from './context/AppContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -53,17 +52,17 @@ export default function App() {
         isDarkTheme,
         setIsDarkTheme,
     };
-
+    const currentTheme = isDarkTheme ? DarkTheme: DefaultTheme;
 
     return (
         <AppContext.Provider value={appContext}>
             <ThemeProvider>
                 <StatusBar
                     barStyle={isDarkTheme ? 'light-content' : 'dark-content'}
-                    backgroundColor={isDarkTheme ? DarkTheme.colors.statusBarBackground : DefaultTheme.colors.statusBarBackground}
+                    backgroundColor={currentTheme.colors.statusBarBackground}
                 />
                 <AuthProvider>
-                    <NavigationContainer theme={isDarkTheme ? DarkTheme : DefaultTheme}>
+                    <NavigationContainer style={isDarkTheme ? DarkTheme : DefaultTheme}>
                         <Stack.Navigator initialRouteName='AuthLoading' screenOptions={{ headerShown: false }}>
                             <Stack.Screen
                                 name='AuthLoading'
@@ -85,7 +84,6 @@ export default function App() {
                                 component={HomeScreen}
                                 options={{ headerShown: false, title: 'Home' }}
                             />
-
                             <Stack.Screen
                                 name='Settings'
                                 component={SettingsScreen}
@@ -110,6 +108,11 @@ export default function App() {
                                 name='Categorie'
                                 component={CategorieScreen}
                                 options={{ headerShown: true, title: 'Categorie' }}
+                            />
+                            <Stack.Screen
+                                name='HelpHome'
+                                component={HelpHomeScreen}
+                                options={{ headerShown: true, title: 'Aiuto' }}
                             />
                             <Stack.Screen
                                 name="Tabs"

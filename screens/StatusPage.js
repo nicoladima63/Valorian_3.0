@@ -23,10 +23,10 @@ const fetchNeedsData = async () => {
 
     //esempio al 50
     return [
-        { name: 'Sport', daysSatisfied: 5, tolerance: 10 },    // Sport soddisfatto per metà dei giorni consentiti
-        { name: 'Pizza', daysSatisfied: 2, tolerance: 4 },     // Pizza soddisfatta per metà dei giorni consentiti
-        { name: 'Cinema', daysSatisfied: 2, tolerance: 5 },    // Cinema soddisfatto per metà dei giorni consentiti
-        { name: 'Pollo', daysSatisfied: 2, tolerance: 3 },     // Pollo soddisfatto per metà dei giorni consentiti
+        { name: 'Sport', daysSatisfied: -3, tolerance: 10 },    // Sport non soddisfatto per nessuno dei giorni consentiti
+        { name: 'Pizza', daysSatisfied: -4, tolerance: 4 },     // Pizza non soddisfatta per nessuno dei giorni consentiti
+        { name: 'Cinema', daysSatisfied: -2, tolerance: 5 },    // Cinema non soddisfatto per nessuno dei giorni consentiti
+        { name: 'Pollo', daysSatisfied: -1, tolerance: 3 },     // Pollo non soddisfatto per nessuno dei giorni consentiti
         { name: 'Amici', daysSatisfied: 2, tolerance: 5 },     // Amici soddisfatti per metà dei giorni consentiti
         { name: 'Sesso', daysSatisfied: 2, tolerance: 4 },     // Sesso soddisfatto per metà dei giorni consentiti
         { name: 'Leggere', daysSatisfied: 1, tolerance: 3 },   // Leggere soddisfatto per un terzo dei giorni consentiti
@@ -282,8 +282,8 @@ const LandingPage = ({ navigation }) => {
             navigation={navigation}
             showTopBar={true}
             header={<Text style={theme.headerTitle}></Text>}
-            //fab={<Text>+</Text>}
-            //fabAction={handleFabPressHome}
+        //fab={<Text>+</Text>}
+        //fabAction={handleFabPressHome}
         >
             <View style={theme.content}>
                 <Text style={theme.contentTitle}>Ecco come stai:</Text>

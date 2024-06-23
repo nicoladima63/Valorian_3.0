@@ -86,9 +86,7 @@ const BisogniList = ({ session, setFabAction }) => {
         }
     };
 
-
     const transformData = (categorie, bisogni, bisInCat) => {
-
         if (!bisogni || bisogni.length === 0) {
             return [];
         }
@@ -135,7 +133,6 @@ const BisogniList = ({ session, setFabAction }) => {
         getBisogni();
     };
 
-
     const updateBisogno = async (bisogno) => {
         setLoading(true);
         try {
@@ -145,7 +142,6 @@ const BisogniList = ({ session, setFabAction }) => {
             // Filtra i campi non necessari
             const { id, nome, soddisfattoil, colore } = updatedBisogno;
             const dataToUpdate = { nome, soddisfattoil, colore };
-
 
             await BisogniController.updateBisogno(id, dataToUpdate); // Aggiorna il bisogno usando l'id e l'oggetto filtrato
 
@@ -185,41 +181,51 @@ const BisogniList = ({ session, setFabAction }) => {
 
     const renderEmptyComponent = () => (
         <View>
-            <View style={styles.articleTop}>
-                <Text style={styles.articleTitle}>Nessun bisogno inserito:</Text>
+            <View style={theme.articleTop}>
+                <Text style={theme.articleTitle}>Nessun bisogno inserito:</Text>
             </View>
-            <View style={styles.articleBottom}>
-                <View style={styles.checkTextContainer}>
-                    <Icon name="info-circle" size={22} color="#2ECC71" style={styles.checkIcon} />
-                    <Text style={styles.articleText}>Clicca sul pulsante</Text>
-                    <Icon name="plus-circle" size={24} color="#D8BFD8" style={[styles.ml20, styles.checkIcon]} />
-                    <Text style={styles.articleText}>in basso a destra</Text>
+            <View style={theme.articleBottom}>
+                <View style={theme.checkTextContainer}>
+                    <Icon name="info-circle" size={22} color="#2ECC71" style={theme.checkIcon} />
+                    <Text style={theme.articleText}>Clicca sul pulsante</Text>
+                    <Icon name="plus-circle" size={24} color="#D8BFD8" style={[theme.ml20, theme.checkIcon]} />
+                    <Text style={theme.articleText}>in basso a destra</Text>
                 </View>
             </View>
         </View>
     );
 
+    const isToday = (someDate) => {
+        const today = new Date();
+        return someDate.getDate() === today.getDate() &&
+            someDate.getMonth() === today.getMonth() &&
+            someDate.getFullYear() === today.getFullYear();
+    };
+
     return (
-        <View style={styles.body}>
-            <View style={styles.articleTop}>
+        <View style={theme.body}>
+            <View style={theme.articleTop}>
                 <SectionList
                     sections={DATA}
                     keyExtractor={(item, index) => item.uniqueKey}
                     renderItem={({ item }) => (
-                        <View style={styles.contentArticle}>
-                            <Pressable onPress={() => updateBisogno(item)}>
-                                <View style={styles.checkTextContainer}>
-                                    <Icon name="check" size={18} color="#aaaaaa" style={styles.checkIcon} />
-                                    <Text style={styles.articleText}>{item.nome}</Text>
+                        <View style={theme.contentArticle2}>
+                            <View style={theme.leftContainer}>
+                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? "#24bb21" : "#aaaaaa"} />
+                            </View>
+
+                            <Pressable onPress={() => updateBisogno(item)} style={theme.centerContainer}>
+                                <Text style={theme.articleText}>{item.nome}</Text>
+                            </Pressable>
+
+                            <Pressable onPress={() => selectBisogno(item)} style={theme.rightContainer}>
+                                <View style={theme.iconContainer}>
+                                    <Icon name="angle-right" size={24} color="#c3c3c3" />
                                 </View>
                             </Pressable>
-                            <Pressable onPress={() => selectBisogno(item)}>
-                                <Icon name="angle-right" size={24} color="#E3E3E3" style={styles.angleRightIcon} />
-                            </Pressable>
-                        </View>
-                    )}
+                        </View>)}
                     renderSectionHeader={({ section: { title, color } }) => (
-                        <Text style={[styles.articleTitle, { color: color }]}>{title}</Text>
+                        <Text style={[theme.articleTitle, { color: color }]}>{title}</Text>
                     )}
                     ListEmptyComponent={renderEmptyComponent}
                     refreshControl={
@@ -232,12 +238,10 @@ const BisogniList = ({ session, setFabAction }) => {
 
             </View>
 
-
-
-            <View style={styles.articleBottom}>
-                <View style={styles.checkTextContainer}>
-                    <Icon name="info-circle" size={18} color="#2ECC71" style={styles.checkIcon} />
-                    <Text style={styles.articleText}>Tocca il nome per soddisfare. Tocca la freccia per modificare</Text>
+            <View style={theme.articleBottom}>
+                <View style={theme.checkTextContainer}>
+                    <Icon name="info-circle" size={20} color="#24bb21" style={theme.leftContainer} />
+                    <Text style={theme.articleText}>Tocca il nome per soddisfare. Tocca la freccia per modificare</Text>
                 </View>
 
             </View>
@@ -260,7 +264,7 @@ const BisogniList = ({ session, setFabAction }) => {
             <Spinner
                 visible={loading}
                 textContent={'Caricamento dati in corso...'}
-                textStyle={styles.spinnerTextStyle}
+                textStyle={theme.spinnerTextStyle}
             />
             <Snackbar
                 isVisible={snackbarVisible}
@@ -274,258 +278,5 @@ const BisogniList = ({ session, setFabAction }) => {
         </View>
     );
 }
-const styles = StyleSheet.create({
-    safeAreaView: {
-        flex: 1,
-        backgroundColor: '#0d1017',
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#1C1C1C  ',
-    },
-    header: {
-        flex: 0.1,
-        backgroundColor: '#161b21',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-    },
-    logo: {
-        width: 28,
-        height: 28,
-        marginRight: 20,
-    },
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#dedede',
-    },
-    content: {
-        flex: 1.5,
-        flexDirection: 'column',
-    },
-    contentTitle: {
-        fontSize: 16,
-        marginLeft: 12,
-        color: '#dedede',
-        marginBottom: 8,
-        marginTop: 20,
-    },
-
-
-
-    contentArticle: {
-        backgroundColor: '#21262c',
-        margin: 0,
-        padding: 12,
-        borderRadius: 4,
-        borderWidth: 1,
-        borderColor: '#3F424A',
-        minHeight: 60,
-        marginTop: 4,
-        flexDirection: 'row', // Dispone gli elementi in fila
-        alignItems: 'center', // Centra gli elementi verticalmente
-        justifyContent: 'space-between', // Spazio tra gli elementi
-    },
-    contentArticleSquareContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-    },
-    contentArticleSquare: {
-        backgroundColor: '#21262c',
-        marginVertical: 4,
-        padding: 12,
-        borderRadius: 4,
-        borderWidth: 1,
-        borderColor: '#3F424A',
-        height: 80,
-        width: 80,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin: 4
-    },
-    checkTextContainer: {
-        flexDirection: 'row',
-    },
-    checkIcon: {
-        marginRight: 20, // Spazio tra l'icona check e il testo
-    },
-    articleText: {
-        color: '#fff',
-        marginRight: 20, // Spazio tra il testo e l'icona angle-right
-    },
-    angleRightIcon: {
-        width: 44,
-    },
-
-
-
-
-
-    contentPadding: {
-        height: 100, // Aggiungi uno spazio extra in fondo al contenuto
-    },
-    body: {
-        flex: 1,
-        backgroundColor: '#0d1017',
-        position: 'relative',
-    },
-    article: {
-        backgroundColor: '#161b21',
-        marginHorizontal: 12,
-        padding: 14,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: '#3F424A',
-    },
-    articleTitle: {
-        fontSize: 16,
-        color: '#dedede',
-        marginBottom: 0,
-        marginTop: 14,
-    },
-    articleText: {
-        color: '#E3E3E3',
-    },
-    articleTop: {
-        backgroundColor: '#161b21',
-        marginHorizontal: 12,
-        padding: 14,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-        borderWidth: 1,
-        borderColor: '#3F424A',
-    },
-    articleMiddle: {
-        backgroundColor: '#161b21',
-        marginHorizontal: 12,
-        padding: 14,
-        borderRadius: 0,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderColor: '#3F424A',
-    },
-    articleBottom: {
-        backgroundColor: '#161b21',
-        marginHorizontal: 12,
-        padding: 14,
-        borderBottomLeftRadius: 8,
-        borderBottomRightRadius: 8,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderColor: '#3F424A',
-    },
-    bodyFooter: {
-        backgroundColor: '#21262c',
-        margin: 0,
-        padding: 10,
-        borderRadius: 4,
-        //borderWidth: 1,
-        borderColor: 'grey',
-        position: 'absolute', // Mantieni posizione assoluta
-        bottom: 0, // Mantieni in fondo al contenitore
-        left: 0,  // Allinea a sinistra
-        right: 0, // Allinea a destra
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-    },
-    footer: {
-        flex: 0.1,
-        backgroundColor: '#161b21',
-        justifyContent: 'center',
-
-    },
-    iconContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        padding: 12,
-    },
-    mt10: { marginTop: 10 },
-    mb10: { marginBottom: 10 },
-    ml10: { marginLeft: 10 },
-    mr10: { marginRight: 10 },
-    mt20: { marginTop: 20 },
-    mb20: { marginBottom: 20 },
-    ml20: { marginLeft: 20 },
-    mr20: { marginRight: 20 },
-    verticallySpaced: {
-        paddingTop: 4,
-        paddingBottom: 4,
-        alignSelf: 'stretch',
-    },
-    fwb: { fontWeight: 'bold' },
-    fs20: { fontSize: 20 },
-    link: { color: '#D8BFD8' },
-    primary: { backgroundColor: '#2124bb' },
-    undo: { backgroundColor: '#aaaaaa50' },
-    danger: { backgroundColor: '#bb211450' },
-    warning: { backgroundColor: '#e2f04e' },
-    success: { backgroundColor: '#24bb2150' },
-    info: { backgroundColor: '#D8BFD8' },
-    //buttonText: {
-    //    //paddingTop: 10,
-    //    paddingHorizontal: 35,
-    //    paddingVertical: 6,
-    //    fontSize: 14,
-    //    color:'#fff',
-    //    fontWeight: 'bold',
-    //    letterSpacing: 0.8,
-    //},
-
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: '#3F424A',
-        padding: 10,
-    },
-
-    buttonOK: {
-        backgroundColor: '#2ECC71',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 5,
-        marginVertical: 10,
-        width: 100,
-    },
-    buttonCancel: {
-        backgroundColor: '#AAAAAA',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 5,
-        marginVertical: 10,
-        width: 100,
-    },
-    buttonSave: {
-        backgroundColor: '#3498DB',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 5,
-        marginVertical: 10,
-        width: 100,
-    },
-    buttonDelete: {
-        backgroundColor: '#E74C3C',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 5,
-        marginVertical: 10,
-        width: 100,
-    },
-    buttonText: {
-        color: '#FFFFFF',
-        textAlign: 'center',
-        fontSize: 14,
-    },
-});
-
 
 export default BisogniList;

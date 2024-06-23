@@ -44,22 +44,6 @@ const StyleComponent = () => {
                                         </View>
                                         <Icon name="angle-right" size={24} color="#E3E3E3" style={styles.angleRightIcon} />
                                     </View>
-                                    <View style={styles.contentArticle}>
-                                        <View style={styles.checkTextContainer}>
-                                            <Icon name="check" size={18} color="#aaaaaa" style={styles.checkIcon} />
-                                            <Text style={styles.articleText}>contentArticle articleText</Text>
-                                        </View>
-                                        <Icon name="angle-right" size={24} color="#E3E3E3" style={styles.angleRightIcon} />
-                                    </View>
-
-                                    <View style={styles.contentArticle}>
-                                        <View style={styles.checkTextContainer}>
-                                            <Icon name="check" size={18} color="#2ECC71" style={styles.checkIcon} />
-                                            <Text style={styles.articleText}>contentArticle articleText</Text>
-                                        </View>
-                                        <Icon name="angle-right" size={24} color="#E3E3E3" style={styles.angleRightIcon} />
-                                    </View>
-
                                 </View>
 
                                 <View style={styles.articleMiddle}>

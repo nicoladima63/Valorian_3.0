@@ -315,7 +315,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                                 onSubmitEditing={() => importanzaRef.current.focus()}
                                 blurOnSubmit={false}
                             />
-                            <Text style={{ textAlign: 'center', marginBottom: 8 }}>Definisci quanto sia importante per te (da 1 a 10)</Text>
+                            <Text style={{ textAlign: 'center', marginBottom: 8 }}>Quanto è importante per te in una scala da 1 a 10?</Text>
                             <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{importanza}</Text>
                             <View >
                                 <Slider
@@ -331,7 +331,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                                 />
 
                             </View>
-                            <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 8 }}>Ogni quanto hai bisogno di soddifarlo (in giorni)</Text>
+                            <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 8 }}>Ogni quanto riesci a stare senza aoddisfarlo? (in giorni)</Text>
                             <TextInput
                                 ref={tolleranzaRef}
                                 style={[styles.modalInput, errors.tolleranza && styles.inputError]}
@@ -369,10 +369,10 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
 
                         </View>
                         <View style={theme.buttonContainer2}>
-                            <Pressable style={theme.buttonCancel} onPress={handleClose}>
+                            <Pressable style={theme.buttonUndo} onPress={handleClose}>
                                 <Text style={theme.buttonText}>Annulla</Text>
                             </Pressable>
-                            <Pressable style={theme.buttonSubmit} onPress={handleSubmit}>
+                            <Pressable style={theme.buttonOK} onPress={handleSubmit}>
                                 <Text style={theme.buttonText}>Aggiungi</Text>
                             </Pressable>
                         </View>

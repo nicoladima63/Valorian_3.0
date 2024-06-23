@@ -1,81 +1,276 @@
 export const BaseTheme = (colors) => ({
-    container: {
+    safeAreaView: {
         flex: 1,
-        paddingVertical: 0,
-        paddingHorizontal: 16,
         backgroundColor: colors.background,
     },
-    content: {
+
+    //container
+    container: {
         flex: 1,
-        //flexDirection: 'row',
-        //alignItems: 'center',
-        //justifyContent: 'space-between'
-        padding: 8,
-    },
-    contentTitle: {
-        fontSize: 18,
-        color: colors.contentTitle,
-        marginLeft: 10,
-    },
-    contentText: {
-        fontSize: 14,
-        color: colors.contentText
+        backgroundColor: colors.background,
     },
     containerBorder: {
         borderWidth: 1,
         borderColor: colors.border,
         borderRadius: 5,
-        marginTop: 10
+        marginTop: 10,
+    },
+
+    logoImage: {
+        width: 100,
+        height: 100,
+    },
+    logoImageContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+    },
+
+    //header
+    header: {
+        flex: 0.1,
+        backgroundColor: colors.background,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: colors.onBackground,
+    },
+    logo: {
+        width: 28,
+        height: 28,
+        marginRight: 20,
+    },
+
+    //content
+    content: {
+        flex: 1.5,
+        flexDirection: 'column',
+        backgroundColor: colors.background,
+    },
+    contentTitle: {
+        fontSize: 16,
+        marginLeft: 12,
+        color: colors.onBackground,
+        marginBottom: 8,
+        marginTop: 20,
+    },
+    contentArticle: {
+        backgroundColor: colors.background,
+        //margin: 0,
+        //padding: 8,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: colors.border,
+        minHeight: 40,
+        //marginTop: 4,
+        flexDirection: 'row', // Dispone gli elementi in fila
+        alignItems: 'center', // Centra gli elementi verticalmente
+        justifyContent: 'space-between', // Spazio tra gli elementi
+    },
+
+
+    contentArticle2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        //padding: 8,
+        backgroundColor: '#fff',
+        marginVertical: 2,
+        borderRadius: 8,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: colors.border,
+
+    },
+    leftContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    centerContainer: {
+        flex: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    rightContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderLeftWidth: 1,
+        borderColor: colors.border,
+
+    },
+    iconContainer: {
+        width: 40, // Imposta la dimensione del quadrato
+        height: 40, // Imposta la dimensione del quadrato
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+
+
+
+
+    contentArticleSquareContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+    },
+    contentArticleSquare: {
+        backgroundColor: colors.contentBox,
+        marginVertical: 4,
+        padding: 12,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: colors.border,
+        height: 80,
+        width: 80,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        margin: 4
+    },
+    checkTextContainer: {
+        flexDirection: 'row',
+    },
+    checkIcon: {
+        marginRight: 20, // Spazio tra l'icona check e il testo
+    },
+    articleText: {
+        color: colors.onPrimary,
+        marginRight: 20, // Spazio tra il testo e l'icona angle-right
+    },
+    angleRightIcon: {
+        width: 44,
+    },
+    contentPadding: {
+        height: 100, // Aggiungi uno spazio extra in fondo al contenuto
+    },
+    contentParagraph: {
+        marginTop: 8,
+        color: colors.onBackground,
+        flexDirection: 'column',
+        fonstSize: 14,  
+    },
+
+    //body
+    body: {
+        flex: 1,
+        backgroundColor: colors.background,
+        position: 'relative',
+    },
+    article: {
+        backgroundColor: colors.background,
+        marginHorizontal: 12,
+        padding: 14,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: colors.border,
+    },
+    articleTitle: {
+        fontSize: 16,
+        color: colors.background,
+        marginBottom: 10
+    },
+    articleText: {
+        color: colors.onBackground,
+    },
+    articleTop: {
+        backgroundColor: colors.background,
+        marginHorizontal: 12,
+        padding: 14,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+        borderWidth: 1,
+        borderColor: colors.border,
+    },
+    articleMiddle: {
+        backgroundColor: colors.background,
+        marginHorizontal: 12,
+        padding: 14,
+        borderRadius: 0,
+        borderWidth: 1,
+        borderTopWidth: 0,
+        borderColor: colors.border,
+    },
+    articleBottom: {
+        backgroundColor: colors.background,
+        marginHorizontal: 12,
+        padding: 14,
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        borderWidth: 1,
+        borderTopWidth: 0,
+        borderColor: colors.border,
+    },
+    bodyFooter: {
+        backgroundColor: colors.background,
+        margin: 0,
+        padding: 10,
+        borderRadius: 4,
+        //borderWidth: 1,
+        borderColor: colors.border,
+        position: 'absolute', // Mantieni posizione assoluta
+        bottom: 0, // Mantieni in fondo al contenitore
+        left: 0,  // Allinea a sinistra
+        right: 0, // Allinea a destra
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+    },
+    footer: {
+        flex: 0.1,
+        backgroundColor: colors.background,
+        justifyContent: 'center',
+
+    },
+    iconContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        padding: 12,
     },
     image: {
         height: 160,
-        width: 170
-    },
-    headerTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        //marginLeft: 10,
-        color: colors.headerTitle
+        width: 170,
     },
 
-    title: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: colors.text,
-        marginLeft: 15,
-
-    },
-    paragrafo: {
-        fontSize: 16,
-        //fontWeight: "bold",
-        //textTransform: "uppercase",
-        //textAlign: "center",
-        color: colors.text
-    },
-    paragraph: {
-        fontSize: 14,
-        textAlign: 'center',
-        marginBottom: 10,
-        lineHeight: 20,
-    },
-
+    //text vari e tipografici
     errorText: {
-        color: 'red',
+        color: colors.onError,
         fontSize: 12,
         marginTop: 5,
         marginLeft: 10,
-
     },
-    linkText: {
+    link: {
         color: colors.link,
     },
-    mt20: {
-        marginTop: 20
+    mt10: { marginTop: 10 },
+    mb10: { marginBottom: 10 },
+    ml10: { marginLeft: 10 },
+    mr10: { marginRight: 10 },
+    mt20: { marginTop: 20 },
+    mb20: { marginBottom: 20 },
+    ml20: { marginLeft: 20 },
+    mr20: { marginRight: 20 },
+    verticallySpaced: {
+        paddingTop: 4,
+        paddingBottom: 4,
+        alignSelf: 'stretch',
     },
-    mb20: {
-        marginBottom: 20
-    },
-    //FAB
+    fwb: { fontWeight: 'bold' },
+    fs20: { fontSize: 20 },
+
+    // FAB
     fab: {
         position: 'absolute',
         bottom: 20,
@@ -89,36 +284,40 @@ export const BaseTheme = (colors) => ({
         elevation: 5,
     },
     fabText: {
-        color: 'white',
+        color: colors.onPrimary,
         fontSize: 24,
     },
-    //BUTTON
+
+    // BUTTON
     buttonContainer1: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 40,
-        position: 'absolute',
-        bottom: 10,
-        width:'50%'
     },
-
     buttonContainer2: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        //alignItems: 'center',
         marginBottom: 40,
         position: 'absolute',
         bottom: 10,
-        width: '50%'
-
+        //width: '50%',
+    },
+    button: {
+        flex: 1,
+        height: 60,
+        backgroundColor: colors.primary,
+        padding: 10,
+        width: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
     },
     buttonCancel: {
         flex: 1,
         height: 45,
-        backgroundColor: colors.cancel,
+        backgroundColor: colors.undo,
         padding: 10,
         marginHorizontal: 5,
         justifyContent: 'center',
@@ -135,19 +334,46 @@ export const BaseTheme = (colors) => ({
         alignItems: 'center',
         borderRadius: 5,
     },
+    buttonOK: {
+        backgroundColor: colors.primary,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 5,
+        marginVertical: 10,
+        width: 100,
+    },
+    buttonSave: {
+        backgroundColor: colors.secondary,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 5,
+        marginVertical: 10,
+        width: 100,
+    },
+    buttonDelete: {
+        backgroundColor: colors.error,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 5,
+        marginVertical: 10,
+        width: 100,
+    },
+    buttonUndo: {
+        backgroundColor: colors.undo,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 5,
+        marginVertical: 10,
+        width: 100,
+    },
     buttonText: {
-        backgroundColor: colors.buttonText,
-        fontSize: 16,
+        color: colors.onPrimary,
+        textAlign: 'center',
+        fontSize: 14,
+        paddingVertical: 10,
     },
-    // stayElevated
-    stayElevated: {
-        margin: 4,
-        backgroundColor: 'white',
-        borderRadius: 4,
-        //flex: 1,
-        padding: 8,
-    },
-    //MODAL
+
+    // MODAL
     modalOverlay: {
         flex: 1,
         justifyContent: 'center',
@@ -155,7 +381,7 @@ export const BaseTheme = (colors) => ({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         padding: 20,
         borderRadius: 10,
         alignItems: 'center',
@@ -163,14 +389,15 @@ export const BaseTheme = (colors) => ({
     modalText: {
         fontSize: 16,
         marginBottom: 20,
+        color: colors.onBackground,
     },
     closeButton: {
         padding: 10,
-        backgroundColor: '#2196F3',
+        backgroundColor: colors.primary,
         borderRadius: 5,
     },
     closeButtonText: {
-        color: 'white',
+        color: colors.onPrimary,
         fontWeight: 'bold',
     },
     infoIcon: {
@@ -179,19 +406,12 @@ export const BaseTheme = (colors) => ({
     checkIcon: {
         marginLeft: 10,
     },
-
-    //TOPBAR
-    topBarContainer: {
-        //    padding: 10,
-        //    flexDirection: 'row',
-        //    alignItems: 'center',
-        //    justifyContent: 'space-between',
-        //    marginTop: 20,
-        //    backgroundColor:colors.background
-    },
+    // TOPBAR
+    topBarContainer: {},
     topBarTitle: {
         fontSize: 20,
         fontWeight: 'bold',
+        color: colors.onBackground,
     },
     topBarIcon: {
         marginLeft: 20,
@@ -204,24 +424,38 @@ export const BaseTheme = (colors) => ({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    input: {
+
+    //input
+    input1: {
         borderWidth: 1,
-        //borderColor: colors.grey5,
+        borderColor: colors.border,
         borderRadius: 5,
         padding: 10,
         flex: 1,
         marginRight: 10,
+        color: colors.onBackground,
     },
-    //login
+    input2: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: colors.border,
+        padding: 10,
+        color: colors.onBackground,
+
+    },
+
+    // LOGIN
     Logincontainer: {
         flex: 1,
         alignItems: "center",
         paddingTop: 20,
-        backgroundColor: colors.background
+        backgroundColor: colors.background,
     },
     Loginimage: {
         height: 100,
-        width: 100
+        width: 100,
     },
     Logintitle: {
         fontSize: 22,
@@ -229,7 +463,7 @@ export const BaseTheme = (colors) => ({
         textTransform: "uppercase",
         textAlign: "center",
         paddingVertical: 20,
-        color: colors.primary
+        color: colors.primary,
     },
     LoginSubtitle: {
         fontSize: 20,
@@ -237,24 +471,22 @@ export const BaseTheme = (colors) => ({
         textTransform: "uppercase",
         textAlign: "center",
         paddingVertical: 20,
-        color: colors.secondary
+        color: colors.secondary,
     },
     LogininputView: {
-        //gap: 15,
         width: "100%",
         paddingHorizontal: 40,
         marginBottom: 5,
         marginTop: 10,
-        flex: 1
-
+        flex: 1,
     },
     Logininput: {
         height: 50,
         paddingHorizontal: 20,
-        borderColor: colors.grey,
+        borderColor: colors.border,
         borderWidth: 1,
         borderRadius: 7,
-        color: colors.grey
+        color: colors.onBackground,
     },
     LoginrememberView: {
         width: "100%",
@@ -268,15 +500,15 @@ export const BaseTheme = (colors) => ({
         flexDirection: "row",
         gap: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     LoginrememberText: {
         fontSize: 13,
-        color: colors.grey,
+        color: colors.onBackground,
     },
     LoginforgetText: {
         fontSize: 11,
-        color: colors.secondary
+        color: colors.secondary,
     },
     Loginbutton: {
         backgroundColor: colors.primary,
@@ -285,31 +517,31 @@ export const BaseTheme = (colors) => ({
         borderWidth: 1,
         borderRadius: 5,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     LoginbuttonText: {
-        color: "white",
+        color: colors.onPrimary,
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     LoginbuttonView: {
         flex: 1,
         width: "100%",
-        paddingHorizontal: 50
+        paddingHorizontal: 50,
     },
     LoginoptionsText: {
         textAlign: "center",
         paddingVertical: 10,
         color: "gray",
         fontSize: 13,
-        marginBottom: 6
+        marginBottom: 6,
     },
     LoginmediaIcons: {
         flexDirection: "row",
         gap: 15,
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: 23
+        marginBottom: 23,
     },
     Loginicons: {
         width: 40,
@@ -321,6 +553,6 @@ export const BaseTheme = (colors) => ({
     },
     Loginsignup: {
         color: colors.secondary,
-        fontSize: 13
-    }
+        fontSize: 13,
+    },
 })
