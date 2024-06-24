@@ -30,14 +30,18 @@ const WelcomePage = ({ navigation }) => {
             //header={<Text style={theme.headerTitle}>Valorian</Text>}
             //fab={<Text>+</Text>}
             //fabAction={handleFabPressHome}
-            showBodyFooter={false}
-            bodyFooter={<View></View>}
+            showBodyFooter={true}
+            bodyFooter={
+                <Pressable style={[theme.button,theme.ml40,theme.mr40,theme.mb20]} onPress={handleStart}>
+                    <Text style={theme.buttonText}>INIZIA</Text>
+                </Pressable>
+            }
         >
             <View style={theme.body}>
                 <View style={theme.logoImageContainer}>
                     <Image source={logo} style={theme.logoImage} resizeMode='contain' />
                 </View>
-                <Text style={[theme.headerTitle,theme.ml20,theme.mb20]}>Benvenuto in Valorian!</Text>
+                <Text style={[theme.headerTitle, theme.ml20, theme.mb20]}>Benvenuto in Valorian!</Text>
 
                 <View style={theme.article}>
                     <Text style={theme.contentTitle}>Siamo entusiasti di averti con noi.</Text>
@@ -53,13 +57,13 @@ const WelcomePage = ({ navigation }) => {
                     <Text style={theme.contentParagraph}>
                         Inizia subito a esplorare la tua vita in modo pi&#249; consapevole e a lavorare verso un benessere pi&#249; completo!
                     </Text>
-                    <View style={theme.contentPadding}/>
+                    <View style={theme.contentPadding} />
 
                     <View style={theme.contentArticle}>
                         <View style={theme.checkTextContainer}>
-                            <Text style={theme.articleText}>Mostra la prossima volta</Text>
+                            <Text style={[theme.articleText,theme.ml20]}>Mostra la prossima volta</Text>
                         </View>
-                        <Switch
+                        <Switch style={theme.mr20}
                             value={showNextTime}
                             onValueChange={setShowNextTime}
                             thumbColor={showNextTime ? '#f5dd4b' : '#f4f3f4'}
@@ -69,11 +73,6 @@ const WelcomePage = ({ navigation }) => {
                     </View>
                 </View>
 
-            </View>
-            <View style={theme.bodyFooter}>
-                <TouchableOpacity style={theme.button} onPress={handleStart}>
-                    <Text style={theme.buttonText}>INIZIA</Text>
-                </TouchableOpacity>
             </View>
 
         </Layout >

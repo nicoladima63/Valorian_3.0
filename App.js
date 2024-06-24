@@ -59,7 +59,7 @@ function AppWithTheme() {
         <AppContext.Provider value={{ isDarkTheme }}>
             <SafeAreaProvider>
                 <StatusBar
-                    barStyle={isDarkTheme ? 'light-content' : 'dark-content'}
+                    barStyle={isDarkTheme ? 'dark-content' : 'light-content'}
                     backgroundColor={theme.colors.statusBarBackground}
                 />
                 <AuthProvider>

@@ -75,10 +75,9 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
             return;
         }
 
-        setLoading(true);
-        const insert = {
-            nome, importanza, tolleranza, colore: '', soddisfattoil: new Date(),
-            creatoil: new Date(), enabled: true, uuid: userId
+        const update = {
+            nome, importanza, tolleranza, colore: '', soddisfattoil,
+            creatoil, enabled: true, uuid: userId
         };
 
         try {

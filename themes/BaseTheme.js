@@ -144,7 +144,7 @@ export const BaseTheme = (colors) => ({
         marginRight: 20, // Spazio tra l'icona check e il testo
     },
     articleText: {
-        color: colors.onPrimary,
+        color: colors.onBackground,
         marginRight: 20, // Spazio tra il testo e l'icona angle-right
     },
     angleRightIcon: {
@@ -222,7 +222,7 @@ export const BaseTheme = (colors) => ({
         //borderWidth: 1,
         borderColor: colors.border,
         position: 'absolute', // Mantieni posizione assoluta
-        bottom: 0, // Mantieni in fondo al contenitore
+        bottom: 10, // Mantieni in fondo al contenitore
         left: 0,  // Allinea a sinistra
         right: 0, // Allinea a destra
         flexDirection: 'row',
@@ -258,6 +258,8 @@ export const BaseTheme = (colors) => ({
     mb10: { marginBottom: 10 },
     ml10: { marginLeft: 10 },
     mr10: { marginRight: 10 },
+    ml40: { marginLeft: 40 },
+    mr40: { marginRight: 40 },
     mt20: { marginTop: 20 },
     mb20: { marginBottom: 20 },
     ml20: { marginLeft: 20 },
@@ -306,10 +308,10 @@ export const BaseTheme = (colors) => ({
     },
     button: {
         flex: 1,
-        height: 60,
+        height: 45,
         backgroundColor: colors.primary,
-        padding: 10,
-        width: '50%',
+        padding: 4,
+        width: 300,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
