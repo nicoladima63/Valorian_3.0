@@ -3,11 +3,14 @@ import * as CatController from '../controllers/categorieController';
 import * as BisController from '../controllers/bisogniController';
 import BisInCat from './BisInCat';
 import {
-    View, Text, TextInput, StyleSheet, Modal, Pressable, TouchableOpacity, FlatList
+    View, Text, Alert, Pressable, TouchableOpacity, StyleSheet, Modal,
+    FlatList, ScrollView, TouchableWithoutFeedback, TextInput,
+    KeyboardAvoidingView, Platform, Keyboard
 } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import Slider from '@react-native-community/slider';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Color from 'color';
 
 const CategoryItem = ({ categoria, isSelected, onSelect, colore }) => {
@@ -64,6 +67,11 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
     const onColorChange = colore => {
         setColore(colore);
     };
+
+    const handlePressEmptySpace = () => {
+        Keyboard.dismiss(); // Nascondi la tastiera quando si tocca uno spazio vuoto
+    };
+
 
     const handleSubmit = async () => {
         setLoading(true); // Inizia il caricamento
@@ -208,84 +216,94 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
 
 
     return (
-        <Modal
-            visible={visible}
-            animationType="slide"
-            transparent={false}
-            onRequestClose={onClose}
-            background={theme.colors.background}
-        >
-            <View style={[theme.container, { backgroundColor: theme.colors.contentContainer }]}>
-                <Text style={theme.title}>Modifica Bisogno</Text>
-                <Text style={{ textAlign: 'center', marginBottom: 8, marginTop:20 }}>Nome</Text>
-                <TextInput
-                    style={[styles.input, errors.nome && styles.inputError]}
-                    placeholder="esempio pizza o corsa"
-                    aria-label="Nome"
-                    value={bisogno.nome}
-                    onChangeText={setNome}
-                    returnKeyType="next"
-                    onSubmitEditing={() => importanzaRef.current.focus()}
-                    blurOnSubmit={false}
-                />
-                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Definisci quanto sia importante per te (da 1 a 10)</Text>
-                <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{bisogno.importanza}</Text>
-                <View >
-                    <Slider
-                        //style={[styles.input, errors.importanza && styles.inputError]}
-                        style={{ height: 60 }}
-                        minimumValue={1}
-                        maximumValue={10}
-                        lowerLimit={1}
-                        step={1}
-                        value={bisogno.importanza}
-                        onValueChange={setImportanza}
-                        renderStepNumber={true}
-
+        <TouchableWithoutFeedback onPress={handlePressEmptySpace}>
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <Modal
+                        visible={visible}
+                        animationType="slide"
+                        transparent={false}
+                        onRequestClose={handleClose}
+                        background={theme.colors.background}
+                    >
+                        <View style={[theme.container, { backgroundColor: theme.colors.contentContainer }]}>
+                            <Text style={theme.title}>Nuovo Bisogno</Text>
+                            <Text style={[theme.contentTitle, theme.mt20]}>Nome del bisogno</Text>
+                            <TextInput
+                                style={[styles.modalInput, errors.nome && styles.inputError]}
+                                placeholder="esempio pizza o corsa"
+                                aria-label="Nome"
+                                value={nome}
+                                onChangeText={setNome}
+                                returnKeyType="next"
+                                onSubmitEditing={() => importanzaRef.current.focus()}
+                                blurOnSubmit={false}
+                            />
+                            <Text style={{ textAlign: 'center', marginBottom: 8 }}>Quanto è importante per te in una scala da 1 a 10?</Text>
+                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{importanza}</Text>
+                            <View>
+                                <Slider
+                                    style={{ height: 80 }}
+                                    minimumValue={0}
+                                    maximumValue={10}
+                                    lowerLimit={1}
+                                    step={1}
+                                    value={importanza}
+                                    onValueChange={setImportanza}
+                                    renderStepNumber={true}
+                                />
+                            </View>
+                            <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 8 }}>Ogni quanto riesci a stare senza soddisfarlo? (in giorni)</Text>
+                            <TextInput
+                                ref={tolleranzaRef}
+                                style={[styles.modalInput, errors.tolleranza && styles.inputError]}
+                                placeholder="numero dei giorni"
+                                value={tolleranza}
+                                onChangeText={(text) => {
+                                    const numericValue = parseInt(text);
+                                    if (!isNaN(numericValue) && numericValue > 0) {
+                                        setTolleranza(numericValue);
+                                    }
+                                }}
+                                returnKeyType="next"
+                                blurOnSubmit={false}
+                                keyboardType="numeric"
+                                maxLength={3}
+                            />
+                            <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
+                            <FlatList
+                                data={categorie}
+                                keyExtractor={(item) => item.id.toString()}
+                                renderItem={({ item }) => (
+                                    <CategoryItem
+                                        categoria={item}
+                                        isSelected={selectedCategories.includes(item)}
+                                        onSelect={handleSelectCategory}
+                                        colore={item.colore}
+                                    />
+                                )}
+                            />
+                        </View>
+                        <View style={theme.buttonContainer2}>
+                            <Pressable style={theme.buttonUndo} onPress={handleClose}>
+                                <Text style={theme.buttonText}>Annulla</Text>
+                            </Pressable>
+                            <Pressable style={theme.buttonOK} onPress={handleSubmit}>
+                                <Text style={theme.buttonText}>Aggiungi</Text>
+                            </Pressable>
+                        </View>
+                    </Modal>
+                    <Spinner
+                        visible={loading}
+                        textContent={'Loading...'}
+                        textStyle={styles.spinnerTextStyle}
                     />
-
-                </View>
-                <Text style={{ textAlign: 'center', marginBottom: 8 }}>Ogni quanto hai bisogno di soddifarlo (in giorni)</Text>
-                <TextInput
-                    ref={tolleranzaRef}
-                    style={[styles.input, errors.tolleranza && styles.inputError]}
-                    placeholder="numero di giorni"
-                    value={bisogno.tolleranza}
-                    onChangeText={(text) => {
-                        const numericValue = parseInt(text);
-                        if (!isNaN(numericValue) && numericValue > 0) {
-                            setTolleranza(text);
-                        }
-                    }}
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    keyboardType="numeric"
-                    maxLength={3}
-                />
-                <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
-
-                {loading ? (
-                    <p>Loading...</p>
-                ) : (
-                    <BisInCat bisogno={bisogno} />
-                )}
-
-                <View style={theme.buttonContainer2}>
-                    <Pressable style={styles.button} onPress={handleClose}>
-                        <Text style={styles.text}>Annulla</Text>
-                    </Pressable>
-                    <Pressable style={styles.button} onPress={handleSubmit}>
-                        <Text style={styles.text}>Aggiorna</Text>
-                    </Pressable>
-                </View>
-
-            </View>
-            <Spinner
-                visible={loading}
-                textContent={'Loading...'}
-                textStyle={styles.spinnerTextStyle}
-            />
-        </Modal>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     );
 };
 

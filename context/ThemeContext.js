@@ -1,6 +1,6 @@
 // src/context/ThemeContext.js
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { Appearance } from 'react-native';
+import { Appearance, StatusBar } from 'react-native';
 import { DefaultTheme, DarkTheme } from '../themes/theme';
 
 const ThemeContext = createContext();
@@ -13,6 +13,7 @@ const getSystemTheme = () => {
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState(getSystemTheme());
     const [themeMode, setThemeMode] = useState('auto'); // 'light', 'dark', 'auto'
+
 
     useEffect(() => {
         const handleSystemThemeChange = ({ colorScheme }) => {
@@ -28,7 +29,12 @@ export const ThemeProvider = ({ children }) => {
         };
     }, [themeMode]);
 
-    const toggleTheme = (mode) => {
+    useEffect(() => {
+        StatusBar.setBarStyle(theme === DarkTheme ? 'light-content' : 'dark-content');
+        StatusBar.setBackgroundColor(theme.colors.statusBarBackground);
+    }, [theme]);
+
+    const toggleTheme = (mode, callback) => {
         setThemeMode(mode);
         if (mode === 'light') {
             setTheme(DefaultTheme);
@@ -36,6 +42,9 @@ export const ThemeProvider = ({ children }) => {
             setTheme(DarkTheme);
         } else if (mode === 'auto') {
             setTheme(getSystemTheme());
+        }
+        if (callback) {
+            callback();
         }
     };
 

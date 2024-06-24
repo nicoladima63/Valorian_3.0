@@ -15,7 +15,9 @@ export const BaseTheme = (colors) => ({
         borderRadius: 5,
         marginTop: 10,
     },
-
+    sliderContainer: {
+        backgroundColor: colors.inactive,
+    },
     logoImage: {
         width: 100,
         height: 100,
@@ -120,7 +122,7 @@ export const BaseTheme = (colors) => ({
     contentArticleSquareContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         paddingHorizontal: 20,
     },
     contentArticleSquare: {
@@ -300,9 +302,10 @@ export const BaseTheme = (colors) => ({
     buttonContainer2: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
+        alignItems: 'center',
         marginBottom: 40,
-        position: 'absolute',
+        //position: 'absolute',
         bottom: 10,
         //width: '50%',
     },
@@ -339,34 +342,34 @@ export const BaseTheme = (colors) => ({
     buttonOK: {
         backgroundColor: colors.primary,
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingVertical: 4,
         borderRadius: 5,
         marginVertical: 10,
-        width: 100,
+        width: 150,
     },
     buttonSave: {
         backgroundColor: colors.secondary,
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingVertical: 4,
         borderRadius: 5,
         marginVertical: 10,
-        width: 100,
+        width: 150,
     },
     buttonDelete: {
         backgroundColor: colors.error,
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingVertical: 4,
         borderRadius: 5,
         marginVertical: 10,
-        width: 100,
+        width: 150,
     },
     buttonUndo: {
         backgroundColor: colors.undo,
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingVertical: 4,
         borderRadius: 5,
         marginVertical: 10,
-        width: 100,
+        width: 150,
     },
     buttonText: {
         color: colors.onPrimary,

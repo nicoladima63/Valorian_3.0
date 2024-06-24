@@ -199,7 +199,7 @@ const BisogniList = ({ session, setFabAction }) => {
                     renderItem={({ item }) => (
                         <View style={theme.contentArticle2}>
                             <View style={theme.leftContainer}>
-                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? "#24bb21" : theme.colors.contetArticle} />
+                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? "#24bb2180" : theme.colors.contetArticle} />
                             </View>
 
                             <Pressable onPress={() => updateBisogno(item)} style={theme.centerContainer}>
@@ -211,11 +211,13 @@ const BisogniList = ({ session, setFabAction }) => {
                                     <Icon name="angle-right" size={24} color="#c3c3c3" />
                                 </View>
                             </Pressable>
-                        </View>)}
+                        </View>
+                    )}
                     renderSectionHeader={({ section: { title, color } }) => (
                         <Text style={[theme.articleTitle, { color: color }]}>{title}</Text>
                     )}
                     ListEmptyComponent={renderEmptyComponent}
+                    ListFooterComponent={<View style={theme.contentPadding} />}
                     refreshControl={
                         <RefreshControl
                             refreshing={refreshing}
@@ -223,8 +225,8 @@ const BisogniList = ({ session, setFabAction }) => {
                         />
                     }
                 />
+
             </View>
-            <View style={theme.contentPadding} />
 
             <AddBisogno
                 visible={modalVisibleAdd}

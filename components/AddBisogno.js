@@ -88,7 +88,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
             }
 
             const insertedId = data[0]?.id; // Recupera l'ID del bisogno inserito
-            console.log('91 Inserted ID:', insertedId,'categorie', selectedCategories);
+            console.log('91 Inserted ID:', insertedId, 'categorie', selectedCategories);
             const updateResult = await CatController.aggiornaAssociazioni(insertedId, selectedCategories);
             if (updateResult.error) {
                 console.error('Error updating associations:', updateResult.error);
@@ -108,9 +108,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
     const handleSubmit = async () => {
         setLoading(true); // Inizia il caricamento
         validateForm();
-
-        // Verifica se ci sono errori
-        if (Object.keys(errors).length !== 0) {
+        if (!isFormValid) {
             setLoading(false);
             return;
         }
@@ -132,7 +130,6 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
 
             // Aggiungi controllo per verificare che data esista e non sia undefined
             if (!data || !Array.isArray(data) || data.length === 0) {
-                console.error('135 Error: Invalid data received:', data);
                 alert('Errore nei dati ricevuti dalla chiamata createBisogno.');
                 setLoading(false);
                 return;
@@ -142,7 +139,6 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
 
             try {
                 const updateResult = await CatController.aggiornaAssociazioni(insertedId, selectedCategories);
-                console.log('updateResult:', updateResult);
 
                 if (updateResult) {
                     onAdd();
@@ -157,42 +153,33 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
             alert('157 Errore durante la chiamata API.', error);
         } finally {
             setLoading(false);
+            handleClose();
+            resetForm();
         }
     };
 
 
     const validateForm = () => {
         let errors = {};
-
         // Validate name field 
-        if (!nome) {
-            errors.nome = 'Nome richiesto.';
-        }
-
+        if (!nome) {errors.nome = 'Nome richiesto.';}
         // Validate importanza field 
-        if (!importanza) {
-            errors.importanza = 'Importanza richiesta.';
-        }
-
+        if (!importanza) {errors.importanza = 'Importanza richiesta.';}
         // Validate tolleranza field 
-        if (!tolleranza) {
-            errors.tolleranza = 'Tolleranza richiesta.';
-        }
-
+        if (!tolleranza) {errors.tolleranza = 'Tolleranza richiesta.';}
         // Validate colore field 
-        if (!colore) {
-            errors.colore = 'Colore richiesto.';
-        }
-
+        //if (!colore) {errors.colore = 'Colore richiesto.';}
         // Set the errors and update form validity 
         setErrors(errors);
         setIsFormValid(Object.keys(errors).length === 0);
+        console.log('errors:', errors);
+        console.log('isFormValid:', isFormValid);
     };
 
     const resetForm = () => {
         setNome('');
         setImportanza(1);
-        setTolleranza(1);
+        setTolleranza('');
         setColore('');
         setErrors({});
         setIsFormValid(false);
@@ -224,77 +211,112 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <Modal
                         visible={visible}
-                        animationType="slide"
+                        animationType="fade"
                         transparent={false}
                         onRequestClose={handleClose}
                         background={theme.colors.background}
                     >
-                        <View style={[theme.container, { backgroundColor: theme.colors.contentContainer }]}>
-                            <Text style={theme.title}>Nuovo Bisogno</Text>
-                            <Text style={[theme.contentTitle, theme.mt20]}>Nome del bisogno</Text>
-                            <TextInput
-                                style={[styles.modalInput, errors.nome && styles.inputError]}
-                                placeholder="esempio pizza o corsa"
-                                aria-label="Nome"
-                                value={nome}
-                                onChangeText={setNome}
-                                returnKeyType="next"
-                                onSubmitEditing={() => importanzaRef.current.focus()}
-                                blurOnSubmit={false}
-                            />
-                            <Text style={{ textAlign: 'center', marginBottom: 8 }}>Quanto è importante per te in una scala da 1 a 10?</Text>
-                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{importanza}</Text>
-                            <View>
-                                <Slider
-                                    style={{ height: 80 }}
-                                    minimumValue={0}
-                                    maximumValue={10}
-                                    lowerLimit={1}
-                                    step={1}
-                                    value={importanza}
-                                    onValueChange={setImportanza}
-                                    renderStepNumber={true}
-                                />
+
+                        <View style={theme.container}>
+                            <View style={theme.header}>
+                                <Text style={theme.headerTitle}>Nuovo Bisogno</Text>
                             </View>
-                            <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 8 }}>Ogni quanto riesci a stare senza soddisfarlo? (in giorni)</Text>
-                            <TextInput
-                                ref={tolleranzaRef}
-                                style={[styles.modalInput, errors.tolleranza && styles.inputError]}
-                                placeholder="numero dei giorni"
-                                value={tolleranza}
-                                onChangeText={(text) => {
-                                    const numericValue = parseInt(text);
-                                    if (!isNaN(numericValue) && numericValue > 0) {
-                                        setTolleranza(numericValue);
-                                    }
-                                }}
-                                returnKeyType="next"
-                                blurOnSubmit={false}
-                                keyboardType="numeric"
-                                maxLength={3}
-                            />
-                            <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
-                            <FlatList
-                                data={categorie}
-                                keyExtractor={(item) => item.id.toString()}
-                                renderItem={({ item }) => (
-                                    <CategoryItem
-                                        categoria={item}
-                                        isSelected={selectedCategories.includes(item)}
-                                        onSelect={handleSelectCategory}
-                                        colore={item.colore}
-                                    />
-                                )}
-                            />
+
+                            <View style={theme.content}>
+                                <View style={theme.body}>
+                                    <View style={theme.article}>
+                                        <Text style={theme.articleText}>Nome del bisogno</Text>
+                                        <TextInput
+                                            style={[styles.modalInput, errors.nome && styles.inputError, { color: theme.colors.onBackground, backgroundColor: '#f8f8f8' }]}
+                                            placeholder="esempio pizza o corsa"
+                                            aria-label="Nome"
+                                            value={nome}
+                                            onChangeText={(text) => {
+                                                setNome(text);
+                                                if (errors.nome) {
+                                                    setErrors((prevErrors) => ({ ...prevErrors, nome: null }));
+                                                }
+                                            }}
+                                            blurOnSubmit={false}
+                                        />
+                                        {errors.nome ? (
+                                            <Text style={{ color: theme.colors.errorText, backgroundColor: theme.colors.errorBackground }}>
+                                                {errors.nome}
+                                            </Text>
+                                        ) : null}
+                                        <View style={{ backgroundColor: '#f8f8f8' }}>
+                                            <Text style={[theme.onBackground, { textAlign: 'center', marginBottom: 8 }]}>Quanto è importante per te in una scala da 1 a 10?</Text>
+                                            <Text style={[theme.onBackground, { textAlign: 'center', fontWeight: 'bold' }]}>{importanza}</Text>
+                                            <Slider
+                                                style={{ height: 80 }}
+                                                minimumValue={0}
+                                                maximumValue={10}
+                                                lowerLimit={1}
+                                                step={1}
+                                                value={importanza}
+                                                onValueChange={setImportanza}
+                                                renderStepNumber={true}
+                                                color={theme.colors.onBackground}
+                                                minimumTrackTintColor={theme.colors.onBackground}
+                                                maximumTrackTintColor={theme.colors.onPrimary}
+
+                                            />
+                                        </View>
+                                        <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 8 }}>Ogni quanto riesci a stare senza soddisfarlo? (in giorni)</Text>
+                                        <TextInput
+                                            ref={tolleranzaRef}
+                                            style={[styles.modalInput, errors.tolleranza && styles.inputError]}
+                                            placeholder="numero dei giorni"
+                                            value={tolleranza.toString()}
+                                            onChangeText={(text) => {
+                                                const numericValue = parseInt(text);
+                                                if (!isNaN(numericValue) && numericValue > 0) {
+                                                    setTolleranza(numericValue);
+                                                    if (errors.tolleranza) {
+                                                        setErrors((prevErrors) => ({ ...prevErrors, tolleranza: null }));
+                                                    }
+                                                }
+                                            }}
+                                            returnKeyType="next"
+                                            blurOnSubmit={true}
+                                            keyboardType="numeric"
+                                            maxLength={3}
+                                        />
+                                        {errors.tolleranza ? (
+                                            <Text style={{ color: theme.colors.errorText, backgroundColor: theme.colors.errorBackground }}>
+                                                {errors.tolleranza}
+                                            </Text>
+                                        ) : null}
+                                        <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
+                                        <FlatList
+                                            data={categorie}
+                                            keyExtractor={(item) => item.id.toString()}
+                                            renderItem={({ item }) => (
+                                                <CategoryItem
+                                                    categoria={item}
+                                                    isSelected={selectedCategories.includes(item)}
+                                                    onSelect={handleSelectCategory}
+                                                    colore={item.colore}
+                                                />
+                                            )}
+                                        />
+
+
+                                    </View>
+
+                                </View>
+                            </View>
+
                         </View>
-                        <View style={theme.buttonContainer2}>
-                            <Pressable style={theme.buttonUndo} onPress={handleClose}>
+                        <View style={theme.contentArticleSquareContainer}>
+                            <Pressable style={theme.buttonSave} onPress={handleClose}>
                                 <Text style={theme.buttonText}>Annulla</Text>
                             </Pressable>
                             <Pressable style={theme.buttonOK} onPress={handleSubmit}>
                                 <Text style={theme.buttonText}>Aggiungi</Text>
                             </Pressable>
                         </View>
+
                     </Modal>
                     <Spinner
                         visible={loading}
@@ -342,7 +364,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         padding: 10,
         borderWidth: 1,
-        borderColor: '#DDD',
+        borderColor: '#ababab',
         borderRadius: 5,
     },
     inputError: {

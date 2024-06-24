@@ -45,7 +45,7 @@ const WelcomePage = ({ navigation }) => {
 
                 <View style={theme.article}>
                     <Text style={theme.contentTitle}>Siamo entusiasti di averti con noi.</Text>
-                    <Text style={theme.paragraph}>
+                    <Text style={theme.contentParagraph}>
                         Questa app &egrave; progettata per aiutarti a monitorare e migliorare il tuo stato di benessere, valutando quanto ti senti soddisfatto nei vari aspetti della tua vita.
                     </Text>
                     <Text style={theme.contentParagraph}>
@@ -66,8 +66,8 @@ const WelcomePage = ({ navigation }) => {
                         <Switch style={theme.mr20}
                             value={showNextTime}
                             onValueChange={setShowNextTime}
-                            thumbColor={showNextTime ? '#f5dd4b' : '#f4f3f4'}
-                            trackColor={{ false: '#767577', true: '#81b0ff' }}
+                            thumbColor={showNextTime ? theme.colors.primary : '#f4f3f4'}
+                            trackColor={{ false: '#767577', true: theme.colors.secondary }}
                         />
 
                     </View>

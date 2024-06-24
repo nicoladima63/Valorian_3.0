@@ -53,15 +53,12 @@ export default function App() {
 }
 
 function AppWithTheme() {
-    const { theme, isDarkTheme } = useTheme();
+    const { theme, themeMode } = useTheme();
 
     return (
-        <AppContext.Provider value={{ isDarkTheme }}>
+        <AppContext.Provider value={{ themeMode }}>
             <SafeAreaProvider>
-                <StatusBar
-                    barStyle={isDarkTheme ? 'dark-content' : 'light-content'}
-                    backgroundColor={theme.colors.statusBarBackground}
-                />
+                <StatusBar/>
                 <AuthProvider>
                     <NavigationContainer theme={theme}>
                         <Stack.Navigator initialRouteName='AuthLoading' screenOptions={{ headerShown: false }}>

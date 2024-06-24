@@ -63,7 +63,7 @@ const HomeScreen = ({ route, navigation }) => {
                 <View style={theme.articleTop}>
                     <View style={theme.checkTextContainer}>
                         <Icon name="info-circle" size={22} color="#2ECC71" style={theme.checkIcon} />
-                        <Text style={theme.articleText}>Clicca su un bisogno per soddisfarlo</Text>
+                        <Text style={[theme.articleText,theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text>
                     </View>
                 </View>
 
