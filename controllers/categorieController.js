@@ -98,7 +98,6 @@ export const getAssociazioni = async (bisogno) => {
         throw error;
     }
 };
-
 export const deleteAssociazioni = async (bisognoid) => {
     try {
         const { data, error } = await supabase
@@ -108,8 +107,8 @@ export const deleteAssociazioni = async (bisognoid) => {
         if (error) throw error;
         return data;
     } catch (error) {
-        console.error('Errore in DeleteAssociazioni:', error);
-        throw error;
+        console.error('Errore in deleteAssociazioni:', error);
+        throw error; // Rilancia l'errore per gestirlo nel componente chiamante
     }
 };
 
@@ -124,17 +123,16 @@ export const createAssociazioni = async (bisognoid, categorie) => {
         if (error) throw error;
         return data;
     } catch (error) {
-        console.error('Errore in CreateAssociazioni:', error);
-        throw error;
+        console.error('Errore in createAssociazioni:', error);
+        throw error; // Rilancia l'errore per gestirlo nel componente chiamante
     }
 };
+
 export const updateAssociazioni = async (bisognoid, categorie) => {
     try {
-        // Cancella le associazioni esistenti
         await deleteAssociazioni(bisognoid);
-
-        // Crea le nuove associazioni
         const data = await createAssociazioni(bisognoid, categorie);
+        console.log('135 Dati restituiti da createAssociazioni:', data); // Aggiungi questo log per debug
         return data;
     } catch (error) {
         console.error('Errore in updateAssociazioni:', error);
@@ -146,8 +144,9 @@ export const aggiornaAssociazioni = async (bisognoid, nuoveCategorie) => {
     try {
         const result = await updateAssociazioni(bisognoid, nuoveCategorie);
         console.log('Associazioni aggiornate:', result);
+        return result; // Ritorna il risultato se tutto va bene
     } catch (error) {
         console.error('Errore in aggiornaAssociazioni:', error);
+        throw error; // Rilancia l'errore per gestirlo nel componente chiamante
     }
 };
-

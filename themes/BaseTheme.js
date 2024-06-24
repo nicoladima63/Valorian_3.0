@@ -51,7 +51,7 @@ export const BaseTheme = (colors) => ({
     content: {
         flex: 1.5,
         flexDirection: 'column',
-        backgroundColor: colors.background,
+        backgroundColor: colors.content,
     },
     contentTitle: {
         fontSize: 16,
@@ -61,7 +61,7 @@ export const BaseTheme = (colors) => ({
         marginTop: 20,
     },
     contentArticle: {
-        backgroundColor: colors.background,
+        backgroundColor: colors.contentArticle,
         //margin: 0,
         //padding: 8,
         borderRadius: 4,
@@ -80,7 +80,7 @@ export const BaseTheme = (colors) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         //padding: 8,
-        backgroundColor: '#fff',
+        backgroundColor: colors.contentArticle,
         marginVertical: 2,
         borderRadius: 8,
         borderRadius: 4,
@@ -163,11 +163,11 @@ export const BaseTheme = (colors) => ({
     //body
     body: {
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: colors.contentBody,
         position: 'relative',
     },
     article: {
-        backgroundColor: colors.background,
+        backgroundColor: colors.article,
         marginHorizontal: 12,
         padding: 14,
         borderRadius: 8,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,9 +16,8 @@ import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
 import { Tabs } from './navigation/Tabs';
 
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { DefaultTheme, DarkTheme } from './themes/theme';
-
 import { AppContext } from './context/AppContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
@@ -46,23 +45,25 @@ function AuthLoadingScreen({ navigation }) {
 }
 
 export default function App() {
-    const [isDarkTheme, setIsDarkTheme] = useState(false);
+    return (
+        <ThemeProvider>
+            <AppWithTheme />
+        </ThemeProvider>
+    );
+}
 
-    const appContext = {
-        isDarkTheme,
-        setIsDarkTheme,
-    };
-    const currentTheme = isDarkTheme ? DarkTheme: DefaultTheme;
+function AppWithTheme() {
+    const { theme, isDarkTheme } = useTheme();
 
     return (
-        <AppContext.Provider value={appContext}>
-            <ThemeProvider>
+        <AppContext.Provider value={{ isDarkTheme }}>
+            <SafeAreaProvider>
                 <StatusBar
                     barStyle={isDarkTheme ? 'light-content' : 'dark-content'}
-                    backgroundColor={currentTheme.colors.statusBarBackground}
+                    backgroundColor={theme.colors.statusBarBackground}
                 />
                 <AuthProvider>
-                    <NavigationContainer style={isDarkTheme ? DarkTheme : DefaultTheme}>
+                    <NavigationContainer theme={theme}>
                         <Stack.Navigator initialRouteName='AuthLoading' screenOptions={{ headerShown: false }}>
                             <Stack.Screen
                                 name='AuthLoading'
@@ -97,7 +98,7 @@ export default function App() {
                             <Stack.Screen
                                 name='Register'
                                 component={RegisterScreen}
-                                options={{ headerShown: false, title: 'Registarti' }}
+                                options={{ headerShown: false, title: 'Registrati' }}
                             />
                             <Stack.Screen
                                 name='Account'
@@ -122,7 +123,7 @@ export default function App() {
                         </Stack.Navigator>
                     </NavigationContainer>
                 </AuthProvider>
-            </ThemeProvider>
+            </SafeAreaProvider>
         </AppContext.Provider>
     );
 }

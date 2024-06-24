@@ -4,47 +4,57 @@ import { useTheme } from '../context/ThemeContext';
 import Layout from './Layout';
 import styles from '../themes/style';
 import { View, Text, TouchableOpacity, Button, ScrollView, PixelRatio } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import ElevatedView from 'react-native-elevated-view';
 import { RFValue } from "react-native-responsive-fontsize";
-
+import { RadioButton } from 'react-native-paper';
 
 const SettingsScreen = ({ navigation }) => {
-    const { toggleTheme, theme } = useTheme();
+    const {theme, themeMode, toggleTheme } = useTheme();
     const { isDarkTheme, setIsDarkTheme } = React.useContext(AppContext);
     const fontSizeScaler = (size) => size * PixelRatio.getFontScale();
 
     return (
         <Layout
             navigation={navigation}
-            showTopBar={true}
+            showTopBar={false}
             header={<Text>Settings</Text>}
             //footer={<Text>Another Footer</Text>}
             fab={<Text style={styles.fabText}>+</Text>}
         >
 
-            <ElevatedView elevation={4} style={theme.stayElevated}>
-                <TouchableOpacity style={{
-                    flexDirection: 'row',
-                    paddingHorizontal: 8,
-                    paddingVertical: 20,
-                    borderRadius: 8,
-                    alignItems: 'center'
-                }}
-                    onPress={() => {
-                        setIsDarkTheme(!isDarkTheme);
-                        toggleTheme();
-                    }}>
-                    <Ionicons name={isDarkTheme ? 'checkbox' : 'square-outline'} size={24} color={theme.colors.text} />
-                    <Text style={{
-                        color: theme.colors.text,
-                        marginLeft: 8
-                    }}>{isDarkTheme ? 'Tema chiaro' : 'Tema Scuro'}</Text>
-                </TouchableOpacity>
-            </ElevatedView>
-            <ElevatedView elevation={4} style={theme.stayElevated}>
-                <Button onPress={() => navigation.navigate('Categorie')} title="Categorie" />
-            </ElevatedView>
+
+            <View style={{ padding: 20 }}>
+                <Text style={{ fontSize: 18, marginBottom: 10 }}>Tema</Text>
+                <RadioButton.Group onValueChange={value => toggleTheme(value)} value={themeMode}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon name="adjust" size={20} color={theme.colors.primary} style={{ marginRight: 20 }} />
+                        <Text style={{ marginRight: 20 }}>Automatico</Text>
+                    </View>
+                    <RadioButton value="auto" />
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon name="sun-o" size={20} color={theme.colors.primary} style={{ marginRight: 20 }} />
+                        <Text style={{ marginRight: 20 }}>Chiaro</Text>
+                    </View>
+                    <RadioButton value="light" />
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon name="moon-o" size={20} color={theme.colors.primary} style={{ marginRight: 20 }} />
+                        <Text style={{ marginRight: 20 }}>Scuro</Text>
+                    </View>
+                    <RadioButton value="dark" />
+                </View>
+                <Text style={{ marginTop: 10, color: theme.colors.text }}>
+                    Automatico &egrave; supportato solo sui sistemi operativi che consentono di controllare lo schema di colori a livello di sistema.
+                    </Text>
+                </RadioButton.Group>
+            </View>
+
+
 
             <View>
                 <Text>Main Content</Text>

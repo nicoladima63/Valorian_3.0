@@ -9,7 +9,7 @@ const getCurrentUser = async () => {
 
 // Create a new bisogno
 export const createBisogno = async (bisogno) => {
-    console.log('createBisogno: bisogno:', bisogno)  
+    console.log('12 createBisogno: bisogno:', bisogno)  
 
     try {
         //const user = await getCurrentUser();
@@ -18,12 +18,12 @@ export const createBisogno = async (bisogno) => {
             .insert(bisogno )
             .select();
         //    .insert([{ ...bisogno, uuid: user.id }]);
-        console.log('createBisogno: data:', data)  
+        console.log('21 createBisogno: data:', data)  
 
         if (error) throw error;
         return data;
     } catch (error) {
-        console.error('Error creating bisogno:', error);
+        console.error('26 Error creating bisogno:', error);
         throw error;
     }
 };

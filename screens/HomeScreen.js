@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { View, Text, Pressable, Modal, themeheet, Button, TouchableOpacity } from 'react-native';
 import Layout from './Layout';
 import SectionListComponent from '../components/SectionListComponent';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const HomeScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
@@ -32,7 +33,7 @@ const HomeScreen = ({ route, navigation }) => {
             navigation={navigation}
             showTopBar={false}
             header={<View></View>}
-            fab={<Text>+</Text>}
+            fab={<Text style={theme.fabText}>+</Text>}
             fabAction={handleFabPressHome}
             showBodyFooter={false}
             bodyFooter={
@@ -59,6 +60,13 @@ const HomeScreen = ({ route, navigation }) => {
                         <Text style={theme.contentTitle}>Aiuto</Text>
                     </Pressable>
                 </View>
+                <View style={theme.articleTop}>
+                    <View style={theme.checkTextContainer}>
+                        <Icon name="info-circle" size={22} color="#2ECC71" style={theme.checkIcon} />
+                        <Text style={theme.articleText}>Clicca su un bisogno per soddisfarlo</Text>
+                    </View>
+                </View>
+
                 <SectionListComponent session={session} setFabAction={setFabAction} />
             </View>
         </Layout>

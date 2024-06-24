@@ -7,10 +7,8 @@ import { useTheme } from '../context/ThemeContext';
 import AddBisogno from '../components/AddBisogno';
 import EditBisogno from '../components/EditBisogno';
 import Spinner from 'react-native-loading-spinner-overlay';
-import ElevatedView from 'react-native-elevated-view';
-import { FontAwesome } from '@expo/vector-icons';
-import Snackbar from '../components/Snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Snackbar from '../components/Snackbar';
 
 const BisogniList = ({ session, setFabAction }) => {
     const { theme } = useTheme();
@@ -33,18 +31,13 @@ const BisogniList = ({ session, setFabAction }) => {
             try {
                 const fetchedCategorie = await getCategorie();
                 setCategorie(fetchedCategorie);
-                console.log('categories', fetchedCategorie);
 
                 const fetchedBisogni = await getBisogni();
                 setBisogni(fetchedBisogni);
-                console.log('bisogni', fetchedBisogni);
 
                 if (fetchedBisogni && fetchedBisogni.length > 0) {
                     const fetchedBisInCat = await getBisInCat();
                     setBisInCat(fetchedBisInCat);
-                    console.log('bisInCat', fetchedBisInCat);
-                } else {
-                    console.log('No bisogni found, skipping bisInCat fetch');
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -79,6 +72,7 @@ const BisogniList = ({ session, setFabAction }) => {
     const getBisogni = async () => {
         try {
             const data = await BisogniController.getBisogni();
+            setBisogni(data); // Aggiungi questo per aggiornare lo stato
             return data;
         } catch (error) {
             console.error('Error fetching bisogni:', error);
@@ -116,7 +110,6 @@ const BisogniList = ({ session, setFabAction }) => {
     };
 
     const DATA = transformData(categorie, bisogni, bisInCat);
-    console.log('DATA:', DATA);
 
     const selectBisogno = (bisogno) => {
         setModalVisibleEdit(true);
@@ -125,40 +118,35 @@ const BisogniList = ({ session, setFabAction }) => {
 
     const handleModalAddClose = () => {
         setModalVisibleAdd(false);
-        getBisogni();
+        getBisogni(); // Aggiorna i bisogni dopo la chiusura della modal di aggiunta
     };
 
     const handleModalEditClose = () => {
         setModalVisibleEdit(false);
-        getBisogni();
+        getBisogni(); // Aggiorna i bisogni dopo la chiusura della modal di modifica
     };
 
     const updateBisogno = async (bisogno) => {
         setLoading(true);
         try {
-            // Aggiorna la data di soddisfazione
             const updatedBisogno = { ...bisogno, soddisfattoil: new Date() };
-
-            // Filtra i campi non necessari
             const { id, nome, soddisfattoil, colore } = updatedBisogno;
             const dataToUpdate = { nome, soddisfattoil, colore };
 
-            await BisogniController.updateBisogno(id, dataToUpdate); // Aggiorna il bisogno usando l'id e l'oggetto filtrato
+            await BisogniController.updateBisogno(id, dataToUpdate);
 
-            // Crea il dettaglio
             const dettaglio = {
                 bisognoid: bisogno.id,
                 soddisfattoil: new Date(),
             };
-            await DettagliController.createDettaglio(dettaglio); // crea il dettaglio
+            await DettagliController.createDettaglio(dettaglio);
 
             setSnackbarMessage(`Bisogno "${nome}" aggiornato`);
             setSnackbarVisible(true);
 
-            // Aggiorna la lista dei bisogni dopo l'aggiornamento
             getBisogni();
         } catch (error) {
-            console.error('Error updating bisogno:', error); // Cambiato alert con console.error per gestire errori
+            console.error('Error updating bisogno:', error);
             setSnackbarMessage('Error updating bisogno:', error.message || 'Unknown error');
             setSnackbarVisible(true);
         } finally {
@@ -204,14 +192,14 @@ const BisogniList = ({ session, setFabAction }) => {
 
     return (
         <View style={theme.body}>
-            <View style={theme.articleTop}>
+            <View style={theme.articleBottom}>
                 <SectionList
                     sections={DATA}
                     keyExtractor={(item, index) => item.uniqueKey}
                     renderItem={({ item }) => (
                         <View style={theme.contentArticle2}>
                             <View style={theme.leftContainer}>
-                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? "#24bb21" : "#aaaaaa"} />
+                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? "#24bb21" : theme.colors.contetArticle} />
                             </View>
 
                             <Pressable onPress={() => updateBisogno(item)} style={theme.centerContainer}>
@@ -235,48 +223,44 @@ const BisogniList = ({ session, setFabAction }) => {
                         />
                     }
                 />
-
             </View>
-
-            <View style={theme.articleBottom}>
-                <View style={theme.checkTextContainer}>
-                    <Icon name="info-circle" size={20} color="#24bb21" style={theme.leftContainer} />
-                    <Text style={theme.articleText}>Tocca il nome per soddisfare. Tocca la freccia per modificare</Text>
-                </View>
-
-            </View>
+            <View style={theme.contentPadding} />
 
             <AddBisogno
                 visible={modalVisibleAdd}
                 onClose={handleModalAddClose}
-                onAdd={getBisogni}
+                onAdd={getBisogni} // Passiamo getBisogni come prop onAdd
                 userId={session.user.id}
             />
-            {Object.keys(bisogno).length > 0 && (
-                <EditBisogno
-                    visible={modalVisibleEdit}
-                    onClose={handleModalEditClose}
-                    onAdd={getBisogni}
-                    bisogno={bisogno}
-                    userId={session.user.id}
-                />
-            )}
+
+            <EditBisogno
+                visible={modalVisibleEdit}
+                onClose={handleModalEditClose}
+                bisogno={bisogno}
+                userId={session.user.id}
+            />
+
             <Spinner
                 visible={loading}
-                textContent={'Caricamento dati in corso...'}
-                textStyle={theme.spinnerTextStyle}
+                textContent={'Loading...'}
+                textStyle={styles.spinnerTextStyle}
             />
+
             <Snackbar
-                isVisible={snackbarVisible}
-                message={snackbarMessage}
-                duration={1000}
-                position="bottom"
-                backgroundColor="#ffc107"
-                textColor="black"
+                visible={snackbarVisible}
                 onDismiss={() => setSnackbarVisible(false)}
-            />
+                duration={3000}
+            >
+                {snackbarMessage}
+            </Snackbar>
         </View>
     );
-}
+};
+
+const styles = StyleSheet.create({
+    spinnerTextStyle: {
+        color: '#FFF'
+    },
+});
 
 export default BisogniList;

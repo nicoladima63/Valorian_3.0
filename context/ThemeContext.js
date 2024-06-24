@@ -1,18 +1,46 @@
 // src/context/ThemeContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { Appearance } from 'react-native';
 import { DefaultTheme, DarkTheme } from '../themes/theme';
 
 const ThemeContext = createContext();
 
-export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(DefaultTheme);
+const getSystemTheme = () => {
+    const colorScheme = Appearance.getColorScheme();
+    return colorScheme === 'dark' ? DarkTheme : DefaultTheme;
+};
 
-    const toggleTheme = () => {
-        setTheme(theme === DefaultTheme ? DarkTheme : DefaultTheme);
+export const ThemeProvider = ({ children }) => {
+    const [theme, setTheme] = useState(getSystemTheme());
+    const [themeMode, setThemeMode] = useState('auto'); // 'light', 'dark', 'auto'
+
+    useEffect(() => {
+        const handleSystemThemeChange = ({ colorScheme }) => {
+            if (themeMode === 'auto') {
+                setTheme(colorScheme === 'dark' ? DarkTheme : DefaultTheme);
+            }
+        };
+
+        const subscription = Appearance.addChangeListener(handleSystemThemeChange);
+
+        return () => {
+            subscription.remove();
+        };
+    }, [themeMode]);
+
+    const toggleTheme = (mode) => {
+        setThemeMode(mode);
+        if (mode === 'light') {
+            setTheme(DefaultTheme);
+        } else if (mode === 'dark') {
+            setTheme(DarkTheme);
+        } else if (mode === 'auto') {
+            setTheme(getSystemTheme());
+        }
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme, themeMode, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );
