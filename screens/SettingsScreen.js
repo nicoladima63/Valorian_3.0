@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ElevatedView from 'react-native-elevated-view';
 import { RFValue } from "react-native-responsive-fontsize";
 import { RadioButton } from 'react-native-paper';
+import ColorsBarComponent from '../components/ColorBarsComponent'
 
 const SettingsScreen = ({ navigation }) => {
     const { theme, themeMode, toggleTheme } = useTheme();
@@ -77,12 +78,12 @@ const SettingsScreen = ({ navigation }) => {
                             Testo fontSizeScaler(16)
                         </Text>
 
-                        <ScrollView style={styles.content} >
-
-                        </ScrollView>
-                    </View>
                 </View>
+                <ScrollView style={styles.conten} >
+                    <ColorsBarComponent></ColorsBarComponent>
+                </ScrollView>
 
+            </View>
         </Layout >
     )
 };
