@@ -84,12 +84,12 @@ export const getBisInCat = async () => {
         throw error;
     }
 };
-export const getAssociazioni = async (bisogno) => {
+export const getAssociazioni = async (bisognoid) => {
     try {
         const { data, error } = await supabase
             .from('bisincat')
             .select('categoriaid')
-            .eq('bisognoid', bisogno.id);
+            .eq('bisognoid', bisognoid);
         console.log('getAssociazioni controller:',data)
         if (error) throw error;
         return data;

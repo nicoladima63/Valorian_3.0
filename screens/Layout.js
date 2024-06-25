@@ -12,9 +12,7 @@ const Layout = ({ children, navigation, showTopBar, showBodyFooter, header, body
             <View style={theme.container}>
 
                 {header && (
-                    <View style={theme.header}>
-                        <Image source={logo} style={theme.logo} resizeMode='contain' />
-                        <Text style={theme.headerTitle}>Valorian</Text>
+                    <View>
                         {showTopBar && <TopBar navigation={navigation} />}
                     </View>
                 )}

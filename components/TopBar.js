@@ -69,9 +69,10 @@ const TopBar = ({ navigation }) => {
 
 
     return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: theme.colors.background, height: 60 }}>
-            <Image source={logo} style={{ width: 30, height: 30, marginLeft: 20 }} resizeMode='stretch' />
-            <Text style={[theme.headerTitle, { marginLeft: 10, color: theme.colors.headerTitle }]}>{routeName}</Text>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: theme.colors.background, height: 60 }}>
+            <Image source={logo} style={theme.logo} resizeMode='contain' />
+            <Text style={theme.headerTitle}>Valorian</Text>
 
             <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ marginRight: 20 }}>
                 <Avatar

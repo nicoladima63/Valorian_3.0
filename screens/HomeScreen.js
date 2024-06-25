@@ -31,8 +31,8 @@ const HomeScreen = ({ route, navigation }) => {
     return (
         <Layout
             navigation={navigation}
-            showTopBar={false}
-            header={<View></View>}
+            showTopBar={true}
+            header
             fab={<Text style={theme.fabText}>+</Text>}
             fabAction={handleFabPressHome}
             showBodyFooter={false}
@@ -68,6 +68,7 @@ const HomeScreen = ({ route, navigation }) => {
                 </View>
 
                 <SectionListComponent session={session} setFabAction={setFabAction} />
+                <View style={theme.articleBottom}></View>
             </View>
         </Layout>
     ); };

@@ -13,27 +13,36 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Color from 'color';
 
-const CategoryItem = ({ categoria, isSelected, onSelect, colore }) => {
-    const backgroundColorWithOpacity = Color(colore).alpha(0.5).rgb().string();
+const CategoryItem = ({ categoria, isSelected, onSelect }) => {
+    const { theme } = useTheme();
     return (
         <TouchableOpacity
+            onPress={() => onSelect(categoria)}
             style={[
                 styles.categoryItem,
-                { backgroundColor: backgroundColorWithOpacity },
-                isSelected ? styles.selected : null,
+                {
+                    backgroundColor: Color(categoria.colore).alpha(0.5).toString(),
+                },
             ]}
-            onPress={() => onSelect(categoria)}
         >
-            <Text style={styles.categoryText}>{categoria.nome}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: '50%' }}>
+                <Icon
+                    name={isSelected ? 'check-circle' : 'circle-thin'}
+                    size={24}
+                    color={categoria.colore}
+                    style={{ marginRight: 10 }}
+                />
+                <Text style={[theme.textItem, { color: categoria.colore }]}>{categoria.nome}</Text>
+            </View>
         </TouchableOpacity>
     );
 };
 
 
 const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
-    const [nome, setNome] = useState(bisogno.nome);
-    const [importanza, setImportanza] = useState(bisogno.importanza);
-    const [tolleranza, setTolleranza] = useState(bisogno.tolleranza);
+    const [nome, setNome] = useState('');
+    const [importanza, setImportanza] = useState('');
+    const [tolleranza, setTolleranza] = useState('');
     const [colore, setColore] = useState('');
 
     const [loading, setLoading] = useState(false);
@@ -43,9 +52,33 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
     const [categorie, setCategorie] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
-    const importanzaRef = useRef(null);
-    const tolleranzaRef = useRef(null);
 
+    useEffect(() => {
+        if (visible && bisogno.id) {
+            getCategorieForBisogno(bisogno.id);
+            setInitialValues(bisogno);
+        }
+    }, [visible, bisogno]);
+
+    const setInitialValues = (bisogno) => {
+        setNome(bisogno.nome || '');
+        setImportanza(bisogno.importanza || '');
+        setTolleranza(bisogno.tolleranza || '');
+        setColore(bisogno.colore || '');
+        setSelectedCategories(bisogno.categorie || []);
+    };
+
+    const getCategorieForBisogno = async (bisognoid) => {
+        try {
+            const associazioni = await CatController.getAssociazioni(bisognoid);
+            console.log('Associazioni:', associazioni);
+            const selectedIds = associazioni.map((associazione) => associazione.categoriaid);
+            console.log('Selected IDs:', selectedIds);
+            setSelectedCategories(selectedIds);
+        } catch (error) {
+            console.error('Errore nel caricamento delle categorie associate:', error);
+        }
+    };
     useEffect(() => {
         if (!visible) {
             resetForm();
@@ -64,74 +97,68 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
         }
     };
 
-    const onColorChange = colore => {
-        setColore(colore);
-    };
-
     const handlePressEmptySpace = () => {
         Keyboard.dismiss(); // Nascondi la tastiera quando si tocca uno spazio vuoto
     };
-
 
     const handleSubmit = async () => {
         setLoading(true); // Inizia il caricamento
         validateForm();
 
         // Wait for the validation state to update
-        if (!Object.keys(errors).length === 0) {
+        if (!isFormValid) {
             setLoading(false);
             return;
         }
 
         const update = {
-            nome, importanza, tolleranza, colore: '', soddisfattoil,
-            creatoil, enabled: true, uuid: userId
+            nome,
+            importanza,
+            tolleranza,
+            colore,
+            soddisfattoil,
+            creatoil,
+            enabled: true,
+            uuid: userId
         };
 
         try {
-            const { data, error } = await BisController.createBisogno(insert);
+            const data = await BisController.updateBisogno(bisogno.id, update);
 
-            if (error) {
-                console.error('Error adding need:', error);
-                alert('Errore nell\'aggiungere il bisogno.');
-            } else {
-                onAdd();
-                handleClose();
+            try {
+                const updateResult = await CatController.aggiornaAssociazioni(bisogno.id, selectedCategories);
+
+                if (updateResult) {
+                    onSave();
+                    handleClose();
+                }
+            } catch (error) {
+                console.error('152Errore durante l\'aggiornamento:', error);
+                // Gestisci l'errore qui, ad esempio mostrando un messaggio all'utente
             }
         } catch (error) {
             console.error('Error:', error);
             alert('Errore durante la chiamata API.');
         } finally {
             setLoading(false);
+            handleClose();
+            resetForm();
         }
     };
 
     const validateForm = () => {
         let errors = {};
-
         // Validate name field 
-        if (!nome) {
-            errors.nome = 'Nome richiesto.';
-        }
-
+        if (!nome) { errors.nome = 'Nome richiesto.'; }
         // Validate importanza field 
-        if (!importanza) {
-            errors.importanza = 'Importanza richiesta.';
-        }
-
+        if (!importanza) { errors.importanza = 'Importanza richiesta.'; }
         // Validate tolleranza field 
-        if (!tolleranza) {
-            errors.tolleranza = 'Tolleranza richiesta.';
-        }
-
+        if (!tolleranza) { errors.tolleranza = 'Tolleranza richiesta.'; }
         // Validate colore field 
-        if (!colore) {
-            errors.colore = 'Colore richiesto.';
-        }
-
+        //if (!colore) {errors.colore = 'Colore richiesto.';}
         // Set the errors and update form validity 
         setErrors(errors);
-        //setIsFormValid(Object.keys(errors).length === 0);
+        setIsFormValid(Object.keys(errors).length === 0);
     };
 
     const resetForm = () => {
@@ -141,6 +168,7 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
         setColore('');
         setErrors({});
         setIsFormValid(false);
+        setSelectedCategories([]);
     };
 
     const handleClose = () => {
@@ -149,7 +177,6 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
     };
 
     const handleSelectCategory = async (category) => {
-        // Verifica se la categoria è già stata associata
         const isCategorySelected = selectedCategories.includes(category);
 
         setSelectedCategories((prevSelected) =>
@@ -158,62 +185,14 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                 : [...prevSelected, category]
         );
     };
-
-    const associaBisInCat = async () => {
-        const isCategorySelected = selectedCategories.includes(category);
-        try {
-            // Rimuovi l'associazione precedente per questa categoria
-            const { data, error } = await supabase
-                .from('bisincat')
-                .delete()
-                .eq('bisognoid', bisogno.id)
-                .eq('categoriaid', category.id);
-
-            // Se la categoria non era gi� associata, aggiungi la nuova associazione
-            if (!isCategorySelected) {
-                await supabase
-                    .from('bisincat')
-                    .insert([{ bisognoid: selectedNeed.id, categoriaid: category.id }]);
-            }
-
-            // Aggiorna lo stato delle categorie selezionate
-        } catch (error) {
-            console.error('Errore nell\'aggiornamento delle associazioni', error);
-            Alert.alert('Errore nell\'aggiornamento delle associazioni');
-        }
-
-    }
-
-    const handleAssociate = async () => {
-        alert('bisogno', selectedNeed.nome)
-        try {
-            const { data, error } = await supabase
-                .from('bisincat')
-                .insert(selectedCategories.map(cat => ({
-                    bisognoid: selectedNeed.id,
-                    categoriaid: cat.id
-                })));
-
-            if (error) {
-                throw error;
-            }
-
-            Alert.alert(
-                'Association Successful',
-                `Need: ${selectedNeed.nome}\nCategories: ${selectedCategories.map(cat => cat.nome).join(', ')}`,
-                [{ text: 'OK', onPress: () => resetSelections() }]
-            );
-        } catch (error) {
-            console.error('Errore nell\'associazione dei bisogni alle categorie', error);
-            Alert.alert('Errore nell\'associazione dei bisogni alle categorie');
+    const handleSelectCategory2 = (categoria) => {
+        const isSelected = selectedCategories.includes(categoria.id);
+        if (isSelected) {
+            setSelectedCategories((prevSelected) => prevSelected.filter((catId) => catId !== categoria.id));
+        } else {
+            setSelectedCategories((prevSelected) => [...prevSelected, categoria.id]);
         }
     };
-
-    const resetSelections = () => {
-        setSelectedCategories([]);
-        setSelectedNeed(null);
-    };
-
 
     return (
         <TouchableWithoutFeedback onPress={handlePressEmptySpace}>
@@ -224,76 +203,97 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <Modal
                         visible={visible}
-                        animationType="slide"
+                        animationType="fade"
                         transparent={false}
                         onRequestClose={handleClose}
                         background={theme.colors.background}
                     >
-                        <View style={[theme.container, { backgroundColor: theme.colors.contentContainer }]}>
-                            <Text style={theme.title}>Nuovo Bisogno</Text>
-                            <Text style={[theme.contentTitle, theme.mt20]}>Nome del bisogno</Text>
-                            <TextInput
-                                style={[styles.modalInput, errors.nome && styles.inputError]}
-                                placeholder="esempio pizza o corsa"
-                                aria-label="Nome"
-                                value={nome}
-                                onChangeText={setNome}
-                                returnKeyType="next"
-                                onSubmitEditing={() => importanzaRef.current.focus()}
-                                blurOnSubmit={false}
-                            />
-                            <Text style={{ textAlign: 'center', marginBottom: 8 }}>Quanto è importante per te in una scala da 1 a 10?</Text>
-                            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{importanza}</Text>
-                            <View>
-                                <Slider
-                                    style={{ height: 80 }}
-                                    minimumValue={0}
-                                    maximumValue={10}
-                                    lowerLimit={1}
-                                    step={1}
-                                    value={importanza}
-                                    onValueChange={setImportanza}
-                                    renderStepNumber={true}
-                                />
+                        <View style={theme.container}>
+                            <View style={theme.header}>
+                                <Text style={theme.headerTitle}>Modifica Bisogno</Text>
                             </View>
-                            <Text style={{ textAlign: 'center', marginTop: 10, marginBottom: 8 }}>Ogni quanto riesci a stare senza soddisfarlo? (in giorni)</Text>
-                            <TextInput
-                                ref={tolleranzaRef}
-                                style={[styles.modalInput, errors.tolleranza && styles.inputError]}
-                                placeholder="numero dei giorni"
-                                value={tolleranza}
-                                onChangeText={(text) => {
-                                    const numericValue = parseInt(text);
-                                    if (!isNaN(numericValue) && numericValue > 0) {
-                                        setTolleranza(numericValue);
-                                    }
-                                }}
-                                returnKeyType="next"
-                                blurOnSubmit={false}
-                                keyboardType="numeric"
-                                maxLength={3}
-                            />
-                            <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
-                            <FlatList
-                                data={categorie}
-                                keyExtractor={(item) => item.id.toString()}
-                                renderItem={({ item }) => (
-                                    <CategoryItem
-                                        categoria={item}
-                                        isSelected={selectedCategories.includes(item)}
-                                        onSelect={handleSelectCategory}
-                                        colore={item.colore}
-                                    />
-                                )}
-                            />
-                        </View>
-                        <View style={theme.buttonContainer2}>
-                            <Pressable style={theme.buttonUndo} onPress={handleClose}>
-                                <Text style={theme.buttonText}>Annulla</Text>
-                            </Pressable>
-                            <Pressable style={theme.buttonOK} onPress={handleSubmit}>
-                                <Text style={theme.buttonText}>Aggiungi</Text>
-                            </Pressable>
+
+                            <View style={theme.content}>
+                                <View style={theme.body}>
+                                    <View style={theme.article}>
+                                        <Text style={theme.articleText}>Nome del bisogno</Text>
+                                        <TextInput
+                                            style={[styles.modalInput, errors.nome && styles.inputError, { color: theme.colors.onBackground, backgroundColor: '#f8f8f8' }]}
+                                            placeholder="esempio pizza o corsa"
+                                            value={nome}
+                                            onChangeText={(text) => {
+                                                setNome(text);
+                                                if (errors.nome) {
+                                                    setErrors((prevErrors) => ({ ...prevErrors, nome: null }));
+                                                }
+                                            }}
+                                            blurOnSubmit={false}
+                                        />
+                                        {errors.nome ? (
+                                            <Text style={{ color: theme.colors.errorText, backgroundColor: theme.colors.errorBackground }}>
+                                                {errors.nome}
+                                            </Text>
+                                        ) : null}
+                                        <Text style={[theme.onBackground, { textAlign: 'center', marginBottom: 14 }]}>Quanto è importante per te in una scala da 1 a 10?</Text>
+                                        <Text style={[theme.onBackground, { textAlign: 'center', fontWeight: 'bold' }]}>{importanza}</Text>
+                                        <Slider
+                                            style={{ height: 48 }}
+                                            minimumValue={0}
+                                            maximumValue={10}
+                                            lowerLimit={1}
+                                            step={1}
+                                            tapToSeek
+                                            value={importanza}
+                                            onValueChange={setImportanza}
+                                            renderStepNumber={true}
+                                            minimumTrackTintColor={theme.colors.onBackground}
+                                            maximumTrackTintColor={theme.colors.onPrimary}
+                                        />
+                                        <Text style={{ textAlign: 'center', marginTop: 20, marginBottom: 8 }}>Ogni quanto riesci a stare senza soddisfarlo? (in giorni)</Text>
+                                        <TextInput
+                                            style={[styles.modalInput, errors.tolleranza && styles.inputError]}
+                                            placeholder="numero dei giorni"
+                                            value={tolleranza.toString()}
+                                            onChangeText={(text) => {
+                                                setTolleranza(text);
+                                                if (errors.tolleranza) {
+                                                    setErrors((prevErrors) => ({ ...prevErrors, tolleranza: null }));
+                                                }
+                                            }}
+                                            blurOnSubmit={false}
+                                            keyboardType="numeric"
+                                            maxLength={2}
+                                        />
+                                        {errors.tolleranza ? (
+                                            <Text style={{ color: theme.colors.errorText, backgroundColor: theme.colors.errorBackground }}>
+                                                {errors.tolleranza}
+                                            </Text>
+                                        ) : null}
+                                        <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
+                                        <FlatList
+                                            data={categorie}
+                                            keyExtractor={(item) => item.id.toString()}
+                                            numColumns={2}
+                                            renderItem={({ item }) => (
+                                                <CategoryItem
+                                                    categoria={item}
+                                                    isSelected={selectedCategories.includes(item)}
+                                                    onSelect={()=>handleSelectCategory(item)}
+                                                    colore={item.colore}
+                                                />
+                                            )}
+                                        />
+                                    </View>
+                                    <View style={theme.contentArticleSquareContainer}>
+                                        <Pressable style={theme.buttonSave} onPress={handleClose}>
+                                            <Text style={theme.buttonText}>Annulla</Text>
+                                        </Pressable>
+                                        <Pressable style={theme.buttonOK} onPress={handleSubmit}>
+                                            <Text style={theme.buttonText}>Aggiungi</Text>
+                                        </Pressable>
+                                    </View>
+                                </View>
+                            </View>
                         </View>
                     </Modal>
                     <Spinner
@@ -307,107 +307,89 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
     );
 };
 
-export default EditBisogno;
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        padding: 20,
-        //backgroundColor: theme.colors.background,
+    spinnerTextStyle: {
+        color: '#FFF'
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        color: '#800080',
-    },
-    input: {
-        backgroundColor: '#99999933',
-        height: 45,
-        borderWidth: 1,
-        borderColor: '#ccc',
+    modalInput: {
+        width: '100%',
+        height: 40,
+        marginVertical: 10,
         padding: 10,
-        marginBottom: 10,
-        borderRadius: 10,
-    },
-    colorInput: {
-        height: 45,
         borderWidth: 1,
-        borderColor: '#ccc',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 10,
-        borderRadius: 10,
-    },
-    colorInputText: {
-        color: '#000',
+        borderColor: '#ababab',
+        borderRadius: 5,
     },
     inputError: {
-        borderColor: 'red',
-    },
-    colorPickerContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        //backgroundColor: '#101010',
-        height: 200,
-    },
-    colorPicker: {
-        height: 50,
-        width: 300,
-        alignSelf: 'center',
-        //borderWidth: 1,
-        //borderColor: '#ccc',
-        marginTop: 60,
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 20,
-    },
-    button: {
-        height: 51,
-        width: 148,
-        backgroundColor: '#007BFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        alignSelf: 'center',
-        position: 'bottom',
-    },
-    buttonText: {
-        color: '#FFFFFF',
-        fontSize: 18,
-    },
-    sliderValues: {
-        position: 'absolute',
-        top: -30, // regola questa posizione per posizionare il numero correttamente
-        left: '50%',
-        transform: [{ translateX: -10 }], // regola questa trasformazione per centrare il numero
-        fontSize: 16,
-        color: '#000', // colore del testo
-    },
-    //per le categirie
-    grid: {
-        justifyContent: 'space-between',
-    },
-    row: {
-        justifyContent: 'space-between',
+        borderColor: '#FF0000',
     },
     categoryItem: {
-        flex: 1,
-        margin: 5,
+        flexDirection: 'row',
         padding: 10,
+        marginVertical: 5,
+        borderWidth: 1,
         borderRadius: 5,
+        borderColor: '#DDD',
+        backgroundColor: '#FFF',
+    },
+    outer: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
         alignItems: 'center',
     },
-    selected: {
-        borderWidth: 2,
-        borderColor: 'purple',
+    outerTrue: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: '#0F0FFF',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    categoryText: {
-        color: '#333',
+    inner: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#aaa',
     },
-
-
+    innerTrue: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#0F0FFF',
+    },
+    outerSmall: {
+        width: 4,
+        height: 4,
+        top: 6,
+        borderRadius: 2,
+        backgroundColor: '#003366',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    outerTrueSmall: {
+        width: 8,
+        height: 8,
+        borderRadius: 2,
+        backgroundColor: '#ABCDEF',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    innerSmall: {
+        width: 7,
+        height: 7,
+        borderRadius: 1,
+        backgroundColor: '#223366',
+    },
+    innerTrueSmall: {
+        width: 7,
+        height: 7,
+        borderRadius: 1,
+        backgroundColor: '#334488',
+    },
 });
+
+
+export default EditBisogno;

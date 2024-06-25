@@ -27,7 +27,7 @@ const WelcomePage = ({ navigation }) => {
         <Layout
             navigation={navigation}
             showTopBar={false}
-            //header={<Text style={theme.headerTitle}>Valorian</Text>}
+            header
             //fab={<Text>+</Text>}
             //fabAction={handleFabPressHome}
             showBodyFooter={true}

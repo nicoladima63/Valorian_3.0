@@ -112,8 +112,8 @@ const BisogniList = ({ session, setFabAction }) => {
     const DATA = transformData(categorie, bisogni, bisInCat);
 
     const selectBisogno = (bisogno) => {
-        setModalVisibleEdit(true);
         setBisogno(bisogno);
+        setModalVisibleEdit(true);
     };
 
     const handleModalAddClose = () => {
@@ -192,7 +192,7 @@ const BisogniList = ({ session, setFabAction }) => {
 
     return (
         <View style={theme.body}>
-            <View style={theme.articleBottom}>
+            <View style={theme.articleMiddle}>
                 <SectionList
                     sections={DATA}
                     keyExtractor={(item, index) => item.uniqueKey}
@@ -225,9 +225,7 @@ const BisogniList = ({ session, setFabAction }) => {
                         />
                     }
                 />
-
             </View>
-
             <AddBisogno
                 visible={modalVisibleAdd}
                 onClose={handleModalAddClose}
