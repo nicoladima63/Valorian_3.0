@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ScrollView, StatusBar, TouchableOpacity, Image, TextInput, FlatList } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, StatusBar, TouchableOpacity, Image, TextInput, Pressable, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RadioButton } from 'react-native-paper';
 const StyleComponent = () => {
@@ -14,7 +14,7 @@ const StyleComponent = () => {
             />
             <View style={[styles.header, styles.bbs6]}>
                 <Image source={logo} style={styles.logo} resizeMode='contain' />
-                <Text style={styles.headerTitle}>header</Text>
+                <Text style={styles.h5}>header</Text>
             </View>
             <View style={styles.content}>
                 <Text style={styles.text}>content</Text>
@@ -101,18 +101,14 @@ const StyleComponent = () => {
                             <Text style={styles.h5}>articleTitle</Text>
                             <Text style={[styles.articleText, styles.link]}>nicoladimartino@gmail.com</Text>
                         </View>
-                        <View style={[styles.article, styles.articleSuccess]}>
-                            <Text style={[styles.text, styles.h5, styles.fwb, styles.textSuccess]}> email verificata</Text>
-                            <Text style={styles.textSuccess}>text article success</Text>
-                        </View>
 
 
 
                         <View style={styles.article}>
                             <View style={[styles.grid, styles.overflowHidden]}>
                                 <View style={[styles.grid, styles.overflowHidden]}>
-                                    <View style={styles.gap2}>
-                                        <Icon name="cog" size={36} color="#D8BFD8" />
+                                    <View style={[styles.gap2, styles.mb20]}>
+                                        <Icon name="cog" size={24} color="#D8BFD8" />
                                     </View>
                                     <View style={styles.gap2}>
                                         <Text style={[styles.text, styles.h3, styles.fwb]}> Impostazioni h3</Text>
@@ -124,7 +120,7 @@ const StyleComponent = () => {
                                 <View style={styles.article}>
                                     <View style={styles.grid}>
                                         <Icon name="user" size={24} color="#D8BFD8" />
-                                        <TouchableOpacity style={[styles.grid, styles.TouchablebuttonPrimary, { justifyContent: 'space-evenly' }]}>
+                                        <TouchableOpacity style={[styles.grid, styles.TouchablebuttonPrimary, styles.br6, { justifyContent: 'space-evenly' }]}>
                                             <View>
                                                 <Text style={styles.h5}>vai</Text>
                                             </View>
@@ -133,6 +129,10 @@ const StyleComponent = () => {
                                             </View>
                                         </TouchableOpacity>
                                     </View>
+                                    <View style={[styles.article, styles.articleSuccess, styles.br20, styles.mt10]}>
+                                        <Text style={[styles.text, styles.h5, styles.fwb, styles.textSuccess]}> email verificata</Text>
+                                    </View>
+
                                 </View>
 
                             </View>
@@ -170,9 +170,95 @@ const StyleComponent = () => {
                                     </View>
                                 </RadioButton.Group>
                             </View>
+
+
+                            <View style={styles.article}>
+                                <View style={styles.column}>
+                                    <Image source={logo} style={[styles.logoImage60, styles.mb20]} resizeMode='contain' />
+                                    <Text style={[styles.text, styles.h5, styles.fwb, styles.mb20]}>Login Form</Text>
+                                </View>
+
+                                <View style={[styles.article, styles.articleTop]}>
+                                    <Text style={[styles.text]}>Email</Text>
+                                    <View style={[styles.article, styles.articleDefault]}>
+                                        <TextInput
+                                            style={styles.text}
+                                            placeholder="la tue email"
+                                            placeholderTextColor={colors.slate9}
+                                        //onChangeText={onChangeText}
+                                        //value={123}
+                                        />
+                                    </View>
+                                    <View style={[styles.article, styles.articleDanger, styles.pv2]}>
+                                        <Text style={styles.textDanger}>indirizzo obbligatorio</Text>
+                                    </View>
+
+
+                                </View>
+
+                                <View style={[styles.article, styles.articleMiddle]}>
+                                    <Text style={styles.text}>Password</Text>
+                                    <View style={[styles.article, styles.articleDefault]}>
+
+                                        <TextInput
+                                            style={styles.text}
+                                            placeholder="la tua password"
+                                            placeholderTextColor={colors.slate9}
+                                        //onChangeText={onChangeText}
+                                        //value={123}
+                                        />
+                                    </View>
+                                    <View style={[styles.article, styles.articleDanger, styles.pv2]}>
+                                        <Text style={styles.textDanger}>password obbligatoria</Text>
+                                    </View>
+                                </View>
+
+                                <View style={[styles.article, styles.articleMiddle,styles.grid]}>
+                                    <View style={styles.Loginswitch}>
+                                        <Switch value={''} onValueChange={''} trackColor={{ true: "green", false: "gray" }} />
+                                        <Text style={styles.text}>Ricordami</Text>
+                                    </View>
+
+                                    <Pressable onPress={() => navigation.navigate('ForgotPassword')}>
+                                        <Text style={[styles.link, styles.alignRight]}>Password dimenticata?</Text>
+                                    </Pressable>
+                                </View>
+
+                                <View style={[styles.article, styles.articleMiddle]}>
+                                    <TouchableOpacity style={[styles.grid, styles.TouchablebuttonPrimary, styles.br6, { justifyContent: 'space-evenly' }]}>
+                                        <View>
+                                            <Text style={styles.h5}>Accedi</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View style={[styles.article, styles.articleMiddle, styles.grid]}>
+                                    <Text style={[styles.text, styles.mt20]}>Non hai un Account?</Text>
+                                    <Pressable onPress={() => navigation.navigate('Register')}>
+                                        <Text style={[styles.link, styles.alignRight]}>  Registrati</Text>
+                                    </Pressable>
+                                </View>
+
+                                <View style={[styles.article, styles.articleBottom]}>
+
+
+                                </View>
+                            </View>
+
+
                         </View>
 
+                        <View style={styles.article}>
+                            <View style={[styles.article, styles.articleTop]}>
 
+                            </View>
+                            <View style={[styles.article, styles.articleMiddle]}>
+
+                            </View>
+                            <View style={[styles.article, styles.articleBottom]}>
+
+                            </View>
+                        </View>
 
                     </ScrollView>
 
@@ -185,23 +271,6 @@ const StyleComponent = () => {
 
 
             </View >
-            {/*<Text style={[styles.text]}>Login Form</Text>*/}
-            {/*<View style={styles.article}>*/}
-            {/*    <Text style={styles.h5}>Email</Text>*/}
-            {/*    <TextInput*/}
-            {/*        style={styles.input}*/}
-            {/*        placeholder="password"*/}
-            {/*    //onChangeText={onChangeText}*/}
-            {/*    //value={123}*/}
-            {/*    />*/}
-            {/*    <Text style={styles.articleText}>Password</Text>*/}
-            {/*    <TextInput*/}
-            {/*        style={styles.input}*/}
-            {/*        placeholder="password"*/}
-            {/*    //onChangeText={onChangeText}*/}
-            {/*    //value={123}*/}
-            {/*    />*/}
-            {/*</View>*/}
 
 
 
@@ -374,16 +443,17 @@ const colors = {
     slate12: '#ecedee',
 
 }
-const borderRadius = {xxsmall: 2,xsmall: 4,small: 6,medium: 8,large: 12,xlarge: 16,xxlarge: 20,};
-const bxxSmall = borderRadius.xxsmall;
-const bxSmal = borderRadius.xsmall;
-const bSmall = borderRadius.small;
-const bMedium = borderRadius.medium;
-const bLarge = borderRadius.large;
-const bxLarge = borderRadius.xlarge;
-const bxxLarge = borderRadius.xxlarge;
+const borderRadius = { br2: 2, br4: 4, br6: 6, br8: 8, br12: 12, br16: 16, br20: 20, };
+const br2 = borderRadius.br2;
+const br4 = borderRadius.br4;
+const br6 = borderRadius.br6;
+const br8 = borderRadius.br8;
+const br10 = borderRadius.br10;
+const br12 = borderRadius.br12;
+const br16 = borderRadius.br16;
+const br20 = borderRadius.br20;
 
-const fontSize = {xxsmall: 10,xsmall: 12,small: 14,medium: 16,large: 18,xlarge: 20,xxlarge: 24,};
+const fontSize = { xxsmall: 10, xsmall: 12, small: 14, medium: 16, large: 18, xlarge: 20, xxlarge: 24, };
 const fxxSmall = fontSize.xxsmall;
 const fxSmall = fontSize.xsmall;
 const fSmall = fontSize.small;
@@ -392,7 +462,7 @@ const fLarge = fontSize.large;
 const fxLarge = fontSize.xlarge;
 const fxxLarge = fontSize.xxlarge;
 
-const fontWeight = {light: 300,regular: 400,medium: 500,semiBold: 600,bold: 700,extraBold: 800,black: 900,};
+const fontWeight = { light: 300, regular: 400, medium: 500, semiBold: 600, bold: 700, extraBold: 800, black: 900, };
 const fwLight = fontWeight.light;
 const fwRegular = fontWeight.regular;
 const fwMedium = fontWeight.medium;
@@ -401,7 +471,7 @@ const fwBold = fontWeight.bold;
 const fwExtraBold = fontWeight.extraBold;
 const fwBlack = fontWeight.black;
 
-const margin = {m2: 2,m4: 4,m8: 8,m16: 16,m24: 24,m32: 32,m40: 40,};
+const margin = { m2: 2, m4: 4, m8: 8, m16: 16, m24: 24, m32: 32, m40: 40, };
 const m2 = margin.m2;
 const m4 = margin.m4;
 const m8 = margin.m8;
@@ -410,7 +480,7 @@ const m24 = margin.m24;
 const m32 = margin.m32;
 const m40 = margin.m40;
 
-const padding = {p2: 2,p4: 4,p8: 8,p16: 16,p20:20,p24: 24,p32: 32,p40: 40,};
+const padding = { p2: 2, p4: 4, p8: 8, p16: 16, p20: 20, p24: 24, p32: 32, p40: 40, };
 const p2 = padding.p2;
 const p4 = padding.p4;
 const p8 = padding.p8;
@@ -420,7 +490,7 @@ const p24 = padding.p24;
 const p32 = padding.p32;
 const p40 = padding.p40;
 
-const gap = {gap2: 2,gap4: 4,gap8: 8,gap16: 16,gap24: 24,gap32: 32,gap40: 40,};
+const gap = { gap2: 2, gap4: 4, gap8: 8, gap16: 16, gap24: 24, gap32: 32, gap40: 40, };
 const g2 = gap.gap2;
 const g4 = gap.gap4;
 const g8 = gap.gap8;
@@ -429,7 +499,7 @@ const g24 = gap.gap24;
 const g32 = gap.gap32;
 const g40 = gap.gap40;
 
-const lineHeight = {    lh1: 1.2,    lh2: 1.4,    lh3: 1.6,    lh4: 1.8,    lh5: 2.0,};
+const lineHeight = { lh1: 1.2, lh2: 1.4, lh3: 1.6, lh4: 1.8, lh5: 2.0, };
 const lh1 = lineHeight.lh1;
 const lh2 = lineHeight.lh2;
 const lh3 = lineHeight.lh3;
@@ -472,7 +542,7 @@ const styles = StyleSheet.create({
     article: {
         paddingVertical: 10,
         paddingHorizontal: 16,
-        borderRadius: bMedium,
+        borderRadius: br8,
         borderWidth: 1,
         marginBottom: 0,
         backgroundColor: colors.slate1,
@@ -481,6 +551,8 @@ const styles = StyleSheet.create({
     articleDefault: {
         backgroundColor: colors.slate3,
         borderColor: colors.slate10,
+        paddingVertical: 8,
+        paddingHorizontal: 14,
 
     },
     articleSuccess: {
@@ -500,8 +572,8 @@ const styles = StyleSheet.create({
         borderColor: colors.yellow7,
     },
     articleTop: {
-        borderTopLeftRadius: bMedium,
-        borderTopRightRadius: bMedium,
+        borderTopLeftRadius: br8,
+        borderTopRightRadius: br8,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
         borderColor: colors.slate7,
@@ -514,12 +586,12 @@ const styles = StyleSheet.create({
     articleBottom: {
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
-        borderBottomLeftRadius: bMedium,
-        borderBottomRightRadius: bMedium,
+        borderBottomLeftRadius: br8,
+        borderBottomRightRadius: br8,
         borderTopWidth: 0,
         borderColor: colors.slate7,
     },
-    
+
     // tag H
     h1: { fontSize: 24, color: colors.slate12 },
     h2: { fontSize: 22, color: colors.slate12 },
@@ -535,6 +607,7 @@ const styles = StyleSheet.create({
 
     //font
     fwb: { fontWeight: 'bold', },
+
     //text
     text: { color: colors.slate12, },
     text10: { fontSize: 10, },
@@ -544,16 +617,16 @@ const styles = StyleSheet.create({
     text18: { fontSize: 18, },
     text20: { fontSize: 20, },
     textArticle: { color: colors.slate12, },
-    textSuccess: {color: colors.green11,fontWeight: 'bold',},
-    textDanger: {color: colors.red11,fontWeight: 'bold',},
-    textWarning: {color: colors.yellow10,fontWeight: 'bold',},
-    textInfo: {color: colors.blue11,fontWeight: 'bold',},
-    textSecondary: {color:colors.slate11,},
-    textTertiary: {color:colors.slate10,},
-    textQuaternary: {color:colors.slate9,},
-    textLink: {color:colors.blue11,},
-  
-    
+    textSuccess: { color: colors.green11, fontWeight: 'bold', },
+    textDanger: { color: colors.red11, fontWeight: 'bold', },
+    textWarning: { color: colors.yellow10, fontWeight: 'bold', },
+    textInfo: { color: colors.blue11, fontWeight: 'bold', },
+    textSecondary: { color: colors.slate11, },
+    textTertiary: { color: colors.slate10, },
+    textQuaternary: { color: colors.slate9, },
+    textLink: { color: colors.blue11, },
+
+
     contentParagraph: {
         marginTop: 8,
         color: colors.onBackground,
@@ -576,27 +649,50 @@ const styles = StyleSheet.create({
         paddingBottom: 4,
         alignSelf: 'stretch',
     },
-    fwb: { fontWeight: 'bold' },
-    fs20: { fontSize: 20 },
-    overflowHidden: {overflow: 'hidden',},
-    gap1: {margin: 0, // 0.25rem è circa 4px},
-    gap2: {marginLeft: 14, // 0.25rem è circa 4px},
-    gap3: {marginLeft: 28, // 0.25rem è circa 4px},
-    grid: {       
+    overflowHidden: { overflow: 'hidden', },
+    grid: {
         flexDirection: 'row', // Puoi cambiare in 'column' per una griglia verticale
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         flexWrap: 'wrap',
         alignItems: 'center'
     },
-    contentPadding: {
-    height: 100, // Aggiungi uno spazio extra in fondo al contenuto
+    column: {
+        flexDirection: 'column', // Puoi cambiare in 'column' per una griglia verticale
+        alignItems: 'center',
+        justifyContent: 'center',
+
     },
+    contentPadding: {
+        height: 100, // Aggiungi uno spazio extra in fondo al contenuto
+    },
+    center: { alignItems: 'center', justifyContent: 'center', },
+    alignRight: { alignSelf: 'flex-end', },
+    alignLeft: { alignSelf: 'flex-start', },
+    //border
+    br2: { borderRadius: br2 },
+    br4: { borderRadius: br4 },
+    br6: { borderRadius: br6 },
+    br8: { borderRadius: br8 },
+    br10: { borderRadius: br10 },
+    br16: { borderRadius: br16 },
+    br20: { borderRadius: br20 },
+    //padding
+    p2: { padding: p2 },
+    p4: { padding: p4 },
+    p8: { padding: p8 },
+    p16: { padding: p16 },
+    p20: { padding: p20 },
+    p24: { padding: p24 },
+    p32: { padding: p32 },
+    p40: { padding: p40 },
+    pv2: { paddingVertical: p2 },
+    ph2: { paddingHorizontal: p2 },
     //logo
-    logo: {width: 28,height: 28,},
-    logoImage100: {width: 100,height: 100,},
-    logoImage80: {width: 80,height: 80,},
-    logoImage60: {width: 100,height: 60,},
-    logoImage40: {width: 100,height: 40,},
+    logo: { width: 28, height: 28, },
+    logoImage100: { width: 100, height: 100, },
+    logoImage80: { width: 80, height: 80, },
+    logoImage60: { width: 100, height: 60, },
+    logoImage40: { width: 100, height: 40, },
     logoImageContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -604,7 +700,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
     },
-   
+
     //content
     contentTitle: {
         fontSize: 16,
@@ -666,7 +762,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-
+    //border
 
 
 
@@ -703,7 +799,7 @@ const styles = StyleSheet.create({
     angleRightIcon: {
         width: 44,
     },
-    
+
 
     //body
     bodyFooter: {
@@ -740,7 +836,7 @@ const styles = StyleSheet.create({
     link: {
         color: colors.blue11,
     },
-    
+
 
     // FAB
     fab: {
@@ -1037,7 +1133,8 @@ const styles = StyleSheet.create({
         color: colors.secondary,
         fontSize: 13,
     },
-    //expo
+
+
 });
 
 export default StyleComponent;
