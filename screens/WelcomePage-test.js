@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, SafeAreaView, ScrollView, StatusBar, TouchableOpacity, Image, TextInput, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { RadioButton } from 'react-native-paper';
 const StyleComponent = () => {
     const logo = require("../assets/images/logo.png")
 
@@ -17,179 +17,244 @@ const StyleComponent = () => {
                 <Text style={styles.headerTitle}>header</Text>
             </View>
             <View style={styles.content}>
-                <Text style={styles.textArticle}>content</Text>
+                <Text style={styles.text}>content</Text>
 
-                    <View style={styles.body}>
-                    <Text style={styles.textArticle}>body</Text>
+                <View style={styles.body}>
 
-
-                        <View style={styles.article}>
-                            <Text style={styles.textArticle}>article default</Text>
-                        </View>
-                        <View style={styles.articleSuccess}>
-                            <Text style={styles.textSuccess}>article success</Text>
-                        </View>
-                        <View style={styles.articleInfo}>
-                            <Text style={styles.textInfo}>article info</Text>
-                        </View>
-                        <View style={styles.articleDanger}>
-                            <Text style={styles.textDanger}>article danger</Text>
-                        </View>
-                        <View style={styles.articleWarning}>
-                            <Text style={styles.textWarning}>article warning</Text>
-                        </View>
-
-                        <View style={styles.articleTop}>
-                            <Text>articleTop</Text>
-                        </View>
-                        <View style={styles.articleMiddle}>
-                            <Text style={styles.articleText}>articleMiddle</Text>
-                        </View>
-                        <View style={styles.articleBottom}>
-                            <Text style={styles.articleText}>articleBottom</Text>
-                        </View>
-
-                        <Text style={styles.contentTitle}>contentTitle</Text>
-
-                        <View style={styles.articleTop}>
-                            <Text style={styles.articleTitle}>articleTitle:</Text>
-                            <View style={styles.contentArticle}>
-                                <View style={styles.checkTextContainer}>
-                                    <Icon name="check" size={18} color="#aaaaaa" style={styles.checkIcon} />
-                                    <Text style={styles.articleText}>contentArticle articleText</Text>
-                                </View>
-                                <Icon name="angle-right" size={24} color="#E3E3E3" style={styles.angleRightIcon} />
-                            </View>
-                            <View style={styles.contentArticle}>
-                                <View style={styles.checkTextContainer}>
-                                    <Icon name="check" size={18} color="#2ECC71" style={styles.checkIcon} />
-                                    <Text style={styles.articleText}>contentArticle articleText</Text>
-                                </View>
-                                <Icon name="angle-right" size={24} color="#E3E3E3" style={styles.angleRightIcon} />
-                            </View>
-                        </View>
-
-                        <View style={styles.articleMiddle}>
-                            <Text style={styles.articleText}>questo può servire dove serve...</Text>
-                        </View>
-
-                        <View style={styles.articleBottom}>
-                            <View style={styles.checkTextContainer}>
-                                <Icon name="info-circle" size={18} color="#2ECC71" style={styles.checkIcon} />
-                                <Text style={styles.articleText}>tocca per soddisfare. la freccia per modificare</Text>
-                            </View>
-
-                        </View>
+                    <Text style={[styles.text, styles.h1, styles.fwb]}> Title h3</Text>
+                    <Text style={[styles.text, styles.h2, styles.fwb]}> Title h2</Text>
+                    <Text style={[styles.text, styles.h3, styles.fwb]}> Title h3</Text>
+                    <Text style={[styles.text, styles.h4, styles.fwb]}> Title h4</Text>
+                    <Text style={[styles.text, styles.h5, styles.fwb]}> Title h5</Text>
+                    <Text style={[styles.text, styles.h6, styles.fwb]}> Title h6</Text>
 
 
-                        <Text style={[styles.contentTitle]}>contentTitle</Text>
-                        <View style={styles.article}>
-                            <View style={styles.contentArticleSquareContainer}>
-                                <View style={styles.contentArticleSquare}>
-                                </View>
-                                <View style={styles.contentArticleSquare}>
-                                </View>
-                                <View style={styles.contentArticleSquare}>
-                                </View>
-                                <View style={styles.contentArticleSquare}>
-                                </View>
-                                <View style={styles.contentArticleSquare}>
-                                </View>
-                                <View style={styles.contentArticleSquare}>
-                                </View>
-                                <View style={styles.contentArticleSquare}>
-                                </View>
-                                <View style={styles.contentArticleSquare}>
+                    <ScrollView>
+                        <View style={[styles.article, styles.articleDefault]}>
+                            <Text style={styles.text}>text article default</Text>
+                        </View>
+                        <View style={[styles.article, styles.articleSuccess]}>
+                            <Text style={[styles.text, styles.h5, styles.fwb, styles.textSuccess]}> Title h5</Text>
+                            <Text style={styles.textSuccess}>text article success</Text>
+                        </View>
+                        <View style={[styles.article, styles.articleInfo]}>
+                            <Text style={[styles.text, styles.h3, styles.fwb, styles.textInfo]}> Title h3</Text>
+                            <Text style={[styles.textInfo]}>text article Info</Text>
+                        </View>
+                        <View style={[styles.article, styles.articleDanger]}>
+                            <Text style={[styles.text, styles.h4, styles.fwb, styles.textDanger]}> Title h4</Text>
+                            <Text style={styles.textDanger}>text article danger</Text>
+                        </View>
+                        <View style={[styles.article, styles.articleWarning]}>
+                            <Text style={[styles.text, styles.h6, styles.fwb, styles.textWarning]}> Title h6</Text>
+                            <Text style={styles.textWarning}>text article warning</Text>
+                        </View>
+
+                        <View style={[styles.article, styles.articleTop]}>
+                            <Text style={styles.text}>articleTop</Text>
+                        </View>
+                        <View style={[styles.article, styles.articleMiddle]}>
+                            <View style={[styles.grid, styles.overflowHidden]}>
+                                <View style={[styles.grid, styles.overflowHidden]}>
+                                    <View style={styles.gap2}>
+                                        <Icon name="folder" size={24} color="#D8BFD8" />
+                                    </View>
+                                    <View style={styles.gap2}>
+                                        <Text style={styles.h5}>articleTitle con icona</Text>
+                                    </View>
                                 </View>
                             </View>
+                            <View style={styles.gap2}>
+                                <Text style={styles.text}>primo rigo di testo</Text>
+                            </View>
+                            <View style={styles.gap2}>
+                                <Text style={styles.text}>secondo rigo di testo</Text>
+                            </View>
+                            <View style={styles.gap2}>
+                                <Text style={styles.text}>terzo rigo di testo</Text>
+                            </View>
                         </View>
-                        <Text style={[styles.contentTitle]}>contentTitle</Text>
+                        <View style={[styles.article, styles.articleMiddle]}>
+                            <View style={[styles.grid, styles.overflowHidden]}>
+                                <View style={styles.gap1}>
+                                    <Text style={styles.articleTitle}>articleTitle</Text>
+                                </View>
+                            </View>
 
-                        <View style={styles.article}>
-                            <Text style={styles.articleTitle}>articleTitle</Text>
-                            <Text style={[styles.articleText, styles.link]}>articleText color.link</Text>
+                            <View style={styles.gap2}>
+                                <Text style={styles.text}>primo rigo di testo</Text>
+                            </View>
+                            <View style={styles.gap2}>
+                                <Text style={styles.text}>secondo rigo di testo</Text>
+                            </View>
+                            <View style={styles.gap2}>
+                                <Text style={styles.text}>terzo rigo di testo</Text>
+                            </View>
                         </View>
-                        <Text style={[styles.contentTitle]}>contentTitle</Text>
-
-                        <View style={styles.article}>
-                            <Text style={styles.articleTitle}>articleTitle</Text>
-                            <Text style={styles.articleText}>nicoladimartino@gmail.com</Text>
+                        <View style={[styles.article, styles.articleBottom]}>
+                            <Text style={styles.text}>articleBottom</Text>
                         </View>
 
-                        <Text style={[styles.contentTitle]}>contentTitle</Text>
+
+                        <Text style={[styles.contentTitle]}>emai verificata</Text>
                         <View style={styles.article}>
-                            <Text style={styles.articleTitle}>articleTitle</Text>
+                            <Text style={styles.h5}>articleTitle</Text>
                             <Text style={[styles.articleText, styles.link]}>nicoladimartino@gmail.com</Text>
                         </View>
-
-                        <Text style={[styles.contentTitle]}>Login Form</Text>
-                        <View style={styles.article}>
-                            <Text style={styles.articleText}>Email</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="password"
-
-                            //onChangeText={onChangeText}
-                            //value={123}
-                            />
-                            <Text style={styles.articleText}>Password</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="password"
-
-                            //onChangeText={onChangeText}
-                            //value={123}
-                            />
-                        </View>
-                        <Text style={[styles.contentTitle]}>contentTitle ultimo</Text>
-
-                        <View style={styles.article}>
-                            <TextInput
-                                style={styles.input}
-                                //onChangeText={onChangeNumber}
-                                value={8}
-                                placeholder="useless placeholder"
-                                keyboardType="numeric"
-                            />
+                        <View style={[styles.article, styles.articleSuccess]}>
+                            <Text style={[styles.text, styles.h5, styles.fwb, styles.textSuccess]}> email verificata</Text>
+                            <Text style={styles.textSuccess}>text article success</Text>
                         </View>
 
-                        <Text style={[styles.contentTitle]}>contentTitle</Text>
+
+
                         <View style={styles.article}>
-                            <Text style={styles.articleTitle}>articleTitle</Text>
-                            <Text style={[styles.articleText, styles.link]}>nicoladimartino@gmail.com</Text>
+                            <View style={[styles.grid, styles.overflowHidden]}>
+                                <View style={[styles.grid, styles.overflowHidden]}>
+                                    <View style={styles.gap2}>
+                                        <Icon name="cog" size={36} color="#D8BFD8" />
+                                    </View>
+                                    <View style={styles.gap2}>
+                                        <Text style={[styles.text, styles.h3, styles.fwb]}> Impostazioni h3</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={[styles.article]}>
+                                <Text style={[styles.text, styles.h5, styles.fwb]}>Account</Text>
+                                <View style={styles.article}>
+                                    <View style={styles.grid}>
+                                        <Icon name="user" size={24} color="#D8BFD8" />
+                                        <TouchableOpacity style={[styles.grid, styles.TouchablebuttonPrimary, { justifyContent: 'space-evenly' }]}>
+                                            <View>
+                                                <Text style={styles.h5}>vai</Text>
+                                            </View>
+                                            <View style={[styles.gap2]}>
+                                                <Icon name="arrow-right" size={16} color="#D8BFD8" />
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+
+                            </View>
+                            <View style={[styles.article]}>
+                                <Text style={[styles.text, styles.h5, styles.fwb]}>Scelta del Tema</Text>
+                                <RadioButton.Group >
+                                    <View style={[styles.article, styles.articleTop]}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Icon name="adjust" size={20} color={colors.slate12} style={{ marginRight: 20 }} />
+                                                <Text style={styles.text}>Automatico</Text>
+                                            </View>
+                                            <RadioButton value="auto" />
+                                        </View>
+
+                                    </View>
+
+                                    <View style={[styles.article, styles.articleMiddle]}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Icon name="sun-o" size={20} color={colors.slate12} style={{ marginRight: 20 }} />
+                                                <Text style={styles.text}>Chiaro</Text>
+                                            </View>
+                                            <RadioButton value="light" color={colors.slate12} />
+                                        </View>
+                                    </View>
+                                    <View style={[styles.article, styles.articleBottom]}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Icon name="moon-o" size={20} color={colors.slate12} style={{ marginRight: 20 }} />
+                                                <Text style={styles.text}>Scuro</Text>
+                                            </View>
+                                            <RadioButton value="dark" />
+                                        </View>
+                                    </View>
+                                </RadioButton.Group>
+                            </View>
                         </View>
 
-                        <Text style={[styles.contentTitle]}>contentTitle</Text>
-                        <View style={styles.article}>
-                            <Text style={styles.articleTitle}>articleTitle</Text>
-                            <Text style={[styles.articleText, styles.link]}>nicoladimartino@gmail.com</Text>
-                        </View>
 
-                        <View style={styles.contentPadding}></View>
 
-                    </View>
-                <View style={styles.bodyFooter}>
-                    <TouchableOpacity style={styles.buttonCancel}>
-                        <Text style={styles.buttonText}>Annulla</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonDelete}>
-                        <Text style={styles.buttonText}>Elimina</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonOK}>
-                        <Text style={styles.buttonText}>OK</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonSave}>
-                        <Text style={styles.buttonText}>Salva</Text>
-                    </TouchableOpacity>
+                    </ScrollView>
+
                 </View>
-            </View>
+
+
+
+
+
+
+
+            </View >
+            {/*<Text style={[styles.text]}>Login Form</Text>*/}
+            {/*<View style={styles.article}>*/}
+            {/*    <Text style={styles.h5}>Email</Text>*/}
+            {/*    <TextInput*/}
+            {/*        style={styles.input}*/}
+            {/*        placeholder="password"*/}
+            {/*    //onChangeText={onChangeText}*/}
+            {/*    //value={123}*/}
+            {/*    />*/}
+            {/*    <Text style={styles.articleText}>Password</Text>*/}
+            {/*    <TextInput*/}
+            {/*        style={styles.input}*/}
+            {/*        placeholder="password"*/}
+            {/*    //onChangeText={onChangeText}*/}
+            {/*    //value={123}*/}
+            {/*    />*/}
+            {/*</View>*/}
+
+
+
+            {/*<View style={styles.bodyFooter}>*/}
+            {/*    <TouchableOpacity style={styles.buttonCancel}>*/}
+            {/*        <Text style={styles.buttonText}>Annulla</Text>*/}
+            {/*    </TouchableOpacity>*/}
+            {/*    <TouchableOpacity style={styles.buttonDelete}>*/}
+            {/*        <Text style={styles.buttonText}>Elimina</Text>*/}
+            {/*    </TouchableOpacity>*/}
+            {/*    <TouchableOpacity style={styles.buttonOK}>*/}
+            {/*        <Text style={styles.buttonText}>OK</Text>*/}
+            {/*    </TouchableOpacity>*/}
+            {/*    <TouchableOpacity style={styles.buttonSave}>*/}
+            {/*        <Text style={styles.buttonText}>Salva</Text>*/}
+            {/*    </TouchableOpacity>*/}
+            {/*</View>*/}
+
+
+            {/*<Text style={[styles.contentTitle]}>contenitore di minibox</Text>*/}
+            {/*<View style={styles.article}>*/}
+            {/*    <View style={styles.contentArticleSquareContainer}>*/}
+            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        </View>*/}
+            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        </View>*/}
+            {/*    </View>*/}
+            {/*</View>*/}
+
+
+
+
+
             <View style={styles.footer} >
                 <View style={styles.iconContainer}>
                     <Icon name="home" size={24} color="#D8BFD8" />
                     <Icon name="cog" size={24} color="#D8BFD8" />
                 </View>
             </View>
-        </View>
+        </View >
+
     );
 };
 
@@ -309,7 +374,23 @@ const colors = {
     slate12: '#ecedee',
 
 }
+const borderRadius = {
+    xxsmall: 2,
+    xsmall: 4,
+    small: 6,
+    medium: 8,
+    large: 12,
+    xlarge: 16,
+    xxlarge: 20,
 
+};
+const bxxSmall = borderRadius.xxsmall;
+const bxSmal = borderRadius.xsmall;
+const bSmall = borderRadius.small;
+const bMedium = borderRadius.medium;
+const bLarge = borderRadius.large;
+const bxLarge = borderRadius.xlarge;
+const bxxLarge = borderRadius.xxlarge;
 
 const styles = StyleSheet.create({
     safeAreaView: {
@@ -325,7 +406,7 @@ const styles = StyleSheet.create({
 
     },
     header: {
-        height:50,
+        height: 50,
         backgroundColor: colors.slate2,
         flexDirection: 'row',
         alignItems: 'center',
@@ -335,7 +416,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: colors.slate1,
-    //    paddingHorizontal: 10,
+        //    paddingHorizontal: 10,
     },
     body: {
         flex: 1,
@@ -344,96 +425,120 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     article: {
-        backgroundColor: colors.slate9,
-        padding: 12,
-        borderRadius: 8,
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: bMedium,
         borderWidth: 1,
-        borderColor: colors.slate6,
-        marginBottom: 10,
+        marginBottom: 0,
+        backgroundColor: colors.slate1,
+        borderColor: colors.slate7,
+    },
+    articleDefault: {
+        backgroundColor: colors.slate3,
+        borderColor: colors.slate10,
+
     },
     articleSuccess: {
         backgroundColor: colors.green3,
-        padding: 14,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: colors.green7,
-        marginBottom: 10,
+        borderColor: colors.green8,
     },
     articleDanger: {
         backgroundColor: colors.red3,
-        padding: 14,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: colors.red7,
-        marginBottom: 10,
+        borderColor: colors.red8,
     },
     articleInfo: {
         backgroundColor: colors.blue3,
-        padding: 14,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: colors.blue7,
-        marginBottom: 10,
+        borderColor: colors.blue8,
     },
     articleWarning: {
         backgroundColor: colors.yellow3,
-        padding: 14,
-        borderRadius: 8,
-        borderWidth: 1,
         borderColor: colors.yellow7,
-        marginBottom: 10,
     },
     articleTop: {
-        backgroundColor: colors.slate4,
-        padding: 14,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
+        borderTopLeftRadius: bMedium,
+        borderTopRightRadius: bMedium,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        borderWidth: 1,
         borderColor: colors.slate7,
     },
     articleMiddle: {
-        backgroundColor: colors.slate4,
-        padding: 14,
         borderRadius: 0,
-        borderWidth: 1,
         borderTopWidth: 0,
         borderColor: colors.slate7,
     },
     articleBottom: {
-        backgroundColor: colors.slate4,
-        padding: 14,
-        borderBottomLeftRadius: 8,
-        borderBottomRightRadius: 8,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
-        borderWidth: 1,
+        borderBottomLeftRadius: bMedium,
+        borderBottomRightRadius: bMedium,
         borderTopWidth: 0,
         borderColor: colors.slate7,
     },
+    // tag H
+    h1: { fontSize: 24, color: colors.slate12 },
+    h2: { fontSize: 22, color: colors.slate12 },
+    h3: { fontSize: 20, color: colors.slate12 },
+    h4: { fontSize: 18, color: colors.slate12 },
+    h5: { fontSize: 16, color: colors.slate12 },
+    h6: { fontSize: 14, color: colors.slate12 },
+    //font
+    fwb: { fontWeight: 'bold', },
     //text
-    textArticle: {
-        color: colors.slate12,
-    },
+    text: { color: colors.slate12, },
+    text12: { fontSize: 12, },
+    text14: { fontSize: 14, },
+    text16: { fontSize: 16, },
+    textArticle: { color: colors.slate12, },
     textSuccess: {
-        color: colors.green10,
+        color: colors.green11,
+        fontWeight: 'bold',
     },
     textDanger: {
-        color: colors.red10,
+        color: colors.red11,
+        fontWeight: 'bold',
     },
     textWarning: {
         color: colors.yellow10,
+        fontWeight: 'bold',
     },
     textInfo: {
-        color: colors.blue10,
+        color: colors.blue11,
+        fontWeight: 'bold',
+    },
+    textSecondary: colors.slate11,
+    textTertiary: colors.slate10,
+    textQuaternary: colors.slate9,
+    textLink: colors.blue11,
+    textSuccess: colors.green11,
+    textWarning: colors.yellow11,
+    textDanger: colors.red11,
+    textInfo: colors.blue11,
+    //svarioni
+    overflowHidden: {
+        overflow: 'hidden',
+    },
+    gap1: {
+        margin: 0, // 0.25rem è circa 4px
+    },
+    gap2: {
+        marginLeft: 14, // 0.25rem è circa 4px
+    },
+    gap3: {
+        marginLeft: 28, // 0.25rem è circa 4px
+    },
+    grid: {
+       
+        flexDirection: 'row', // Puoi cambiare in 'column' per una griglia verticale
+        justifyContent:'space-between',
+        flexWrap: 'wrap',
+        alignItems: 'center'
     },
 
 
     //border
     bbs6: {
         borderBottomWidth: 1,
-        borderBottomColor: colors.slate6
+        borderBottomColor: colors.slate6,
     },
     //logo
     logoImage: {
@@ -569,14 +674,6 @@ const styles = StyleSheet.create({
     },
 
     //body
-    articleTitle: {
-        fontSize: 16,
-        color: colors.background,
-        marginBottom: 10
-    },
-    articleText: {
-        color: colors.onBackground,
-    },
     bodyFooter: {
         backgroundColor: colors.background,
         margin: 0,
@@ -608,14 +705,8 @@ const styles = StyleSheet.create({
     },
 
     //text vari e tipografici
-    errorText: {
-        color: colors.onError,
-        fontSize: 12,
-        marginTop: 5,
-        marginLeft: 10,
-    },
     link: {
-        color: colors.link,
+        color: colors.blue11,
     },
     mt10: { marginTop: 10 },
     mb10: { marginBottom: 10 },
@@ -654,6 +745,16 @@ const styles = StyleSheet.create({
     },
 
     // BUTTON
+
+    TouchablebuttonPrimary: {
+        alignItems: 'center',
+        backgroundColor: colors.blue8,
+        borderWidth: 1,
+        borderColor: colors.blue8,
+        paddingHorizontal: 20,
+        paddingVertical: 6,
+        borderRadius: borderRadius.small
+    },
     buttonContainer1: {
         flex: 1,
         flexDirection: 'row',
@@ -669,7 +770,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         //width: '50%',
     },
-    button: {
+    button2: {
         flex: 1,
         height: 45,
         backgroundColor: colors.primary,
@@ -921,89 +1022,6 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     //expo
-    backgroundDefault: colors.slate1,
-    backgroundScreen: '#0c0d0e',
-    backgroundSubtle: colors.slate2,
-    backgroundElement: colors.slate3,
-    backgroundHover: colors.slate4,
-    backgroundSelected: colors.slate5,
-    backgroundOverlay: colors.slate2,
-    backgroundSuccess: colors.green3,
-    backgroundWarning: colors.yellow3,
-    backgroundDanger: colors.red3,
-    backgroundInfo: colors.blue3,
-    iconDefault: colors.slate11,
-    iconSecondary: colors.slate10,
-    iconTertiary: colors.slate9,
-    iconQuaternary: colors.slate8,
-    iconSuccess: colors.green10,
-    iconWarning: colors.yellow11,
-    iconDanger: colors.red10,
-    iconInfo: colors.blue10,
-    textDefault: colors.slate12,
-    textSecondary: colors.slate11,
-    textTertiary: colors.slate10,
-    textQuaternary: colors.slate9,
-    textLink: colors.blue11,
-    textSuccess: colors.green11,
-    textWarning: colors.yellow11,
-    textDanger: colors.red11,
-    textInfo: colors.blue11,
-    borderDefault: colors.slate7,
-    borderSecondary: colors.slate6,
-    borderSuccess: colors.green7,
-    borderWarning: colors.yellow7,
-    borderDanger: colors.red7,
-    borderInfo: colors.blue7,
-    buttonPrimaryBackground: colors.blue8,
-    buttonPrimaryBorder: colors.blue8,
-    buttonPrimaryHover: colors.blue7,
-    buttonPrimaryIcon: colors.blue12,
-    buttonPrimaryText: colors.white,
-    buttonPrimaryDisabledBackground: colors.blue7,
-    buttonPrimaryDisabledBorder: colors.blue7,
-    buttonPrimaryDisabledText: colors.slate11,
-    buttonSecondaryBackground: colors.slate3,
-    buttonSecondaryBorder: colors.slate8,
-    buttonSecondaryHover: colors.slate4,
-    buttonSecondaryIcon: colors.slate12,
-    buttonSecondaryText: colors.white,
-    buttonSecondaryDisabledBackground: colors.slate1,
-    buttonSecondaryDisabledBorder: colors.slate7,
-    buttonSecondaryDisabledText: colors.slate11,
-    buttonTertiaryBackground: colors.transparent,
-    buttonTertiaryBorder: colors.transparent,
-    buttonTertiaryHover: colors.blue4,
-    buttonTertiaryIcon: colors.blue10,
-    buttonTertiaryText: colors.blue11,
-    buttonTertiaryDisabledBackground: colors.transparent,
-    buttonTertiaryDisabledBorder: colors.transparent,
-    buttonTertiaryDisabledText: colors.blue9,
-    buttonQuaternaryBackground: colors.transparent,
-    buttonQuaternaryBorder: colors.transparent,
-    buttonQuaternaryHover: colors.slate4,
-    buttonQuaternaryIcon: colors.slate12,
-    buttonQuaternaryText: colors.white,
-    buttonQuaternaryDisabledBackground: colors.transparent,
-    buttonQuaternaryDisabledBorder: colors.transparent,
-    buttonQuaternaryDisabledText: colors.slate11,
-    buttonPrimaryDestructiveBackground: colors.red8,
-    buttonPrimaryDestructiveBorder: colors.red8,
-    buttonPrimaryDestructiveHover: colors.red7,
-    buttonPrimaryDestructiveIcon: colors.red12,
-    buttonPrimaryDestructiveText: colors.white,
-    buttonPrimaryDestructiveDisabledBackground: colors.red6,
-    buttonPrimaryDestructiveDisabledBorder: colors.red6,
-    buttonPrimaryDestructiveDisabledText: colors.red12,
-    buttonSecondaryDestructiveBackground: colors.red3,
-    buttonSecondaryDestructiveBorder: colors.red7,
-    buttonSecondaryDestructiveHover: colors.red2,
-    buttonSecondaryDestructiveIcon: colors.red9,
-    buttonSecondaryDestructiveText: colors.red11,
-    buttonSecondaryDestructiveDisabledBackground: colors.red2,
-    buttonSecondaryDestructiveDisabledBorder: colors.red6,
-    buttonSecondaryDestructiveDisabledText: colors.red10,
-
 });
 
 export default StyleComponent;
