@@ -9,7 +9,7 @@ const StyleComponent = () => {
     return (
         <View style={styles.container}>
             <StatusBar
-                barStyle="light-content" // Stile delle icone (può essere 'default', 'light-content', 'dark-content')
+                barStyle="light-content" // Stile delle icone (puÃ² essere 'default', 'light-content', 'dark-content')
                 backgroundColor={colors.slate0} // Colore di sfondo della Status Bar (solo Android)
             />
             <View style={[styles.header, styles.bbs6]}>
@@ -474,6 +474,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 0,
         borderColor: colors.slate7,
     },
+    
     // tag H
     h1: { fontSize: 24, color: colors.slate12 },
     h2: { fontSize: 22, color: colors.slate12 },
@@ -481,6 +482,12 @@ const styles = StyleSheet.create({
     h4: { fontSize: 18, color: colors.slate12 },
     h5: { fontSize: 16, color: colors.slate12 },
     h6: { fontSize: 14, color: colors.slate12 },
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: colors.slate12,
+    },
+
     //font
     fwb: { fontWeight: 'bold', },
     //text
@@ -493,18 +500,9 @@ const styles = StyleSheet.create({
         color: colors.green11,
         fontWeight: 'bold',
     },
-    textDanger: {
-        color: colors.red11,
-        fontWeight: 'bold',
-    },
-    textWarning: {
-        color: colors.yellow10,
-        fontWeight: 'bold',
-    },
-    textInfo: {
-        color: colors.blue11,
-        fontWeight: 'bold',
-    },
+    textDanger: {color: colors.red11,fontWeight: 'bold',},
+    textWarning: {color: colors.yellow10,fontWeight: 'bold',},
+    textInfo: {color: colors.blue11,fontWeight: 'bold',},
     textSecondary: colors.slate11,
     textTertiary: colors.slate10,
     textQuaternary: colors.slate9,
@@ -513,38 +511,50 @@ const styles = StyleSheet.create({
     textWarning: colors.yellow11,
     textDanger: colors.red11,
     textInfo: colors.blue11,
+    
+    contentParagraph: {
+        marginTop: 8,
+        color: colors.onBackground,
+        flexDirection: 'column',
+        fonstSize: 14,
+    },
     //svarioni
-    overflowHidden: {
-        overflow: 'hidden',
+    mt10: { marginTop: 10 },
+    mb10: { marginBottom: 10 },
+    ml10: { marginLeft: 10 },
+    mr10: { marginRight: 10 },
+    ml40: { marginLeft: 40 },
+    mr40: { marginRight: 40 },
+    mt20: { marginTop: 20 },
+    mb20: { marginBottom: 20 },
+    ml20: { marginLeft: 20 },
+    mr20: { marginRight: 20 },
+    verticallySpaced: {
+        paddingTop: 4,
+        paddingBottom: 4,
+        alignSelf: 'stretch',
     },
-    gap1: {
-        margin: 0, // 0.25rem è circa 4px
-    },
-    gap2: {
-        marginLeft: 14, // 0.25rem è circa 4px
-    },
-    gap3: {
-        marginLeft: 28, // 0.25rem è circa 4px
-    },
-    grid: {
-       
+    fwb: { fontWeight: 'bold' },
+    fs20: { fontSize: 20 },
+    overflowHidden: {overflow: 'hidden',},
+    gap1: {margin: 0, // 0.25rem Ã¨ circa 4px},
+    gap2: {marginLeft: 14, // 0.25rem Ã¨ circa 4px},
+    gap3: {marginLeft: 28, // 0.25rem Ã¨ circa 4px},
+    grid: {       
         flexDirection: 'row', // Puoi cambiare in 'column' per una griglia verticale
         justifyContent:'space-between',
         flexWrap: 'wrap',
         alignItems: 'center'
     },
-
-
-    //border
-    bbs6: {
-        borderBottomWidth: 1,
-        borderBottomColor: colors.slate6,
+    contentPadding: {
+    height: 100, // Aggiungi uno spazio extra in fondo al contenuto
     },
     //logo
-    logoImage: {
-        width: 100,
-        height: 100,
-    },
+    logo: {width: 28,height: 28,},
+    logoImage100: {width: 100,height: 100,},
+    logoImage80: {width: 80,height: 80,},
+    logoImage60: {width: 100,height: 60,},
+    logoImage40: {width: 100,height: 40,},
     logoImageContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -552,19 +562,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
     },
-    logo: {
-        width: 28,
-        height: 28,
-        marginRight: 20,
-    },
-
-    //header
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: colors.slate12,
-    },
-
+   
     //content
     contentTitle: {
         fontSize: 16,
@@ -663,15 +661,7 @@ const styles = StyleSheet.create({
     angleRightIcon: {
         width: 44,
     },
-    contentPadding: {
-        height: 100, // Aggiungi uno spazio extra in fondo al contenuto
-    },
-    contentParagraph: {
-        marginTop: 8,
-        color: colors.onBackground,
-        flexDirection: 'column',
-        fonstSize: 14,
-    },
+    
 
     //body
     bodyFooter: {
@@ -708,23 +698,7 @@ const styles = StyleSheet.create({
     link: {
         color: colors.blue11,
     },
-    mt10: { marginTop: 10 },
-    mb10: { marginBottom: 10 },
-    ml10: { marginLeft: 10 },
-    mr10: { marginRight: 10 },
-    ml40: { marginLeft: 40 },
-    mr40: { marginRight: 40 },
-    mt20: { marginTop: 20 },
-    mb20: { marginBottom: 20 },
-    ml20: { marginLeft: 20 },
-    mr20: { marginRight: 20 },
-    verticallySpaced: {
-        paddingTop: 4,
-        paddingBottom: 4,
-        alignSelf: 'stretch',
-    },
-    fwb: { fontWeight: 'bold' },
-    fs20: { fontSize: 20 },
+    
 
     // FAB
     fab: {
