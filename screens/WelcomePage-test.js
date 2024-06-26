@@ -374,16 +374,7 @@ const colors = {
     slate12: '#ecedee',
 
 }
-const borderRadius = {
-    xxsmall: 2,
-    xsmall: 4,
-    small: 6,
-    medium: 8,
-    large: 12,
-    xlarge: 16,
-    xxlarge: 20,
-
-};
+const borderRadius = {xxsmall: 2,xsmall: 4,small: 6,medium: 8,large: 12,xlarge: 16,xxlarge: 20,};
 const bxxSmall = borderRadius.xxsmall;
 const bxSmal = borderRadius.xsmall;
 const bSmall = borderRadius.small;
@@ -391,6 +382,60 @@ const bMedium = borderRadius.medium;
 const bLarge = borderRadius.large;
 const bxLarge = borderRadius.xlarge;
 const bxxLarge = borderRadius.xxlarge;
+
+const fontSize = {xxsmall: 10,xsmall: 12,small: 14,medium: 16,large: 18,xlarge: 20,xxlarge: 24,};
+const fxxSmall = fontSize.xxsmall;
+const fxSmall = fontSize.xsmall;
+const fSmall = fontSize.small;
+const fMedium = fontSize.medium;
+const fLarge = fontSize.large;
+const fxLarge = fontSize.xlarge;
+const fxxLarge = fontSize.xxlarge;
+
+const fontWeight = {light: 300,regular: 400,medium: 500,semiBold: 600,bold: 700,extraBold: 800,black: 900,};
+const fwLight = fontWeight.light;
+const fwRegular = fontWeight.regular;
+const fwMedium = fontWeight.medium;
+const fwSemiBold = fontWeight.semiBold;
+const fwBold = fontWeight.bold;
+const fwExtraBold = fontWeight.extraBold;
+const fwBlack = fontWeight.black;
+
+const margin = {m2: 2,m4: 4,m8: 8,m16: 16,m24: 24,m32: 32,m40: 40,};
+const m2 = margin.m2;
+const m4 = margin.m4;
+const m8 = margin.m8;
+const m16 = margin.m16;
+const m24 = margin.m24;
+const m32 = margin.m32;
+const m40 = margin.m40;
+
+const padding = {p2: 2,p4: 4,p8: 8,p16: 16,p20:20,p24: 24,p32: 32,p40: 40,};
+const p2 = padding.p2;
+const p4 = padding.p4;
+const p8 = padding.p8;
+const p16 = padding.p16;
+const p20 = padding.p20;
+const p24 = padding.p24;
+const p32 = padding.p32;
+const p40 = padding.p40;
+
+const gap = {gap2: 2,gap4: 4,gap8: 8,gap16: 16,gap24: 24,gap32: 32,gap40: 40,};
+const g2 = gap.gap2;
+const g4 = gap.gap4;
+const g8 = gap.gap8;
+const g16 = gap.gap16;
+const g24 = gap.gap24;
+const g32 = gap.gap32;
+const g40 = gap.gap40;
+
+const lineHeight = {    lh1: 1.2,    lh2: 1.4,    lh3: 1.6,    lh4: 1.8,    lh5: 2.0,};
+const lh1 = lineHeight.lh1;
+const lh2 = lineHeight.lh2;
+const lh3 = lineHeight.lh3;
+const lh4 = lineHeight.lh4;
+const lh5 = lineHeight.lh5;
+
 
 const styles = StyleSheet.create({
     safeAreaView: {
@@ -492,25 +537,22 @@ const styles = StyleSheet.create({
     fwb: { fontWeight: 'bold', },
     //text
     text: { color: colors.slate12, },
+    text10: { fontSize: 10, },
     text12: { fontSize: 12, },
     text14: { fontSize: 14, },
     text16: { fontSize: 16, },
+    text18: { fontSize: 18, },
+    text20: { fontSize: 20, },
     textArticle: { color: colors.slate12, },
-    textSuccess: {
-        color: colors.green11,
-        fontWeight: 'bold',
-    },
+    textSuccess: {color: colors.green11,fontWeight: 'bold',},
     textDanger: {color: colors.red11,fontWeight: 'bold',},
     textWarning: {color: colors.yellow10,fontWeight: 'bold',},
     textInfo: {color: colors.blue11,fontWeight: 'bold',},
-    textSecondary: colors.slate11,
-    textTertiary: colors.slate10,
-    textQuaternary: colors.slate9,
-    textLink: colors.blue11,
-    textSuccess: colors.green11,
-    textWarning: colors.yellow11,
-    textDanger: colors.red11,
-    textInfo: colors.blue11,
+    textSecondary: {color:colors.slate11,},
+    textTertiary: {color:colors.slate10,},
+    textQuaternary: {color:colors.slate9,},
+    textLink: {color:colors.blue11,},
+  
     
     contentParagraph: {
         marginTop: 8,
