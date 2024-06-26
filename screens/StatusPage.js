@@ -280,12 +280,12 @@ const LandingPage = ({ navigation }) => {
     return (
         <Layout
             navigation={navigation}
-            showTopBar={false}
-            header={<Text style={theme.headerTitle}></Text>}
-        //fab={<Text>+</Text>}
-        //fabAction={handleFabPressHome}
+            showTopBar={true}
+            header
+            //fab={<Text>+</Text>}
+            //fabAction={handleFabPressHome}
         >
-            <View style={theme.content}>
+            <View style={theme.body}>
                 <Text style={theme.contentTitle}>Ecco come stai:</Text>
                 <Text style={theme.contentTitle}>Livello di benessere:</Text>
 

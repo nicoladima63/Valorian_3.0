@@ -1,73 +1,207 @@
+const br = { br2: 2, br4: 4, br6: 6, br8: 8, br12: 12, br16: 16, br20: 20 };
+const fs = { xxsmall: 10, xsmall: 12, small: 14, medium: 16, large: 18, xlarge: 20, xxlarge: 24 };
+const fw = { light: 300, regular: 400, medium: 500, semiBold: 600, bold: 700, extraBold: 800, black: 900 };
+const m = { m2: 2, m4: 4, m8: 8,m10:10,  m16: 16, m24: 24, m32: 32, m40: 40 };
+const p = { p2: 2, p4: 4, p8: 8, p16: 16, p20: 20, p24: 24, p32: 32, p40: 40 };
+const gap = { gap2: 2, gap4: 4, gap8: 8, gap16: 16, gap24: 24, gap32: 32, gap40: 40 };
+const lh = { lh1: 1.2, lh2: 1.4, lh3: 1.6, lh4: 1.8, lh5: 2.0 };
+
 export const BaseTheme = (colors) => ({
     safeAreaView: {
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: colors.slate0,
     },
-    white: '#fff',
-    black: '#000',
-    cyan: '#07c0cb',
-    lightblue: '#1e92c4',
-    darkblue: '#0b67af',
-    indigo: '#4b50b2',
-    purple: '#8945a3',
-    pink: '#c04891',
-    orange: '#e96d3c',
-    gold: '#f38f2f',
-    yellow: '#eebc01',
-    lime: '#aabd04',
-    lightgreen: '#6aa72a',
-    darkgreen: '#3a8e39',
 
-
-    //container
+    //page component
     container: {
         flex: 1,
-        backgroundColor: colors.background,
-    },
-    containerBorder: {
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: 5,
-        marginTop: 10,
-    },
+        backgroundColor: colors.slate0,
+        padding: 0,
 
-    logoImage: {
-        width: 100,
-        height: 100,
     },
-    logoImageContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-    },
-
-    //header
     header: {
-        flex: 0.1,
-        backgroundColor: colors.background,
+        height: 60,
+        backgroundColor: colors.slate2,
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 20,
     },
+    content: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: colors.slate0,
+        //    paddingHorizontal: 10,
+    },
+    body: {
+        flex: 1,
+        backgroundColor: colors.slate0,
+        position: 'relative',
+        paddingHorizontal: 20,
+    },
+    article: {
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: br.br8,
+        borderWidth: 1,
+        marginBottom: 0,
+        backgroundColor: colors.slate1,
+        borderColor: colors.slate7,
+    },
+    articleDefault: {
+        backgroundColor: colors.slate3,
+        borderColor: colors.slate10,
+        paddingVertical: 8,
+        paddingHorizontal: 14,
+
+    },
+    articleSuccess: {
+        backgroundColor: colors.green3,
+        borderColor: colors.green8,
+    },
+    articleDanger: {
+        backgroundColor: colors.red3,
+        borderColor: colors.red8,
+    },
+    articleInfo: {
+        backgroundColor: colors.blue3,
+        borderColor: colors.blue8,
+    },
+    articleWarning: {
+        backgroundColor: colors.yellow3,
+        borderColor: colors.yellow7,
+    },
+    articleTop: {
+        borderTopLeftRadius: br.br8,
+        borderTopRightRadius: br.br8,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+        borderColor: colors.slate7,
+    },
+    articleMiddle: {
+        borderRadius: 0,
+        borderTopWidth: 0,
+        borderColor: colors.slate7,
+    },
+    articleBottom: {
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        borderBottomLeftRadius: br.br8,
+        borderBottomRightRadius: br.br8,
+        borderTopWidth: 0,
+        borderColor: colors.slate7,
+    },
+
+    // tag H
+    h1: { fontSize: 24, color: colors.slate12 },
+    h2: { fontSize: 22, color: colors.slate12 },
+    h3: { fontSize: 20, color: colors.slate12 },
+    h4: { fontSize: 18, color: colors.slate12 },
+    h5: { fontSize: 16, color: colors.slate12 },
+    h6: { fontSize: 14, color: colors.slate12 },
     headerTitle: {
         fontSize: 20,
-        fontWeight: 'bold',
-        color: colors.onBackground,
+        fontWeight: fw.bold,
+        color: colors.slate12,
     },
-    logo: {
-        width: 28,
-        height: 28,
-        marginRight: 20,
+
+    //font
+    fwb: { fontWeight: fw.bold, },
+
+    //text
+    text: { color: colors.slate12, },
+    text10: { fontSize: 10, },
+    text12: { fontSize: 12, },
+    text14: { fontSize: 14, },
+    text16: { fontSize: 16, },
+    text18: { fontSize: 18, },
+    text20: { fontSize: 20, },
+    textArticle: { color: colors.slate12, },
+    textSuccess: { color: colors.green11, },
+    textDanger: { color: colors.red11, },
+    textWarning: { color: colors.yellow10, },
+    textInfo: { color: colors.blue11, },
+    textSecondary: { color: colors.slate11, },
+    textTertiary: { color: colors.slate10, },
+    textQuaternary: { color: colors.slate9, },
+    textLink: { color: colors.blue11, },
+
+
+    paragraph: {
+        marginTop: 15,
+        color: colors.slate12,
+        flexDirection: 'column',
+        fonstSize: 14,
+    },
+    //svarioni
+    mt10: { marginTop: 10 },
+    mb10: { marginBottom: 10 },
+    ml10: { marginLeft: 10 },
+    mr10: { marginRight: 10 },
+    ml40: { marginLeft: 40 },
+    mr40: { marginRight: 40 },
+    mt20: { marginTop: 20 },
+    mb20: { marginBottom: 20 },
+    ml20: { marginLeft: 20 },
+    mr20: { marginRight: 20 },
+    verticallySpaced: {
+        paddingTop: 4,
+        paddingBottom: 4,
+        alignSelf: 'stretch',
+    },
+    overflowHidden: { overflow: 'hidden', },
+    grid: {
+        flexDirection: 'row', // Puoi cambiare in 'column' per una griglia verticale
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        alignItems: 'center'
+    },
+    column: {
+        flexDirection: 'column', // Puoi cambiare in 'column' per una griglia verticale
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
+    contentPadding: {
+        height: 100, // Aggiungi uno spazio extra in fondo al contenuto
+    },
+    center: { alignItems: 'center', justifyContent: 'center', },
+    right: { alignSelf: 'flex-end', },
+    left: { alignSelf: 'flex-start', },
+    //border
+    br0: { borderRadius: 0 },
+    br2: { borderRadius: 2 },
+    br4: { borderRadius: 4 },
+    br6: { borderRadius: 6 },
+    br8: { borderRadius: 8 },
+    br10: { borderRadius: 10 },
+    br16: { borderRadius: 16 },
+    br20: { borderRadius: 20 },
+    //padding
+    p2: { padding: 2 },
+    p4: { padding: 4 },
+    p8: { padding: 8 },
+    p16: { padding: 16 },
+    p20: { padding: 20 },
+    p24: { padding: 24 },
+    p32: { padding: 32 },
+    p40: { padding: 40 },
+    pv2: { paddingVertical: 2 },
+    ph2: { paddingHorizontal: 2 },
+    //logo
+    logo: { width: 28, height: 28, },
+    logoImage100: { width: 100, height: 100, },
+    logoImage80: { width: 80, height: 80, },
+    logoImage60: { width: 100, height: 60, },
+    logoImage40: { width: 100, height: 40, },
+    logoImageContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: m.m20,
+        marginBottom: m.m20,
     },
 
     //content
-    content: {
-        flex: 1.5,
-        flexDirection: 'column',
-        backgroundColor: colors.content,
-    },
     contentTitle: {
         fontSize: 16,
         marginLeft: 12,
@@ -128,10 +262,6 @@ export const BaseTheme = (colors) => ({
         justifyContent: 'center',
     },
 
-
-
-
-
     contentArticleSquareContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -165,70 +295,9 @@ export const BaseTheme = (colors) => ({
     angleRightIcon: {
         width: 44,
     },
-    contentPadding: {
-        height: 100, // Aggiungi uno spazio extra in fondo al contenuto
-    },
-    contentParagraph: {
-        marginTop: 8,
-        color: colors.onBackground,
-        flexDirection: 'column',
-        fonstSize: 14,  
-    },
+
 
     //body
-    body: {
-        flex: 1,
-        backgroundColor: colors.contentBody,
-        position: 'relative',
-    },
-    article: {
-        backgroundColor: colors.article,
-        marginHorizontal: 12,
-        padding: 14,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: colors.border,
-    },
-    articleTitle: {
-        fontSize: 16,
-        color: colors.background,
-        marginBottom: 10
-    },
-    articleText: {
-        color: colors.onBackground,
-    },
-    articleTop: {
-        backgroundColor: colors.background,
-        marginHorizontal: 12,
-        padding: 14,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-        borderWidth: 1,
-        borderColor: colors.border,
-    },
-    articleMiddle: {
-        backgroundColor: colors.background,
-        marginHorizontal: 12,
-        padding: 14,
-        borderRadius: 0,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderColor: colors.border,
-    },
-    articleBottom: {
-        backgroundColor: colors.background,
-        marginHorizontal: 12,
-        padding: 14,
-        borderBottomLeftRadius: 8,
-        borderBottomRightRadius: 8,
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
-        borderWidth: 1,
-        borderTopWidth: 0,
-        borderColor: colors.border,
-    },
     bodyFooter: {
         backgroundColor: colors.background,
         margin: 0,
@@ -260,32 +329,10 @@ export const BaseTheme = (colors) => ({
     },
 
     //text vari e tipografici
-    errorText: {
-        color: colors.onError,
-        fontSize: 12,
-        marginTop: 5,
-        marginLeft: 10,
-    },
     link: {
-        color: colors.link,
+        color: colors.blue11,
     },
-    mt10: { marginTop: 10 },
-    mb10: { marginBottom: 10 },
-    ml10: { marginLeft: 10 },
-    mr10: { marginRight: 10 },
-    ml40: { marginLeft: 40 },
-    mr40: { marginRight: 40 },
-    mt20: { marginTop: 20 },
-    mb20: { marginBottom: 20 },
-    ml20: { marginLeft: 20 },
-    mr20: { marginRight: 20 },
-    verticallySpaced: {
-        paddingTop: 4,
-        paddingBottom: 4,
-        alignSelf: 'stretch',
-    },
-    fwb: { fontWeight: 'bold' },
-    fs20: { fontSize: 20 },
+
 
     // FAB
     fab: {
@@ -306,6 +353,16 @@ export const BaseTheme = (colors) => ({
     },
 
     // BUTTON
+
+    TouchablebuttonPrimary: {
+        alignItems: 'center',
+        backgroundColor: colors.blue8,
+        borderWidth: 1,
+        borderColor: colors.blue8,
+        paddingHorizontal: 20,
+        paddingVertical: 6,
+        borderRadius: br.br2
+    },
     buttonContainer1: {
         flex: 1,
         flexDirection: 'row',
@@ -321,7 +378,7 @@ export const BaseTheme = (colors) => ({
         bottom: 10,
         //width: '50%',
     },
-    button: {
+    button2: {
         flex: 1,
         height: 45,
         backgroundColor: colors.primary,
@@ -441,219 +498,5 @@ export const BaseTheme = (colors) => ({
         flexDirection: 'row',
         alignItems: 'center',
     },
-
-    //input
-    input1: {
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: 5,
-        padding: 10,
-        flex: 1,
-        marginRight: 10,
-        color: colors.onBackground,
-    },
-    input2: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: colors.border,
-        padding: 10,
-        color: colors.onBackground,
-
-    },
-
-    // LOGIN
-    Logincontainer: {
-        flex: 1,
-        alignItems: "center",
-        paddingTop: 20,
-        backgroundColor: colors.background,
-    },
-    Loginimage: {
-        height: 100,
-        width: 100,
-    },
-    Logintitle: {
-        fontSize: 22,
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        textAlign: "center",
-        paddingVertical: 20,
-        color: colors.primary,
-    },
-    LoginSubtitle: {
-        fontSize: 20,
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        textAlign: "center",
-        paddingVertical: 20,
-        color: colors.secondary,
-    },
-    LogininputView: {
-        width: "100%",
-        paddingHorizontal: 40,
-        marginBottom: 5,
-        marginTop: 10,
-        flex: 1,
-    },
-    Logininput: {
-        height: 50,
-        paddingHorizontal: 20,
-        borderColor: colors.border,
-        borderWidth: 1,
-        borderRadius: 7,
-        color: colors.onBackground,
-    },
-    LoginrememberView: {
-        width: "100%",
-        paddingHorizontal: 50,
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexDirection: "column",
-        marginBottom: 8,
-    },
-    Loginswitch: {
-        flexDirection: "row",
-        gap: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    LoginrememberText: {
-        fontSize: 13,
-        color: colors.onBackground,
-    },
-    LoginforgetText: {
-        fontSize: 11,
-        color: colors.secondary,
-    },
-    Loginbutton: {
-        backgroundColor: colors.primary,
-        height: 45,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 5,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    LoginbuttonText: {
-        color: colors.onPrimary,
-        fontSize: 18,
-        fontWeight: "bold",
-    },
-    LoginbuttonView: {
-        flex: 1,
-        width: "100%",
-        paddingHorizontal: 50,
-    },
-    LoginoptionsText: {
-        textAlign: "center",
-        paddingVertical: 10,
-        color: "gray",
-        fontSize: 13,
-        marginBottom: 6,
-    },
-    LoginmediaIcons: {
-        flexDirection: "row",
-        gap: 15,
-        alignItems: "center",
-        justifyContent: "center",
-        marginBottom: 23,
-    },
-    Loginicons: {
-        width: 40,
-        height: 40,
-    },
-    LoginfooterText: {
-        textAlign: "center",
-        color: colors.primary,
-    },
-    Loginsignup: {
-        color: colors.secondary,
-        fontSize: 13,
-    },
-    //expo
-    backgroundDefault: colors.slate1,
-    backgroundScreen: '#0c0d0e',
-    backgroundSubtle: colors.slate2,
-    backgroundElement: colors.slate3,
-    backgroundHover: colors.slate4,
-    backgroundSelected: colors.slate5,
-    backgroundOverlay: colors.slate2,
-    backgroundSuccess: colors.green3,
-    backgroundWarning: colors.yellow3,
-    backgroundDanger: colors.red3,
-    backgroundInfo: colors.blue3,
-    iconDefault: colors.slate11,
-    iconSecondary: colors.slate10,
-    iconTertiary: colors.slate9,
-    iconQuaternary: colors.slate8,
-    iconSuccess: colors.green10,
-    iconWarning: colors.yellow11,
-    iconDanger: colors.red10,
-    iconInfo: colors.blue10,
-    textDefault: colors.slate12,
-    textSecondary: colors.slate11,
-    textTertiary: colors.slate10,
-    textQuaternary: colors.slate9,
-    textLink: colors.blue11,
-    textSuccess: colors.green11,
-    textWarning: colors.yellow11,
-    textDanger: colors.red11,
-    textInfo: colors.blue11,
-    borderDefault: colors.slate7,
-    borderSecondary: colors.slate6,
-    borderSuccess: colors.green7,
-    borderWarning: colors.yellow7,
-    borderDanger: colors.red7,
-    borderInfo: colors.blue7,
-    buttonPrimaryBackground: colors.blue8,
-    buttonPrimaryBorder: colors.blue8,
-    buttonPrimaryHover: colors.blue7,
-    buttonPrimaryIcon: colors.blue12,
-    buttonPrimaryText: colors.white,
-    buttonPrimaryDisabledBackground: colors.blue7,
-    buttonPrimaryDisabledBorder: colors.blue7,
-    buttonPrimaryDisabledText: colors.slate11,
-    buttonSecondaryBackground: colors.slate3,
-    buttonSecondaryBorder: colors.slate8,
-    buttonSecondaryHover: colors.slate4,
-    buttonSecondaryIcon: colors.slate12,
-    buttonSecondaryText: colors.white,
-    buttonSecondaryDisabledBackground: colors.slate1,
-    buttonSecondaryDisabledBorder: colors.slate7,
-    buttonSecondaryDisabledText: colors.slate11,
-    buttonTertiaryBackground: colors.transparent,
-    buttonTertiaryBorder: colors.transparent,
-    buttonTertiaryHover: colors.blue4,
-    buttonTertiaryIcon: colors.blue10,
-    buttonTertiaryText: colors.blue11,
-    buttonTertiaryDisabledBackground: colors.transparent,
-    buttonTertiaryDisabledBorder: colors.transparent,
-    buttonTertiaryDisabledText: colors.blue9,
-    buttonQuaternaryBackground: colors.transparent,
-    buttonQuaternaryBorder: colors.transparent,
-    buttonQuaternaryHover: colors.slate4,
-    buttonQuaternaryIcon: colors.slate12,
-    buttonQuaternaryText: colors.white,
-    buttonQuaternaryDisabledBackground: colors.transparent,
-    buttonQuaternaryDisabledBorder: colors.transparent,
-    buttonQuaternaryDisabledText: colors.slate11,
-    buttonPrimaryDestructiveBackground: colors.red8,
-    buttonPrimaryDestructiveBorder: colors.red8,
-    buttonPrimaryDestructiveHover: colors.red7,
-    buttonPrimaryDestructiveIcon: colors.red12,
-    buttonPrimaryDestructiveText: colors.white,
-    buttonPrimaryDestructiveDisabledBackground: colors.red6,
-    buttonPrimaryDestructiveDisabledBorder: colors.red6,
-    buttonPrimaryDestructiveDisabledText: colors.red12,
-    buttonSecondaryDestructiveBackground: colors.red3,
-    buttonSecondaryDestructiveBorder: colors.red7,
-    buttonSecondaryDestructiveHover: colors.red2,
-    buttonSecondaryDestructiveIcon: colors.red9,
-    buttonSecondaryDestructiveText: colors.red11,
-    buttonSecondaryDestructiveDisabledBackground: colors.red2,
-    buttonSecondaryDestructiveDisabledBorder: colors.red6,
-    buttonSecondaryDestructiveDisabledText: colors.red10,
 
 })

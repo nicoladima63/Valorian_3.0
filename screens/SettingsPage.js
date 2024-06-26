@@ -3,7 +3,6 @@ import { AppContext } from '../context/AppContext';
 import RadioButtonRN from 'radio-buttons-react-native';
 import { Text, View, ScrollView } from 'react-native';
 import Layout from './Layout';
-import styles from '../themes/style';
 import { useTheme } from '../context/ThemeContext';
 
 const Settings = ({ navigation }) => {

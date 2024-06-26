@@ -279,10 +279,12 @@ const DarkColors = {
 
 };
 
+
 const DefaultTheme = {
     dark: false,
     colors: LightColors,
     ...BaseTheme(LightColors),
+
 };
 
 const DarkTheme = {
@@ -291,4 +293,7 @@ const DarkTheme = {
     ...BaseTheme(DarkColors),
 };
 
-export { DefaultTheme, DarkTheme };
+export {
+    DefaultTheme,
+    DarkTheme,
+};

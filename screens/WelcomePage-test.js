@@ -2,168 +2,172 @@ import React from 'react';
 import { View, StyleSheet, Text, ScrollView, StatusBar, TouchableOpacity, Image, TextInput, Pressable, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RadioButton } from 'react-native-paper';
+import { useTheme } from '../context/ThemeContext';
+
+
 const StyleComponent = () => {
     const logo = require("../assets/images/logo.png")
+        const { theme } = useTheme();
 
 
-    return (
-        <View style={styles.container}>
+   return (
+        <View style={theme.container}>
             <StatusBar
                 barStyle="light-content" // Stile delle icone (può essere 'default', 'light-content', 'dark-content')
                 backgroundColor={colors.slate0} // Colore di sfondo della Status Bar (solo Android)
             />
-            <View style={[styles.header, styles.bbs6]}>
-                <Image source={logo} style={styles.logo} resizeMode='contain' />
-                <Text style={styles.h5}>header</Text>
+            <View style={[theme.header, theme.bbs6]}>
+                <Image source={logo} style={theme.logo} resizeMode='contain' />
+                <Text style={theme.h5}>header</Text>
             </View>
-            <View style={styles.content}>
-                <Text style={styles.text}>content</Text>
+            <View style={theme.content}>
+                <Text style={theme.text}>content</Text>
 
-                <View style={styles.body}>
+                <View style={theme.body}>
 
-                    <Text style={[styles.text, styles.h1, styles.fwb]}> Title h3</Text>
-                    <Text style={[styles.text, styles.h2, styles.fwb]}> Title h2</Text>
-                    <Text style={[styles.text, styles.h3, styles.fwb]}> Title h3</Text>
-                    <Text style={[styles.text, styles.h4, styles.fwb]}> Title h4</Text>
-                    <Text style={[styles.text, styles.h5, styles.fwb]}> Title h5</Text>
-                    <Text style={[styles.text, styles.h6, styles.fwb]}> Title h6</Text>
+                    <Text style={[theme.text, theme.h1, theme.fwb]}> Title h3</Text>
+                    <Text style={[theme.text, theme.h2, theme.fwb]}> Title h2</Text>
+                    <Text style={[theme.text, theme.h3, theme.fwb]}> Title h3</Text>
+                    <Text style={[theme.text, theme.h4, theme.fwb]}> Title h4</Text>
+                    <Text style={[theme.text, theme.h5, theme.fwb]}> Title h5</Text>
+                    <Text style={[theme.text, theme.h6, theme.fwb]}> Title h6</Text>
 
 
                     <ScrollView>
-                        <View style={[styles.article, styles.articleDefault]}>
-                            <Text style={styles.text}>text article default</Text>
+                        <View style={[theme.article, theme.articleDefault]}>
+                            <Text style={theme.text}>text article default</Text>
                         </View>
-                        <View style={[styles.article, styles.articleSuccess]}>
-                            <Text style={[styles.text, styles.h5, styles.fwb, styles.textSuccess]}> Title h5</Text>
-                            <Text style={styles.textSuccess}>text article success</Text>
+                        <View style={[theme.article, theme.articleSuccess]}>
+                            <Text style={[theme.text, theme.h5, theme.fwb, theme.textSuccess]}> Title h5</Text>
+                            <Text style={theme.textSuccess}>text article success</Text>
                         </View>
-                        <View style={[styles.article, styles.articleInfo]}>
-                            <Text style={[styles.text, styles.h3, styles.fwb, styles.textInfo]}> Title h3</Text>
-                            <Text style={[styles.textInfo]}>text article Info</Text>
+                        <View style={[theme.article, theme.articleInfo]}>
+                            <Text style={[theme.text, theme.h3, theme.fwb, theme.textInfo]}> Title h3</Text>
+                            <Text style={[theme.textInfo]}>text article Info</Text>
                         </View>
-                        <View style={[styles.article, styles.articleDanger]}>
-                            <Text style={[styles.text, styles.h4, styles.fwb, styles.textDanger]}> Title h4</Text>
-                            <Text style={styles.textDanger}>text article danger</Text>
+                        <View style={[theme.article, theme.articleDanger]}>
+                            <Text style={[theme.text, theme.h4, theme.fwb, theme.textDanger]}> Title h4</Text>
+                            <Text style={theme.textDanger}>text article danger</Text>
                         </View>
-                        <View style={[styles.article, styles.articleWarning]}>
-                            <Text style={[styles.text, styles.h6, styles.fwb, styles.textWarning]}> Title h6</Text>
-                            <Text style={styles.textWarning}>text article warning</Text>
+                        <View style={[theme.article, theme.articleWarning]}>
+                            <Text style={[theme.text, theme.h6, theme.fwb, theme.textWarning]}> Title h6</Text>
+                            <Text style={theme.textWarning}>text article warning</Text>
                         </View>
 
-                        <View style={[styles.article, styles.articleTop]}>
-                            <Text style={styles.text}>articleTop</Text>
+                        <View style={[theme.article, theme.articleTop]}>
+                            <Text style={theme.text}>articleTop</Text>
                         </View>
-                        <View style={[styles.article, styles.articleMiddle]}>
-                            <View style={[styles.grid, styles.overflowHidden]}>
-                                <View style={[styles.grid, styles.overflowHidden]}>
-                                    <View style={styles.gap2}>
+                        <View style={[theme.article, theme.articleMiddle]}>
+                            <View style={[theme.grid, theme.overflowHidden]}>
+                                <View style={[theme.grid, theme.overflowHidden]}>
+                                    <View style={theme.gap2}>
                                         <Icon name="folder" size={24} color="#D8BFD8" />
                                     </View>
-                                    <View style={styles.gap2}>
-                                        <Text style={styles.h5}>articleTitle con icona</Text>
+                                    <View style={theme.gap2}>
+                                        <Text style={theme.h5}>articleTitle con icona</Text>
                                     </View>
                                 </View>
                             </View>
-                            <View style={styles.gap2}>
-                                <Text style={styles.text}>primo rigo di testo</Text>
+                            <View style={theme.gap2}>
+                                <Text style={theme.text}>primo rigo di testo</Text>
                             </View>
-                            <View style={styles.gap2}>
-                                <Text style={styles.text}>secondo rigo di testo</Text>
+                            <View style={theme.gap2}>
+                                <Text style={theme.text}>secondo rigo di testo</Text>
                             </View>
-                            <View style={styles.gap2}>
-                                <Text style={styles.text}>terzo rigo di testo</Text>
+                            <View style={theme.gap2}>
+                                <Text style={theme.text}>terzo rigo di testo</Text>
                             </View>
                         </View>
-                        <View style={[styles.article, styles.articleMiddle]}>
-                            <View style={[styles.grid, styles.overflowHidden]}>
-                                <View style={styles.gap1}>
-                                    <Text style={styles.articleTitle}>articleTitle</Text>
+                        <View style={[theme.article, theme.articleMiddle]}>
+                            <View style={[theme.grid, theme.overflowHidden]}>
+                                <View style={theme.gap1}>
+                                    <Text style={theme.articleTitle}>articleTitle</Text>
                                 </View>
                             </View>
 
-                            <View style={styles.gap2}>
-                                <Text style={styles.text}>primo rigo di testo</Text>
+                            <View style={theme.gap2}>
+                                <Text style={theme.text}>primo rigo di testo</Text>
                             </View>
-                            <View style={styles.gap2}>
-                                <Text style={styles.text}>secondo rigo di testo</Text>
+                            <View style={theme.gap2}>
+                                <Text style={theme.text}>secondo rigo di testo</Text>
                             </View>
-                            <View style={styles.gap2}>
-                                <Text style={styles.text}>terzo rigo di testo</Text>
+                            <View style={theme.gap2}>
+                                <Text style={theme.text}>terzo rigo di testo</Text>
                             </View>
                         </View>
-                        <View style={[styles.article, styles.articleBottom]}>
-                            <Text style={styles.text}>articleBottom</Text>
-                        </View>
-
-
-                        <Text style={[styles.contentTitle]}>emai verificata</Text>
-                        <View style={styles.article}>
-                            <Text style={styles.h5}>articleTitle</Text>
-                            <Text style={[styles.articleText, styles.link]}>nicoladimartino@gmail.com</Text>
+                        <View style={[theme.article, theme.articleBottom]}>
+                            <Text style={theme.text}>articleBottom</Text>
                         </View>
 
 
+                        <Text style={[theme.contentTitle]}>emai verificata</Text>
+                        <View style={theme.article}>
+                            <Text style={theme.h5}>articleTitle</Text>
+                            <Text style={[theme.articleText, theme.link]}>nicoladimartino@gmail.com</Text>
+                        </View>
 
-                        <View style={styles.article}>
-                            <View style={[styles.grid, styles.overflowHidden]}>
-                                <View style={[styles.grid, styles.overflowHidden]}>
-                                    <View style={[styles.gap2, styles.mb20]}>
+
+
+                        <View style={theme.article}>
+                            <View style={[theme.grid, theme.overflowHidden]}>
+                                <View style={[theme.grid, theme.overflowHidden]}>
+                                    <View style={[theme.gap2, theme.mb20]}>
                                         <Icon name="cog" size={24} color="#D8BFD8" />
                                     </View>
-                                    <View style={styles.gap2}>
-                                        <Text style={[styles.text, styles.h3, styles.fwb]}> Impostazioni h3</Text>
+                                    <View style={theme.gap2}>
+                                        <Text style={[theme.text, theme.h3, theme.fwb]}> Impostazioni h3</Text>
                                     </View>
                                 </View>
                             </View>
-                            <View style={[styles.article]}>
-                                <Text style={[styles.text, styles.h5, styles.fwb]}>Account</Text>
-                                <View style={styles.article}>
-                                    <View style={styles.grid}>
+                            <View style={[theme.article]}>
+                                <Text style={[theme.text, theme.h5, theme.fwb]}>Account</Text>
+                                <View style={theme.article}>
+                                    <View style={theme.grid}>
                                         <Icon name="user" size={24} color="#D8BFD8" />
-                                        <TouchableOpacity style={[styles.grid, styles.TouchablebuttonPrimary, styles.br6, { justifyContent: 'space-evenly' }]}>
+                                        <TouchableOpacity style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { justifyContent: 'space-evenly' }]}>
                                             <View>
-                                                <Text style={styles.h5}>vai</Text>
+                                                <Text style={theme.h5}>vai</Text>
                                             </View>
-                                            <View style={[styles.gap2]}>
+                                            <View style={[theme.gap2]}>
                                                 <Icon name="arrow-right" size={16} color="#D8BFD8" />
                                             </View>
                                         </TouchableOpacity>
                                     </View>
-                                    <View style={[styles.article, styles.articleSuccess, styles.br20, styles.mt10]}>
-                                        <Text style={[styles.text, styles.h5, styles.fwb, styles.textSuccess]}> email verificata</Text>
+                                    <View style={[theme.article, theme.articleSuccess, theme.br20, theme.mt10]}>
+                                        <Text style={[theme.text, theme.h5, theme.fwb, theme.textSuccess]}> email verificata</Text>
                                     </View>
 
                                 </View>
 
                             </View>
-                            <View style={[styles.article]}>
-                                <Text style={[styles.text, styles.h5, styles.fwb]}>Scelta del Tema</Text>
+                            <View style={[theme.article]}>
+                                <Text style={[theme.text, theme.h5, theme.fwb]}>Scelta del Tema</Text>
                                 <RadioButton.Group >
-                                    <View style={[styles.article, styles.articleTop]}>
+                                    <View style={[theme.article, theme.articleTop]}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                 <Icon name="adjust" size={20} color={colors.slate12} style={{ marginRight: 20 }} />
-                                                <Text style={styles.text}>Automatico</Text>
+                                                <Text style={theme.text}>Automatico</Text>
                                             </View>
                                             <RadioButton value="auto" />
                                         </View>
 
                                     </View>
 
-                                    <View style={[styles.article, styles.articleMiddle]}>
+                                    <View style={[theme.article, theme.articleMiddle]}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                 <Icon name="sun-o" size={20} color={colors.slate12} style={{ marginRight: 20 }} />
-                                                <Text style={styles.text}>Chiaro</Text>
+                                                <Text style={theme.text}>Chiaro</Text>
                                             </View>
                                             <RadioButton value="light" color={colors.slate12} />
                                         </View>
                                     </View>
-                                    <View style={[styles.article, styles.articleBottom]}>
+                                    <View style={[theme.article, theme.articleBottom]}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                 <Icon name="moon-o" size={20} color={colors.slate12} style={{ marginRight: 20 }} />
-                                                <Text style={styles.text}>Scuro</Text>
+                                                <Text style={theme.text}>Scuro</Text>
                                             </View>
                                             <RadioButton value="dark" />
                                         </View>
@@ -171,75 +175,71 @@ const StyleComponent = () => {
                                 </RadioButton.Group>
                             </View>
 
-
-                            <View style={styles.article}>
-                                <View style={styles.column}>
-                                    <Image source={logo} style={[styles.logoImage60, styles.mb20]} resizeMode='contain' />
-                                    <Text style={[styles.text, styles.h5, styles.fwb, styles.mb20]}>Login Form</Text>
+                            {/*{ //loginform*/}
+                            <View style={theme.article}>
+                                <View style={theme.column}>
+                                    <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
+                                    <Text style={[theme.text, theme.h5, theme.fwb, theme.mb20]}>Form di accesso</Text>
                                 </View>
 
-                                <View style={[styles.article, styles.articleTop]}>
-                                    <Text style={[styles.text]}>Email</Text>
-                                    <View style={[styles.article, styles.articleDefault]}>
+                                <View style={[theme.article, theme.articleTop]}>
+                                    <Text style={[theme.text, theme.mb10]}>Email</Text>
+                                    <View style={[theme.article, theme.articleDefault]}>
                                         <TextInput
-                                            style={styles.text}
+                                            style={theme.text}
                                             placeholder="la tue email"
                                             placeholderTextColor={colors.slate9}
                                         //onChangeText={onChangeText}
                                         //value={123}
                                         />
                                     </View>
-                                    <View style={[styles.article, styles.articleDanger, styles.pv2]}>
-                                        <Text style={styles.textDanger}>indirizzo obbligatorio</Text>
-                                    </View>
+                                    <Text style={theme.textDanger}>indirizzo obbligatorio</Text>
 
 
                                 </View>
 
-                                <View style={[styles.article, styles.articleMiddle]}>
-                                    <Text style={styles.text}>Password</Text>
-                                    <View style={[styles.article, styles.articleDefault]}>
+                                <View style={[theme.article, theme.articleMiddle]}>
+                                    <Text style={[theme.text,theme.mb10]}>Password</Text>
+                                    <View style={[theme.article, theme.articleDefault]}>
 
                                         <TextInput
-                                            style={styles.text}
+                                            style={theme.text}
                                             placeholder="la tua password"
                                             placeholderTextColor={colors.slate9}
                                         //onChangeText={onChangeText}
                                         //value={123}
                                         />
                                     </View>
-                                    <View style={[styles.article, styles.articleDanger, styles.pv2]}>
-                                        <Text style={styles.textDanger}>password obbligatoria</Text>
-                                    </View>
+                                    <Text style={theme.textDanger}>password obbligatoria</Text>
                                 </View>
 
-                                <View style={[styles.article, styles.articleMiddle,styles.grid]}>
-                                    <View style={styles.Loginswitch}>
+                                <View style={[theme.article, theme.articleMiddle, theme.grid]}>
+                                    <View style={theme.Loginswitch}>
                                         <Switch value={''} onValueChange={''} trackColor={{ true: "green", false: "gray" }} />
-                                        <Text style={styles.text}>Ricordami</Text>
+                                        <Text style={theme.text}>Ricordami</Text>
                                     </View>
 
                                     <Pressable onPress={() => navigation.navigate('ForgotPassword')}>
-                                        <Text style={[styles.link, styles.alignRight]}>Password dimenticata?</Text>
+                                        <Text style={[theme.link, theme.alignRight]}>Password dimenticata?</Text>
                                     </Pressable>
                                 </View>
 
-                                <View style={[styles.article, styles.articleMiddle]}>
-                                    <TouchableOpacity style={[styles.grid, styles.TouchablebuttonPrimary, styles.br6, { justifyContent: 'space-evenly' }]}>
+                                <View style={[theme.article, theme.articleMiddle,]}>
+                                    <TouchableOpacity style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { justifyContent: 'space-evenly' }]}>
                                         <View>
-                                            <Text style={styles.h5}>Accedi</Text>
+                                            <Text style={theme.h5}>Accedi</Text>
                                         </View>
                                     </TouchableOpacity>
                                 </View>
 
-                                <View style={[styles.article, styles.articleMiddle, styles.grid]}>
-                                    <Text style={[styles.text, styles.mt20]}>Non hai un Account?</Text>
+                                <View style={[theme.article, theme.articleMiddle, theme.grid]}>
+                                    <Text style={[theme.text, theme.mt20]}>Non hai un Account?</Text>
                                     <Pressable onPress={() => navigation.navigate('Register')}>
-                                        <Text style={[styles.link, styles.alignRight]}>  Registrati</Text>
+                                        <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>
                                     </Pressable>
                                 </View>
 
-                                <View style={[styles.article, styles.articleBottom]}>
+                                <View style={[theme.article, theme.articleBottom]}>
 
 
                                 </View>
@@ -248,14 +248,14 @@ const StyleComponent = () => {
 
                         </View>
 
-                        <View style={styles.article}>
-                            <View style={[styles.article, styles.articleTop]}>
+                        <View style={theme.article}>
+                            <View style={[theme.article, theme.articleTop]}>
 
                             </View>
-                            <View style={[styles.article, styles.articleMiddle]}>
+                            <View style={[theme.article, theme.articleMiddle]}>
 
                             </View>
-                            <View style={[styles.article, styles.articleBottom]}>
+                            <View style={[theme.article, theme.articleBottom]}>
 
                             </View>
                         </View>
@@ -274,40 +274,40 @@ const StyleComponent = () => {
 
 
 
-            {/*<View style={styles.bodyFooter}>*/}
-            {/*    <TouchableOpacity style={styles.buttonCancel}>*/}
-            {/*        <Text style={styles.buttonText}>Annulla</Text>*/}
+            {/*<View style={theme.bodyFooter}>*/}
+            {/*    <TouchableOpacity style={theme.buttonCancel}>*/}
+            {/*        <Text style={theme.buttonText}>Annulla</Text>*/}
             {/*    </TouchableOpacity>*/}
-            {/*    <TouchableOpacity style={styles.buttonDelete}>*/}
-            {/*        <Text style={styles.buttonText}>Elimina</Text>*/}
+            {/*    <TouchableOpacity style={theme.buttonDelete}>*/}
+            {/*        <Text style={theme.buttonText}>Elimina</Text>*/}
             {/*    </TouchableOpacity>*/}
-            {/*    <TouchableOpacity style={styles.buttonOK}>*/}
-            {/*        <Text style={styles.buttonText}>OK</Text>*/}
+            {/*    <TouchableOpacity style={theme.buttonOK}>*/}
+            {/*        <Text style={theme.buttonText}>OK</Text>*/}
             {/*    </TouchableOpacity>*/}
-            {/*    <TouchableOpacity style={styles.buttonSave}>*/}
-            {/*        <Text style={styles.buttonText}>Salva</Text>*/}
+            {/*    <TouchableOpacity style={theme.buttonSave}>*/}
+            {/*        <Text style={theme.buttonText}>Salva</Text>*/}
             {/*    </TouchableOpacity>*/}
             {/*</View>*/}
 
 
-            {/*<Text style={[styles.contentTitle]}>contenitore di minibox</Text>*/}
-            {/*<View style={styles.article}>*/}
-            {/*    <View style={styles.contentArticleSquareContainer}>*/}
-            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*<Text style={[theme.contentTitle]}>contenitore di minibox</Text>*/}
+            {/*<View style={theme.article}>*/}
+            {/*    <View style={theme.contentArticleSquareContainer}>*/}
+            {/*        <View style={theme.contentArticleSquare}>*/}
             {/*        </View>*/}
-            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        <View style={theme.contentArticleSquare}>*/}
             {/*        </View>*/}
-            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        <View style={theme.contentArticleSquare}>*/}
             {/*        </View>*/}
-            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        <View style={theme.contentArticleSquare}>*/}
             {/*        </View>*/}
-            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        <View style={theme.contentArticleSquare}>*/}
             {/*        </View>*/}
-            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        <View style={theme.contentArticleSquare}>*/}
             {/*        </View>*/}
-            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        <View style={theme.contentArticleSquare}>*/}
             {/*        </View>*/}
-            {/*        <View style={styles.contentArticleSquare}>*/}
+            {/*        <View style={theme.contentArticleSquare}>*/}
             {/*        </View>*/}
             {/*    </View>*/}
             {/*</View>*/}
@@ -316,8 +316,8 @@ const StyleComponent = () => {
 
 
 
-            <View style={styles.footer} >
-                <View style={styles.iconContainer}>
+            <View style={theme.footer} >
+                <View style={theme.iconContainer}>
                     <Icon name="home" size={24} color="#D8BFD8" />
                     <Icon name="cog" size={24} color="#D8BFD8" />
                 </View>
@@ -617,10 +617,10 @@ const styles = StyleSheet.create({
     text18: { fontSize: 18, },
     text20: { fontSize: 20, },
     textArticle: { color: colors.slate12, },
-    textSuccess: { color: colors.green11, fontWeight: 'bold', },
-    textDanger: { color: colors.red11, fontWeight: 'bold', },
-    textWarning: { color: colors.yellow10, fontWeight: 'bold', },
-    textInfo: { color: colors.blue11, fontWeight: 'bold', },
+    textSuccess: { color: colors.green11, },
+    textDanger: { color: colors.red11, },
+    textWarning: { color: colors.yellow10, },
+    textInfo: { color: colors.blue11, },
     textSecondary: { color: colors.slate11, },
     textTertiary: { color: colors.slate10, },
     textQuaternary: { color: colors.slate9, },
@@ -669,6 +669,7 @@ const styles = StyleSheet.create({
     alignRight: { alignSelf: 'flex-end', },
     alignLeft: { alignSelf: 'flex-start', },
     //border
+    br0: { borderRadius: 0 },
     br2: { borderRadius: br2 },
     br4: { borderRadius: br4 },
     br6: { borderRadius: br6 },

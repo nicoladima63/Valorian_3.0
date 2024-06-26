@@ -10,14 +10,10 @@ const Layout = ({ children, navigation, showTopBar, showBodyFooter, header, body
     return (
         <SafeAreaView style={theme.safeAreaView}>
             <View style={theme.container}>
-
-                {header && (
-                    <View style={theme.header}>
-                        <Image source={logo} style={theme.logo} resizeMode='contain' />
-                        <Text style={theme.headerTitle}>Valorian</Text>
-                        {showTopBar && <TopBar navigation={navigation} />}
-                    </View>
-                )}
+                {showTopBar && <TopBar navigation={navigation} />}
+                <View style={theme.header}>
+                    {header}
+                </View>
 
                 {/*{leftSide &&*/}
                 {/*    <View style={styles.leftSide}>*/}
