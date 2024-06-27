@@ -1,19 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { useTheme } from '../context/ThemeContext';
-import Layout from './Layout';
-
 import {
-    themeheet, TextInput,
-    View, Text, Alert, Pressable, Image, Switch, ScrollView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, TouchableOpacity
+    View, Text, Alert, Pressable, Image,Switch, ScrollView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform
 } from 'react-native';
 import { Input, Icon } from '@rneui/themed';
 import * as SecureStore from 'expo-secure-store';
 import Spinner from 'react-native-loading-spinner-overlay';
-
-
 export default function LoginScreen({ navigation }) {
-    const [click, setClick] = useState(false);
+    const [click, setClick] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -22,8 +17,13 @@ export default function LoginScreen({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+
     const passwordRef = useRef(null); // Riferimento al TextInput della password
+
     const logo = require("../assets/images/logo.png")
+    //const facebook = require("../assets/images/react-logo.png")
+    //const linkedin = require("../assets/images/react-logo.png")
+    //const tiktok = require("../assets/images/react-logo.png")
 
     useEffect(() => {
         const loadSavedData = async () => {
@@ -56,7 +56,6 @@ export default function LoginScreen({ navigation }) {
     const handlePressEmptySpace = () => {
         Keyboard.dismiss(); // Nascondi la tastiera quando si tocca uno spazio vuoto
     };
-
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
@@ -91,58 +90,40 @@ export default function LoginScreen({ navigation }) {
         setLoading(false);
     }
 
-    const handleEmailChange = (text) => {
-        setEmail(text);
-        if (validateEmail(text)) {
-            setEmailError('');
-        } else {
-            setEmailError('Email non valida');
-        }
-    };
-
+    const CustomButton = ({ title, onPress }) => (
+        <Pressable onPress={onPress} style={theme.Loginbutton}>
+            <Text style={theme.LoginbuttonText}>{title}</Text>
+        </Pressable>
+    );
 
     return (
-        <Layout
-            navigation={navigation}
-            showTopBar={false}
-            header
-            //fab
-            fabAction
-            showBodyFooter={false}
-            bodyFooter
-        >
-            <TouchableWithoutFeedback onPress={handlePressEmptySpace}>
-                <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                >
-                    <View style={theme.contentPadding} ></View>
-                    <View style={theme.body}>
-                        <View style={theme.article}>
-                            <View style={theme.column}>
-                                <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
-                                <Text style={[theme.text, theme.h5, theme.fwb, theme.mb20]}>Form di accesso</Text>
-                            </View>
-
+        <TouchableWithoutFeedback onPress={handlePressEmptySpace}>
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <View style={theme.Logincontainer}>
+                        <Image source={logo} style={theme.Loginimage} resizeMode='contain' />
+                        <Text style={theme.Logintitle}>Login</Text>
+                        {/*<Text style={theme.LoginSubtitle}>login</Text>*/}
+                        <View style={theme.LogininputView}>
                             <Input
-                                style={theme.text}
+                                //style={theme.Logininput}
                                 label="Email"
                                 placeholder='email@esempio.com'
-                                placeholderTextColor={theme.slate9}
                                 value={email}
-                                onChangeText={handleEmailChange}
+                                onChangeText={(text) => {
+                                    setEmail(text);
+                                    setEmailError('');
+                                }}
                                 autoCorrect={false}
                                 autoCapitalize='none'
                                 returnKeyType="next" // Imposta il tipo di tasto di ritorno
                                 onSubmitEditing={() => passwordRef.current.focus()} // Passa al prossimo TextInput quando viene premuto il tasto "Vai"
                             />
-                            {emailError ?
-                                <Text style={theme.textDanger}>{emailError}</Text>
-                                : null}
-
-
+                            {emailError ? <Text style={theme.errorText}>{emailError}</Text> : null}
                             <Input
-                                style={theme.text}
                                 ref={passwordRef}
                                 label="Password"
                                 placeholder='password'
@@ -155,7 +136,6 @@ export default function LoginScreen({ navigation }) {
                                 autoCorrect={false}
                                 rightIcon={
                                     <Icon
-                                        color={theme.onBackground}
                                         type='font-awesome'
                                         name={showPassword ? 'eye' : 'eye-slash'}
                                         onPress={() => setShowPassword(!showPassword)}
@@ -165,47 +145,41 @@ export default function LoginScreen({ navigation }) {
                                 returnKeyType="go" // Imposta il tipo di tasto di ritorno
                                 onSubmitEditing={signInWithEmail} // Chiamata alla funzione di registrazione quando viene premuto "Vai"
                             />
-                            {passwordError ?
-                                <Text style={theme.textDanger}>{passwordError}</Text>
-                                : null}
-                            <View style={[theme.center,theme.mb20]}>
-                                <Pressable onPress={() => navigation.navigate('ForgotPassword')}>
-                                    <Text style={[theme.link, theme.alignRight]}>Password dimenticata?</Text>
-                                </Pressable>
-                            </View>
-                            <View style={[theme.article, theme.grid]}>
-                                <View>
-                                    <Text style={theme.text}>Ricordami</Text>
-                                </View>
-                                <View style={theme.Loginswitch}>
-                                    <Switch value={click} onValueChange={setClick} trackColor={{ true: "green", false: "gray" }} />
-                                </View>
-                            </View>
-
-                            <View style={[theme.article, theme.mt20]}>
-                                <Pressable onPress={() => signInWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { justifyContent: 'space-evenly' }]}>
-                                    <Text style={theme.h5}>Accedi</Text>
-                                </Pressable>
-                            </View>
-
-                            <View style={[theme.article, theme.mt20,theme.mb20, theme.grid]}>
-                                <Text style={[theme.text, theme.mt20]}>Non hai un Account?</Text>
-                                <Pressable onPress={() => navigation.navigate('Register')}>
-                                    <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>
-                                </Pressable>
-                            </View>
-
+                            {passwordError ? <Text style={theme.errorText}>{passwordError}</Text> : null}
                         </View>
+                        <View style={theme.LoginrememberView}>
+                            <View style={theme.Loginswitch}>
+                                <Switch value={click} onValueChange={setClick} trackColor={{ true: "green", false: "gray" }} />
+                                <Text style={theme.LoginfooterText}>Ricordami</Text>
+                            </View>
+                        </View>
+                        <View>
+                            <Pressable onPress={() => Alert.alert("Forget Password!")}>
+                                <Text style={[theme.linkText, theme.mb20]}>Password dimenticata?</Text>
+                            </Pressable>
+                        </View>
+                        <View style={theme.LoginbuttonView}>
+                            <CustomButton title="Accedi" onPress={() => signInWithEmail()} />
+                            <Pressable onPress={() => navigation.navigate('Register')}>
+                                <Text style={[theme.text, theme.mt20]}>Non hai un Account?
+                                    <Text style={theme.linkText}>  Registrati</Text>
+                                </Text>
+                            </Pressable>
+                        </View>
+                        {/*<Text style={theme.LoginoptionsText}>Oppure entra con</Text>*/}
+                        {/*<View style={theme.LoginmediaIcons}>*/}
+                        {/*    <Image source={facebook} style={theme.Loginicons} />*/}
+                        {/*    <Image source={tiktok} style={theme.Loginicons} />*/}
+                        {/*    <Image source={linkedin} style={theme.Loginicons} />*/}
+                        {/*</View>*/}
                         <Spinner
-                            visible={loading} // Visualizza lo spinner quando loading è true
+                            visible={loading} // Visualizza lo spinner quando loading Ã¨ true
                             textContent={'Loading...'}
                             textStyle={theme.spinnerTextStyle}
                         />
-
-                    </View >
-                </KeyboardAvoidingView>
-            </TouchableWithoutFeedback>
-        </Layout>
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     );
 }
-
