@@ -191,41 +191,43 @@ const BisogniList = ({ session, setFabAction }) => {
     };
 
     return (
-        <View style={theme.body}>
-            <View style={theme.articleMiddle}>
-                <SectionList
-                    sections={DATA}
-                    keyExtractor={(item, index) => item.uniqueKey}
-                    renderItem={({ item }) => (
-                        <View style={theme.contentArticle2}>
-                            <View style={theme.leftContainer}>
-                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? "#24bb2180" : theme.colors.contetArticle} />
-                            </View>
-
-                            <Pressable onPress={() => updateBisogno(item)} style={theme.centerContainer}>
-                                <Text style={theme.articleText}>{item.nome}</Text>
-                            </Pressable>
-
-                            <Pressable onPress={() => selectBisogno(item)} style={theme.rightContainer}>
-                                <View style={theme.iconContainer}>
-                                    <Icon name="angle-right" size={24} color="#c3c3c3" />
-                                </View>
-                            </Pressable>
+        <View >
+            <SectionList
+                sections={DATA}
+                keyExtractor={(item, index) => item.uniqueKey}
+                renderItem={({ item, index, section }) => (
+                    <View style={[theme.article, theme.articleMiddle, theme.grid, index === section.data.length - 1 && theme.articleBottom]}>
+                        <View style={theme.left}>
+                            <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? "#24bb2180" : theme.colors.contetArticle} />
                         </View>
-                    )}
-                    renderSectionHeader={({ section: { title, color } }) => (
-                        <Text style={[theme.articleTitle, { color: color }]}>{title}</Text>
-                    )}
-                    ListEmptyComponent={renderEmptyComponent}
-                    ListFooterComponent={<View style={theme.contentPadding} />}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }
-                />
-            </View>
+
+                        <Pressable onPress={() => updateBisogno(item)} style={theme.center}>
+                            <Text style={theme.articleText}>{item.nome}</Text>
+                        </Pressable>
+
+                        <Pressable onPress={() => selectBisogno(item)} style={theme.right}>
+                            <View>
+                                <Icon name="angle-right" size={24} color="#c3c3c3" />
+                            </View>
+                        </Pressable>
+                    </View>
+
+                )}
+                ItemSeparatorComponent={<View style={theme.mb10} />}
+                renderSectionHeader={({ section: { title, color } }) => (
+                    <View style={[theme.article, theme.articleTop]}>
+                        <Text style={[theme.h5, { color: color }]}>{title}</Text>
+                    </View>
+                )}
+                ListEmptyComponent={renderEmptyComponent}
+                ListFooterComponent={<View style={theme.contentPadding} />}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            />
             <AddBisogno
                 visible={modalVisibleAdd}
                 onClose={handleModalAddClose}
@@ -254,6 +256,7 @@ const BisogniList = ({ session, setFabAction }) => {
                 {snackbarMessage}
             </Snackbar>
         </View>
+
     );
 };
 

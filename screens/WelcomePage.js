@@ -22,7 +22,7 @@ const WelcomePage = ({ navigation }) => {
         }
         navigation.replace('Tabs');
     };
-
+    //  &egrave;  &agrave; pi&#249; 
     return (
         <Layout
             navigation={navigation}
@@ -43,18 +43,25 @@ const WelcomePage = ({ navigation }) => {
                     <Text style={[theme.h1, theme.fwb, theme.mb20, theme.mt20]}>Benvenuto in Valorian!</Text>
                 </View>
                 <View style={[theme.article, theme.articleTop]}>
-                    <Text style={[theme.h4, theme.mb20, theme.fwb]}>Siamo entusiasti di averti con noi.</Text>
-                    <Text style={[theme.paragraph, theme.text16, { lineHeight: 20 }]}>
-                        Questa app &egrave; progettata per aiutarti a monitorare e migliorare il tuo stato di benessere, valutando quanto ti senti soddisfatto nei vari aspetti della tua vita.
+                    <Text style={[theme.h4, theme.mb20, theme.fwb]}>
+                        Sono entusiasta di averti con me.
                     </Text>
-                    <Text style={[theme.paragraph, theme.text16, { lineHeight: 20 }]}>
-                        Questo &egrave; molto semplice da fare, dovrai solo cliccare sul nome del bisogno che soddisfi, in questo modo avrai la possibilit&agrave; di tracciare le volte che viene soddisfatto per avere un andamento temporale delle soddisfazioni.
+                    <Text style={[theme.paragraph, theme.text16, { lineHeight: 21 }]}>
+                        Ciao mi chiamo Nicola e dopo un master di due anni in health coaching presso la Health Coaching Academy ho deciso di creare un progetto ambizioso.
+                        <Text style={theme.fwb}> Valorian</Text>.
+                        {'\n'}Credo molto che lo stato di benessere psicofisico di una persona sia importante per la sua salute.
                     </Text>
-                    <Text style={[theme.paragraph, theme.text16, { lineHeight: 20 }]}>
+                    <Text style={[theme.paragraph, theme.text16, { lineHeight: 21 }]}>
+                        Tenere sotto controllo il tuo stato psicofisico &egrave; una operazione facile con la mia applicazione.{'\n'}
+                        Dopo aver inserito quali sono i tuoi bisogni dovrai solo cliccare sul nome del bisogno per comunicare alla app che lo hai soddisfatto.{'\n'}
+                        In questo modo puoi tenere traccia di tutte le soddisfazioni.
+                    </Text>
+                    <Text style={[theme.paragraph, theme.text16, { lineHeight: 21 }]}>
                         Tutti questi dati saranno utilizzati per definire il tuo stato di benessere generale e saranno visualizzati attraverso un grafico.
                     </Text>
-                    <Text style={[theme.paragraph, theme.text16, { lineHeight: 20 }]}>
-                        Inizia subito a esplorare la tua vita in modo pi&#249; consapevole e a lavorare verso un benessere pi&#249; completo!
+                    <Text style={[theme.paragraph, theme.text16, { lineHeight: 21 }]}>
+
+                        Inizia subito a esplorare la tua vita in modo più consapevole e a lavorare verso un benessere più completo!
                     </Text>
                     <View style={theme.contentPadding} />
                 </View>

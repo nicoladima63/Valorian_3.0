@@ -32,7 +32,15 @@ const HomeScreen = ({ route, navigation }) => {
         <Layout
             navigation={navigation}
             showTopBar={true}
-            header
+            header={
+                <View style={}theme.grid>
+                //<View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 }}>
+                    <Text style={[theme.h4]}>I tuoi bisogni</Text>
+                    <Pressable onPress={() => navigation.navigate('HelpHome')}>
+                        <Text style={theme.contentTitle}>Aiuto</Text>
+                    </Pressable>
+                </View>
+            }
             fab={<Text style={theme.fabText}>+</Text>}
             fabAction={handleFabPressHome}
             showBodyFooter={false}
@@ -53,22 +61,21 @@ const HomeScreen = ({ route, navigation }) => {
                 </View>
             }
         >
-            <View style={theme.body}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 }}>
-                    <Text style={[theme.contentTitle]}>I tuoi bisogni</Text>
-                    <Pressable onPress={() => navigation.navigate('HelpHome')}>
-                        <Text style={theme.contentTitle}>Aiuto</Text>
-                    </Pressable>
-                </View>
-                <View style={theme.articleTop}>
+            <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
+
+                <View style={[theme.article,theme.articleTop]}>
                     <View style={theme.checkTextContainer}>
                         <Icon name="info-circle" size={22} color="#2ECC71" style={theme.checkIcon} />
                         <Text style={[theme.articleText,theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text>
                     </View>
                 </View>
+                <View style={[theme.article, theme.articleMiddle]}>
+                    <SectionListComponent session={session} setFabAction={setFabAction} />
+                </View>
 
-                <SectionListComponent session={session} setFabAction={setFabAction} />
-                <View style={theme.articleBottom}></View>
+                <View style={theme.articleBottom}>
+                
+                </View>
             </View>
         </Layout>
     ); };
