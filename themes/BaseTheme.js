@@ -9,7 +9,7 @@ const lh = { lh1: 1.2, lh2: 1.4, lh3: 1.6, lh4: 1.8, lh5: 2.0 };
 export const BaseTheme = (colors) => ({
     safeAreaView: {
         flex: 1,
-        backgroundColor: colors.slate0,
+        backgroundColor: colors.slate2,
     },
 
     //page component

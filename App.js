@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import React, { useEffect,useState } from 'react';
+import { StatusBar,AppState } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,12 +17,10 @@ import CategorieScreen from './screens/CategorieScreen';
 import { Tabs } from './navigation/Tabs';
 
 import { ThemeProvider, useTheme } from './context/ThemeContext';
-import { DefaultTheme, DarkTheme } from './themes/theme';
 import { AppContext } from './context/AppContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const Stack = createNativeStackNavigator();
-
 function AuthLoadingScreen({ navigation }) {
     const { session } = useAuth();
 
@@ -54,6 +52,26 @@ export default function App() {
 
 function AppWithTheme() {
     const { theme, isDarkTheme } = useTheme();
+    const [appState, setAppState] = useState(AppState.currentState);
+
+    useEffect(() => {
+        const handleAppStateChange = (nextAppState) => {
+            if (appState.match(/inactive|background/) && nextAppState === 'active') {
+                console.log('App has come to the foreground!');
+                // Riprendi le attività, aggiorna i dati, ecc.
+            } else if (nextAppState.match(/inactive|background/)) {
+                console.log('App has gone to the background!');
+                // Sospendi le attività, salva lo stato, ecc.
+            }
+            setAppState(nextAppState);
+        };
+
+        const appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
+
+        return () => {
+            appStateSubscription.remove();
+        };
+    }, [appState]);
 
     return (
         <AppContext.Provider value={{ isDarkTheme }}>
