@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { useTheme } from '../context/ThemeContext';
 import Layout from './Layout';
-
 import {
-    themeheet, TextInput,
-    View, Text, Alert, Pressable, Image, Switch, ScrollView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, TouchableOpacity
+    View, Text, Alert, Pressable, Image,
+    Switch, ScrollView, TouchableWithoutFeedback, Keyboard,
+    KeyboardAvoidingView, Platform, 
 } from 'react-native';
 import { Input, Icon } from '@rneui/themed';
 import * as SecureStore from 'expo-secure-store';
@@ -22,7 +22,9 @@ export default function LoginScreen({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const passwordRef = useRef(null); // Riferimento al TextInput della password
+
+    const passwordRef = useRef(null); 
+
     const logo = require("../assets/images/logo.png")
 
     useEffect(() => {
@@ -77,7 +79,6 @@ export default function LoginScreen({ navigation }) {
         }
 
         setLoading(true);
-
         const { error } = await supabase.auth.signInWithPassword({
             email: email,
             password: password,
@@ -128,7 +129,7 @@ export default function LoginScreen({ navigation }) {
                                 style={theme.text}
                                 label="Email"
                                 placeholder='email@esempio.com'
-                                placeholderTextColor={theme.slate9}
+                                placeholderTextColor={theme.colors.slate9}
                                 value={email}
                                 onChangeText={handleEmailChange}
                                 autoCorrect={false}
@@ -146,6 +147,7 @@ export default function LoginScreen({ navigation }) {
                                 ref={passwordRef}
                                 label="Password"
                                 placeholder='password'
+                                placeholderTextColor={theme.colors.slate9}
                                 secureTextEntry={!showPassword}
                                 value={password}
                                 onChangeText={(text) => {

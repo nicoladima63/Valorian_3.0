@@ -31,7 +31,7 @@ export const ThemeProvider = ({ children }) => {
 
     useEffect(() => {
         StatusBar.setBarStyle(theme === DarkTheme ? 'light-content' : 'dark-content');
-        StatusBar.setBackgroundColor(theme.colors.statusBarBackground);
+        StatusBar.setBackgroundColor(theme.colors.background);
     }, [theme]);
 
     const toggleTheme = (mode, callback) => {

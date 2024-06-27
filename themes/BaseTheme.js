@@ -9,13 +9,13 @@ const lh = { lh1: 1.2, lh2: 1.4, lh3: 1.6, lh4: 1.8, lh5: 2.0 };
 export const BaseTheme = (colors) => ({
     safeAreaView: {
         flex: 1,
-        backgroundColor: colors.slate2,
+        backgroundColor: colors.background,
     },
 
     //page component
     container: {
         flex: 1,
-        backgroundColor: colors.slate0,
+        backgroundColor: colors.slate2,
         padding: 0,
 
     },
@@ -25,16 +25,18 @@ export const BaseTheme = (colors) => ({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 20,
+        borderTopWidth: 1,
+        borderTopColor: colors.slate7,
     },
     content: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: colors.slate0,
+        backgroundColor: colors.slate2,
         //    paddingHorizontal: 10,
     },
     body: {
         flex: 1,
-        backgroundColor: colors.slate0,
+        backgroundColor: colors.slate2,
         position: 'relative',
         paddingHorizontal: 20,
     },
@@ -44,11 +46,11 @@ export const BaseTheme = (colors) => ({
         borderRadius: br.br8,
         borderWidth: 1,
         marginBottom: 0,
-        backgroundColor: colors.slate1,
+        backgroundColor: colors.background,
         borderColor: colors.slate7,
     },
     articleDefault: {
-        backgroundColor: colors.slate3,
+        backgroundColor: colors.background,
         borderColor: colors.slate10,
         paddingVertical: 8,
         paddingHorizontal: 14,

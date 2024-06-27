@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, Text, ScrollView, StatusBar, TouchableOpacity, Image, TextInput, Pressable, Switch } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, StatusBar, TouchableOpacity, Image, TextInput, Pressable, Switch, PixelRatio } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RadioButton } from 'react-native-paper';
 import { useTheme } from '../context/ThemeContext';
+import ColorsBarComponent from '../components/ColorBarsComponent'
+import { RFValue } from "react-native-responsive-fontsize";
 
 
 const StyleComponent = () => {
     const logo = require("../assets/images/logo.png")
-        const { theme } = useTheme();
+    const { theme } = useTheme();
+    const fontSizeScaler = (size) => size * PixelRatio.getFontScale();
 
 
-   return (
+    return (
         <View style={theme.container}>
             <StatusBar
                 barStyle="light-content" // Stile delle icone (può essere 'default', 'light-content', 'dark-content')
@@ -25,15 +28,17 @@ const StyleComponent = () => {
 
                 <View style={theme.body}>
 
-                    <Text style={[theme.text, theme.h1, theme.fwb]}> Title h3</Text>
-                    <Text style={[theme.text, theme.h2, theme.fwb]}> Title h2</Text>
-                    <Text style={[theme.text, theme.h3, theme.fwb]}> Title h3</Text>
-                    <Text style={[theme.text, theme.h4, theme.fwb]}> Title h4</Text>
-                    <Text style={[theme.text, theme.h5, theme.fwb]}> Title h5</Text>
-                    <Text style={[theme.text, theme.h6, theme.fwb]}> Title h6</Text>
-
 
                     <ScrollView>
+                        <Text style={[theme.text, theme.h1, theme.fwb]}> Title h3</Text>
+                        <Text style={[theme.text, theme.h2, theme.fwb]}> Title h2</Text>
+                        <Text style={[theme.text, theme.h3, theme.fwb]}> Title h3</Text>
+                        <Text style={[theme.text, theme.h4, theme.fwb]}> Title h4</Text>
+                        <Text style={[theme.text, theme.h5, theme.fwb]}> Title h5</Text>
+                        <Text style={[theme.text, theme.h6, theme.fwb]}> Title h6</Text>
+
+
+
                         <View style={[theme.article, theme.articleDefault]}>
                             <Text style={theme.text}>text article default</Text>
                         </View>
@@ -199,7 +204,7 @@ const StyleComponent = () => {
                                 </View>
 
                                 <View style={[theme.article, theme.articleMiddle]}>
-                                    <Text style={[theme.text,theme.mb10]}>Password</Text>
+                                    <Text style={[theme.text, theme.mb10]}>Password</Text>
                                     <View style={[theme.article, theme.articleDefault]}>
 
                                         <TextInput
@@ -260,16 +265,21 @@ const StyleComponent = () => {
                             </View>
                         </View>
 
+                        <ColorsBarComponent></ColorsBarComponent>
+
+
                     </ScrollView>
 
+                    <View>
+                        <Text>Main Content</Text>
+                        <Text style={{ fontSize: RFValue(16) }}>
+                            Testo RFValue(16)
+                        </Text>
+                        <Text style={{ fontSize: fontSizeScaler(16) }}>
+                            Testo fontSizeScaler(16)
+                        </Text>
+                    </View>
                 </View>
-
-
-
-
-
-
-
             </View >
 
 

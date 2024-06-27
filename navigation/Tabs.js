@@ -2,13 +2,11 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
-//import LandingScreen from '../screens/LandingScreen';
 import StatusPage from '../screens/StatusPage';
 import WelcomePageTest from '../screens/WelcomePage-test';
 import SettingsPage from '../screens/SettingsPage';
 import Bisogni from '../screens/BisogniList';
 import Calendar from '../screens/Calendario';
-//import Associazione from '../screens/Associazione';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useTheme } from '../context/ThemeContext';
@@ -41,7 +39,7 @@ export const Tabs = () => {
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: theme.colors.primary,
-                tabBarInactiveTintColor: theme.colors.inactive,
+                tabBarInactiveTintColor: theme.colors.slate10,
                 tabBarLabelStyle: { fontSize: 12 },
                 tabBarStyle: { backgroundColor: theme.colors.background, height: 55, borderTopColor: theme.colors.border },
             })}

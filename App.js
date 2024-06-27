@@ -1,8 +1,14 @@
-import React, { useEffect,useState } from 'react';
-import { StatusBar,AppState } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { AppContext } from './context/AppContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
+
+import { StatusBar, AppState } from 'react-native';
+import { StatusBarStyle } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import WelcomePage from './screens/WelcomePage';
@@ -15,10 +21,6 @@ import RegisterScreen from './screens/RegisterScreen';
 import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
 import { Tabs } from './navigation/Tabs';
-
-import { ThemeProvider, useTheme } from './context/ThemeContext';
-import { AppContext } from './context/AppContext';
-import { AuthProvider, useAuth } from './context/AuthContext';
 
 const Stack = createNativeStackNavigator();
 function AuthLoadingScreen({ navigation }) {
@@ -51,9 +53,9 @@ export default function App() {
 }
 
 function AppWithTheme() {
-    const { theme, isDarkTheme } = useTheme();
+    const { theme, themeMode } = useTheme();
     const [appState, setAppState] = useState(AppState.currentState);
-
+    const [statusBarStyle, setStatusBarStyle] = useState  ('default' );
     useEffect(() => {
         const handleAppStateChange = (nextAppState) => {
             if (appState.match(/inactive|background/) && nextAppState === 'active') {
@@ -76,7 +78,12 @@ function AppWithTheme() {
     return (
         <AppContext.Provider value={{ themeMode }}>
             <SafeAreaProvider>
-                <StatusBar/>
+                <StatusBar
+                    animated={true}
+                    backgroundColor={ theme.colors.background}
+                    barStyle={statusBarStyle}
+                    showHideTransition={'none'}
+                />
                 <AuthProvider>
                     <NavigationContainer theme={theme}>
                         <Stack.Navigator initialRouteName='AuthLoading' screenOptions={{ headerShown: false }}>

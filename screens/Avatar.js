@@ -3,8 +3,9 @@ import { supabase } from '../lib/supabase';
 import { StyleSheet, View, Alert, Image, Button, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from '../context/ThemeContext';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Avatar({ url, size = 150, onUpload }) {
+export default function Avatar({ url, size = 200, onUpload }) {
     const [uploading, setUploading] = useState(false);
     const [avatarUrl, setAvatarUrl] = useState(null);
     const avatarSize = { height: size, width: size };
@@ -86,28 +87,38 @@ export default function Avatar({ url, size = 150, onUpload }) {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.avatarContainer}>
-                {avatarUrl ? (
-                    <Image
-                        source={{ uri: avatarUrl }}
-                        accessibilityLabel="Avatar"
-                        style={[avatarSize, styles.avatar, styles.image]}
+
+        <View style={[theme.grid, theme.overflowHidden]}>
+            <View style={[theme.grid, theme.overflowHidden]}>
+                <View style={[theme.gap2, theme.mb20]}>
+                    {avatarUrl ? (
+                        <Image
+                            source={{ uri: avatarUrl }}
+                            accessibilityLabel="Avatar"
+                            style={[avatarSize, theme.avatar, theme.br50]}
+                        />
+                    ) : (
+                        <View style={[avatarSize, styles.avatar, styles.noImage]} />
+                    )}
+                </View>
+                <View style={theme.gap2}>
+                    <Button
+                        onPress={uploadAvatar}
+                        disabled={uploading}
+                        title={uploading ? "Uploading..." : "Cambia"}
+                        color={theme.colors.primary}
+                        accessibilityLabel="Upload your avatar image"
                     />
-                ) : (
-                    <View style={[avatarSize, styles.avatar, styles.noImage]} />
-                )}
-            </View>
-            <View>
-                <Button
-                    onPress={uploadAvatar}
-                    disabled={uploading}
-                    title={uploading ? "Uploading..." : "Upload"}
-                    color={theme.colors.primary}
-                    accessibilityLabel="Upload your avatar image"
-                />
+                </View>
             </View>
         </View>
+
+
+
+
+
+
+
     );
 }
 

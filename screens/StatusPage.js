@@ -50,7 +50,7 @@ const fetchNeedsData = async () => {
 
 };
 
-const LandingPage = ({ navigation }) => {
+const StatusPage = ({ navigation }) => {
     const { theme } = useTheme();
     const { session } = useAuth();
     const [needsData, setNeedsData] = useState([]);
@@ -101,7 +101,7 @@ const LandingPage = ({ navigation }) => {
                 type: 'gauge',
                 startAngle: 180,
                 endAngle: 0,
-                center: ['50%', '75%'],
+                center: ['50%', '60%'],
                 radius: '90%',
                 min: 0,
                 max: 100,
@@ -141,7 +141,7 @@ const LandingPage = ({ navigation }) => {
                     }
                 },
                 axisLabel: {
-                    color: theme.contentTitle,
+                    color: theme.colors.onBackground,
                     fontSize: 14,
                     distance: -60,
                     rotate: 'tangential',
@@ -175,8 +175,8 @@ const LandingPage = ({ navigation }) => {
                 data: [
                     {
                         value: Math.max(0, satisfactionIndex), // Mostra almeno 0 se satisfactionIndex è negativo
-                        name: 'Livello di benessere',
-                        color: theme.colors.contentTitle
+                        //name: 'Livello di benessere',
+                        color: theme.colors.onBackground
                     }
                 ]
             }
@@ -281,22 +281,31 @@ const LandingPage = ({ navigation }) => {
         <Layout
             navigation={navigation}
             showTopBar={true}
-            header
-            //fab={<Text>+</Text>}
-            //fabAction={handleFabPressHome}
+            header={
+                <Text style={[theme.h4, theme.mb20, theme.mt10, theme.ml10,]}>Ecco come stai</Text>
+            }
+        //fab={<Text>+</Text>}
+        //fabAction={handleFabPressHome}
         >
-            <View style={theme.body}>
-                <Text style={theme.contentTitle}>Ecco come stai:</Text>
-                <Text style={theme.contentTitle}>Livello di benessere:</Text>
+            <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
 
-                <EChartsComponent option={option1} height={300} />
+                <View style={{ flex: 1 }}>
 
-                <Text style={theme.contentTitle}>Soddisfazione dei bisogni:</Text>
-                <EChartsComponent option={option2} height={350} />
+                    <Text style={theme.h5}>Livello di benessere:</Text>
+                    <View style={{ height: 250 }}>
+                        <EChartsComponent option={option1} height={300} />
+                    </View>
+
+                    <Text style={theme.h5}>Soddisfazione dei bisogni:</Text>
+                    <View style={{ height: 300 }}>
+                        <EChartsComponent option={option2} height={300} />
+                    </View>
+                </View>
             </View>
+
         </Layout>
     );
 };
 
-export default LandingPage;
+export default StatusPage;
 
