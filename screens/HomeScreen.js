@@ -33,8 +33,8 @@ const HomeScreen = ({ route, navigation }) => {
             navigation={navigation}
             showTopBar={true}
             header={
-                <View style={}theme.grid>
-                //<View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 }}>
+                <View style={theme.grid}>
+                {/*<View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 }}>*/}
                     <Text style={[theme.h4]}>I tuoi bisogni</Text>
                     <Pressable onPress={() => navigation.navigate('HelpHome')}>
                         <Text style={theme.contentTitle}>Aiuto</Text>
