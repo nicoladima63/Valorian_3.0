@@ -25,7 +25,6 @@ export const BaseTheme = (colors) => ({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 20,
-        borderTopWidth: 1,
     },
     content: {
         flex: 1,

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Appearance, StatusBar } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Importa AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DefaultTheme, DarkTheme } from '../themes/theme';
 
 const ThemeContext = createContext();
@@ -11,8 +11,8 @@ const getSystemTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(DefaultTheme); // Usa DefaultTheme come valore iniziale
-    const [themeMode, setThemeMode] = useState('auto'); // 'light', 'dark', 'auto'
+    const [theme, setTheme] = useState(DefaultTheme);
+    const [themeMode, setThemeMode] = useState('auto');
 
     useEffect(() => {
         const fetchStoredTheme = async () => {
@@ -51,12 +51,20 @@ export const ThemeProvider = ({ children }) => {
     }, [themeMode]);
 
     useEffect(() => {
-        StatusBar.setBarStyle(theme === DarkTheme ? 'light-content' : 'dark-content');
+        StatusBar.setBarStyle(theme.dark ? 'light-content' : 'dark-content');
         StatusBar.setBackgroundColor(theme.colors.background);
+
+        // Aggiorna il colore della StatusBar all'avvio dell'applicazione
+        updateStatusBar(theme);
 
         // Salva il tema selezionato in AsyncStorage
         AsyncStorage.setItem('themeMode', themeMode);
     }, [theme, themeMode]);
+
+    const updateStatusBar = (currentTheme) => {
+        StatusBar.setBarStyle(currentTheme.dark ? 'light-content' : 'dark-content');
+        StatusBar.setBackgroundColor(theme.colors.background);
+    };
 
     const toggleTheme = (mode, callback) => {
         setThemeMode(mode);

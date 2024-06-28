@@ -77,12 +77,7 @@ function AppWithTheme() {
     return (
         <AppContext.Provider value={{ themeMode }}>
             <SafeAreaProvider>
-                <StatusBar
-                    animated={true}
-                    backgroundColor={ theme.colors.background}
-                    barStyle={statusBarStyle}
-                    showHideTransition={'none'}
-                />
+                <StatusBar/>
                 <AuthProvider>
                     <NavigationContainer theme={theme}>
                         <Stack.Navigator initialRouteName='AuthLoading' screenOptions={{ headerShown: false }}>
