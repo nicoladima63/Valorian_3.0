@@ -213,7 +213,7 @@ const BisogniList = ({ session, setFabAction }) => {
                     </View>
 
                 )}
-                ItemSeparatorComponent={<View style={theme.mb10} />}
+                //ItemSeparatorComponent={<View style={theme.mb10} />}
                 renderSectionHeader={({ section: { title, color } }) => (
                     <View style={[theme.article, theme.articleTop]}>
                         <Text style={[theme.h5, { color: color }]}>{title}</Text>

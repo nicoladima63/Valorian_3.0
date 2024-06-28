@@ -1,7 +1,7 @@
 const br = { br2: 2, br4: 4, br6: 6, br8: 8, br12: 12, br16: 16, br20: 20 };
 const fs = { xxsmall: 10, xsmall: 12, small: 14, medium: 16, large: 18, xlarge: 20, xxlarge: 24 };
 const fw = { light: 300, regular: 400, medium: 500, semiBold: 600, bold: 700, extraBold: 800, black: 900 };
-const m = { m2: 2, m4: 4, m8: 8,m10:10,  m16: 16, m24: 24, m32: 32, m40: 40 };
+const m = { m2: 2, m4: 4, m8: 8, m10: 10, m16: 16, m24: 24, m32: 32, m40: 40 };
 const p = { p2: 2, p4: 4, p8: 8, p16: 16, p20: 20, p24: 24, p32: 32, p40: 40 };
 const gap = { gap2: 2, gap4: 4, gap8: 8, gap16: 16, gap24: 24, gap32: 32, gap40: 40 };
 const lh = { lh1: 1.2, lh2: 1.4, lh3: 1.6, lh4: 1.8, lh5: 2.0 };
@@ -26,7 +26,6 @@ export const BaseTheme = (colors) => ({
         alignItems: 'center',
         paddingHorizontal: 20,
         borderTopWidth: 1,
-        borderTopColor: colors.slate7,
     },
     content: {
         flex: 1,
@@ -43,7 +42,7 @@ export const BaseTheme = (colors) => ({
     article: {
         paddingVertical: 10,
         paddingHorizontal: 16,
-        borderRadius: br.br8,
+        borderRadius: 8,
         borderWidth: 1,
         marginBottom: 0,
         backgroundColor: colors.background,
@@ -73,8 +72,8 @@ export const BaseTheme = (colors) => ({
         borderColor: colors.yellow7,
     },
     articleTop: {
-        borderTopLeftRadius: br.br8,
-        borderTopRightRadius: br.br8,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
         borderColor: colors.slate7,
@@ -87,8 +86,8 @@ export const BaseTheme = (colors) => ({
     articleBottom: {
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
-        borderBottomLeftRadius: br.br8,
-        borderBottomRightRadius: br.br8,
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
         borderTopWidth: 0,
         borderColor: colors.slate7,
     },
@@ -102,12 +101,12 @@ export const BaseTheme = (colors) => ({
     h6: { fontSize: 14, color: colors.slate12 },
     headerTitle: {
         fontSize: 20,
-        fontWeight: fw.bold,
+        fontWeight: 'bold',
         color: colors.slate12,
     },
 
     //font
-    fwb: { fontWeight: fw.bold, },
+    fwb: { fontWeight: 'bold', },
 
     //text
     text: { color: colors.slate12, },
@@ -117,6 +116,8 @@ export const BaseTheme = (colors) => ({
     text16: { fontSize: 16, },
     text18: { fontSize: 18, },
     text20: { fontSize: 20, },
+    text22: { fontSize: 22, },
+    text24: { fontSize: 24, },
     textArticle: { color: colors.slate12, },
     textSuccess: { color: colors.green11, },
     textDanger: { color: colors.red11, },
@@ -134,42 +135,53 @@ export const BaseTheme = (colors) => ({
         flexDirection: 'column',
         fonstSize: 14,
     },
-    //svarioni
+    //margin
     mt10: { marginTop: 10 },
+    mt20: { marginTop: 20 },
+
     mb10: { marginBottom: 10 },
     ml10: { marginLeft: 10 },
     mr10: { marginRight: 10 },
     ml40: { marginLeft: 40 },
     mr40: { marginRight: 40 },
-    mt20: { marginTop: 20 },
     mb20: { marginBottom: 20 },
     ml20: { marginLeft: 20 },
     mr20: { marginRight: 20 },
-    verticallySpaced: {
-        paddingTop: 4,
-        paddingBottom: 4,
-        alignSelf: 'stretch',
-    },
+
+    lh10: { lineheight: 10 },
+    lh15: { lineheight: 15 },
+    lh20: { lineheight: 20 },
+    lh25: { lineheight: 25 },
+    lh30: { lineheight: 30 },
+    lh35: { lineheight: 35 },
+    lh40: { lineheight: 40 },
+    //svarioni
+    verticallySpaced: { paddingTop: 4, paddingBottom: 4, alignSelf: 'stretch', },
     overflowHidden: { overflow: 'hidden', },
     grid: {
-        flexDirection: 'row', // Puoi cambiare in 'column' per una griglia verticale
+        flexDirection: 'row',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         alignItems: 'center'
     },
-    column: {
-        flexDirection: 'column', // Puoi cambiare in 'column' per una griglia verticale
-        alignItems: 'center',
-        justifyContent: 'center',
+    column: { flexDirection: 'column', alignItems: 'center', justifyContent: 'center' },
+    grid3: { flexDirection: 'row', justifyContent: 'space-evenly', },
+    grid2: { flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', alignItems: 'center' },
 
-    },
-    contentPadding: {
-        height: 100, // Aggiungi uno spazio extra in fondo al contenuto
-    },
+    space50: { height: 50 },
+    space100: { height: 100 },
+    space150: { height: 150 },
+    space200: { height: 200 },
+    space250: { height: 250 },
+    contentPadding: { height: 100, },
     center: { alignItems: 'center', justifyContent: 'center', },
     right: { alignSelf: 'flex-end', },
     left: { alignSelf: 'flex-start', },
     //border
+    bt: {borderTopWidth:1,borderColor:colors.slate7},
+    bb: { borderBottomWidth: 1, borderColor: colors.slate7 },
+    bl: { borderLeftWidth: 1, borderColor: colors.slate7 },
+    br: { borderRightWidth: 1, borderColor: colors.slate7 },
     br0: { borderRadius: 0 },
     br2: { borderRadius: 2 },
     br4: { borderRadius: 4 },
@@ -199,8 +211,8 @@ export const BaseTheme = (colors) => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: m.m20,
-        marginBottom: m.m20,
+        marginTop: 20,
+        marginBottom: 20,
     },
 
     //content
@@ -363,7 +375,7 @@ export const BaseTheme = (colors) => ({
         borderColor: colors.blue8,
         paddingHorizontal: 20,
         paddingVertical: 6,
-        borderRadius: br.br2
+        borderRadius: 2
     },
     buttonContainer1: {
         flex: 1,
@@ -455,10 +467,10 @@ export const BaseTheme = (colors) => ({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: colors.slate8,
     },
     modalContent: {
-        backgroundColor: colors.background,
+        backgroundColor: colors.slate12,
         padding: 20,
         borderRadius: 10,
         alignItems: 'center',
@@ -483,23 +495,4 @@ export const BaseTheme = (colors) => ({
     checkIcon: {
         marginLeft: 10,
     },
-    // TOPBAR
-    topBarContainer: {},
-    topBarTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: colors.onBackground,
-    },
-    topBarIcon: {
-        marginLeft: 20,
-    },
-    topBarAvatarContainer: {
-        marginRight: 20,
-    },
-    topButtonContainer: {
-        marginTop: 50,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-
 })

@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext';
 import { View, Text, Pressable, Modal, themeheet, Button, TouchableOpacity } from 'react-native';
 import Layout from './Layout';
 import SectionListComponent from '../components/SectionListComponent';
+import FlexibleView from '../components/FlexibleComponent';
+import { MaterialIcons } from '@expo/vector-icons'; // Puoi cambiare la libreria di icone se preferisci
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const HomeScreen = ({ route, navigation }) => {
@@ -33,12 +35,13 @@ const HomeScreen = ({ route, navigation }) => {
             navigation={navigation}
             showTopBar={true}
             header={
-                <View style={theme.grid}>
-                {/*<View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 }}>*/}
-                    <Text style={[theme.h4]}>I tuoi bisogni</Text>
-                    <Pressable onPress={() => navigation.navigate('HelpHome')}>
-                        <Text style={theme.contentTitle}>Aiuto</Text>
-                    </Pressable>
+                <View style={[theme.header]}>
+                    <FlexibleView
+                        format="testoTesto"
+                        text={<Text style={[theme.h4,theme.fwb]}>I tuoi bisogni</Text>}
+                        textR={<Text style={[theme.h5, { color:theme.colors.green10 }]}>Aiuto</Text>}
+                        onPressRightIcon={() => navigation.navigate('HelpHome')}
+                    />
                 </View>
             }
             fab={<Text style={theme.fabText}>+</Text>}
@@ -63,11 +66,12 @@ const HomeScreen = ({ route, navigation }) => {
         >
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
 
-                <View style={[theme.article,theme.articleTop]}>
-                    <View style={theme.checkTextContainer}>
-                        <Icon name="info-circle" size={22} color="#2ECC71" style={theme.checkIcon} />
-                        <Text style={[theme.articleText,theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text>
-                    </View>
+                <View style={[theme.article, theme.articleTop]}>
+                    <FlexibleView
+                        format="iconaTesto"
+                        leftIcon={<MaterialIcons name="info-outline" size={24} color={theme.colors.green11}  /> }
+                        text={<Text style={[theme.text, theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text> }
+                    />
                 </View>
                 <View style={[theme.article, theme.articleMiddle]}>
                     <SectionListComponent session={session} setFabAction={setFabAction} />

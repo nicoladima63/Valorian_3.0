@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import { TouchableOpacity, View, Image, Text } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import { useNavigationState } from '@react-navigation/native';
+import FlexibleView from '../components/FlexibleComponent';
 
 const TopBar = ({ navigation }) => {
     const { theme } = useTheme();
@@ -69,18 +70,22 @@ const TopBar = ({ navigation }) => {
 
 
     return (
-
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: theme.colors.background, height: 60 }}>
-            <Image source={logo} style={theme.logo} resizeMode='contain' />
-            <Text style={theme.headerTitle}>Valorian</Text>
-
-            <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ marginRight: 20 }}>
-                <Avatar
-                    rounded
-                    source={avatarUrl ? { uri: avatarUrl } : require('../assets/images/avatar.png')}
-                    size="small"
-                />
-            </TouchableOpacity>
+        <View style={[theme.bb]}>
+            <FlexibleView
+                format="iconaTestoIcona"
+                leftIcon={<Image source={logo} style={[theme.article,theme.logo, theme.ml20]} resizeMode='contain' />}
+                text={<View style={theme.header}><Text style={[theme.h3, theme.fwb]}>Valorian</Text></View>}
+                rightIcon={
+                    <View style={theme.mr20}>
+                        <Avatar
+                            rounded
+                            source={avatarUrl ? { uri: avatarUrl } : require('../assets/images/avatar.png')}
+                            size="small"
+                        />
+                    </View>
+                }
+                onPressRightIcon={() => navigation.navigate('Account')}
+            />
         </View>
     );
 };

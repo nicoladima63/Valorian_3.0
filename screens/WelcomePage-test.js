@@ -5,9 +5,11 @@ import { RadioButton } from 'react-native-paper';
 import { useTheme } from '../context/ThemeContext';
 import ColorsBarComponent from '../components/ColorBarsComponent'
 import { RFValue } from "react-native-responsive-fontsize";
+import { OnePress, TwoPress, ThreePress } from '../components/Pressables';
+import FlexibleView from '../components/FlexibleComponent';
+import { MaterialIcons } from '@expo/vector-icons'; // Puoi cambiare la libreria di icone se preferisci
 
-
-const StyleComponent = () => {
+const WelcomeTest = () => {
     const logo = require("../assets/images/logo.png")
     const { theme } = useTheme();
     const fontSizeScaler = (size) => size * PixelRatio.getFontScale();
@@ -36,6 +38,78 @@ const StyleComponent = () => {
                         <Text style={[theme.text, theme.h4, theme.fwb]}> Title h4</Text>
                         <Text style={[theme.text, theme.h5, theme.fwb]}> Title h5</Text>
                         <Text style={[theme.text, theme.h6, theme.fwb]}> Title h6</Text>
+
+
+
+
+                        <View style={[theme.article]}>
+                            <Text style={theme.text}>esempio 1 2 3 pressable</Text>
+                            <View style={theme.article}>
+                                <OnePress title="Single" onPress={() => alert('Single Pressed')} />
+                                <TwoPress
+                                    titles={['First', 'Second']}
+                                    onPresses={[() => alert('First Pressed'), () => alert('Second Pressed')]}
+                                />
+                                <ThreePress
+                                    titles={['First', 'Second', 'Third']}
+                                    onPresses={[
+                                        () => alert('First Pressed'),
+                                        () => alert('Second Pressed'),
+                                        () => alert('Third Pressed'),
+                                    ]}
+                                />
+
+                            </View>
+                            <View style={theme.article}>
+                                <FlexibleView
+                                    format="testoTesto"
+                                    text={<Text style={[theme.h4, theme.fwb]}>I tuoi bisogni</Text>}
+                                    textR={<Text style={[theme.h5, { color: theme.colors.green10 }]}>Aiuto</Text>}
+                                    onPressRightIcon={() => navigation.navigate('HelpHome')}
+                                />
+                            </View>
+                            <View style={theme.article}>
+                                <FlexibleView
+                                    format="iconaTesto"
+                                    leftIcon={<MaterialIcons name="info-outline" size={22} color={theme.colors.green11} />}
+                                    text={<Text style={[theme.text, theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text>}
+                                />
+                            </View>
+                            <View style={theme.article}>
+                                <FlexibleView
+                                    format="testoIcona"
+                                    rightIcon={<MaterialIcons name="arrow-right" size={24} color={theme.colors.green11} />}
+                                    text="vai alle impostazioni"
+                                    onPressRightIcon={() => alert('Home Pressed')}
+                                />
+                            </View>
+                            <View style={theme.article}>
+                                <FlexibleView
+                                    format="iconaTestoIcona"
+                                    leftIcon={<MaterialIcons name="info-outline" size={22} color={theme.colors.green11} />}
+                                    text={<Text style={[theme.text, theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text>}
+                                    rightIcon={<MaterialIcons name="arrow-right" size={24} color={theme.colors.green11} />}
+                                    onPressLeftIcon={() => alert('Menu Pressed')}
+                                    onPressRightIcon={() => alert('Settings Pressed')}
+                                />
+
+                            </View>
+                            <View style={theme.article}>
+                                <FlexibleView
+                                    format="iconaTestoIcona"
+                                    leftIcon={<MaterialIcons name="account-circle" size={22} color={theme.colors.slate11} />}
+                                    text={<Text style={[theme.text, theme.ml20]}>Account</Text>}
+                                    rightIcon={<MaterialIcons name="arrow-right" size={24} color={theme.colors.slate11} />}
+                                    onPressLeftIcon={() => alert('Menu Pressed')}
+                                    onPressRightIcon={() => alert('Settings Pressed')}
+                                />
+                                <View style={[theme.article, theme.articleSuccess, theme.br20, theme.mt10]}>
+                                    <Text style={[theme.text, theme.h5, theme.fwb, theme.textSuccess]}> email verificata</Text>
+                                </View>
+                            </View>
+                        </View>
+
+
 
 
 
@@ -284,43 +358,21 @@ const StyleComponent = () => {
 
 
 
-            {/*<View style={theme.bodyFooter}>*/}
-            {/*    <TouchableOpacity style={theme.buttonCancel}>*/}
-            {/*        <Text style={theme.buttonText}>Annulla</Text>*/}
-            {/*    </TouchableOpacity>*/}
-            {/*    <TouchableOpacity style={theme.buttonDelete}>*/}
-            {/*        <Text style={theme.buttonText}>Elimina</Text>*/}
-            {/*    </TouchableOpacity>*/}
-            {/*    <TouchableOpacity style={theme.buttonOK}>*/}
-            {/*        <Text style={theme.buttonText}>OK</Text>*/}
-            {/*    </TouchableOpacity>*/}
-            {/*    <TouchableOpacity style={theme.buttonSave}>*/}
-            {/*        <Text style={theme.buttonText}>Salva</Text>*/}
-            {/*    </TouchableOpacity>*/}
-            {/*</View>*/}
+            <View style={theme.bodyFooter}>
+                <TouchableOpacity style={theme.buttonCancel}>
+                    <Text style={theme.buttonText}>Annulla</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={theme.buttonDelete}>
+                    <Text style={theme.buttonText}>Elimina</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={theme.buttonOK}>
+                    <Text style={theme.buttonText}>OK</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={theme.buttonSave}>
+                    <Text style={theme.buttonText}>Salva</Text>
+                </TouchableOpacity>
+            </View>
 
-
-            {/*<Text style={[theme.contentTitle]}>contenitore di minibox</Text>*/}
-            {/*<View style={theme.article}>*/}
-            {/*    <View style={theme.contentArticleSquareContainer}>*/}
-            {/*        <View style={theme.contentArticleSquare}>*/}
-            {/*        </View>*/}
-            {/*        <View style={theme.contentArticleSquare}>*/}
-            {/*        </View>*/}
-            {/*        <View style={theme.contentArticleSquare}>*/}
-            {/*        </View>*/}
-            {/*        <View style={theme.contentArticleSquare}>*/}
-            {/*        </View>*/}
-            {/*        <View style={theme.contentArticleSquare}>*/}
-            {/*        </View>*/}
-            {/*        <View style={theme.contentArticleSquare}>*/}
-            {/*        </View>*/}
-            {/*        <View style={theme.contentArticleSquare}>*/}
-            {/*        </View>*/}
-            {/*        <View style={theme.contentArticleSquare}>*/}
-            {/*        </View>*/}
-            {/*    </View>*/}
-            {/*</View>*/}
 
 
 
@@ -1148,4 +1200,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default StyleComponent;
+export default WelcomeTest;

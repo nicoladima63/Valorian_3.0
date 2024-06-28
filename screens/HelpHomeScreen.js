@@ -6,13 +6,13 @@ const HelpHomeScreen = ({ navigation }) => {
     const { theme } = useTheme();
 
     return (
-        <View style={theme.body}>
+        <View style={theme.content}>
             <View style={[theme.ml20, theme.mt20,theme.mr20]}>
 
-                <View style={theme.centeredView}>
-                    <View style={theme.modalView}>
-                        <Text style={[theme.headerTitle, theme.ml20, theme.mb20]}>Spiegazione</Text>
-                        <Text style={theme.contentParagraph}>
+                <View style={[theme.article]}>
+                    <View style={theme.modalVie}>
+                        <Text style={[theme.h3, theme.ml20, theme.mb20,theme.fwb]}>Spiegazione</Text>
+                        <Text style={[theme.text,theme.text16,theme.contentParagraph]}>
                             Quando clicchi sulla freccia adestra el box del bisogno, si apre un popup per la modifica dei dati del bisogno stesso: {'\n'}
                             {'\n'}
                             1- Nome{'\n'}
