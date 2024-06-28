@@ -1,6 +1,6 @@
-// src/context/ThemeContext.js
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Appearance, StatusBar } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Importa AsyncStorage
 import { DefaultTheme, DarkTheme } from '../themes/theme';
 
 const ThemeContext = createContext();
@@ -11,9 +11,30 @@ const getSystemTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState(getSystemTheme());
+    const [theme, setTheme] = useState(DefaultTheme); // Usa DefaultTheme come valore iniziale
     const [themeMode, setThemeMode] = useState('auto'); // 'light', 'dark', 'auto'
 
+    useEffect(() => {
+        const fetchStoredTheme = async () => {
+            try {
+                const storedThemeMode = await AsyncStorage.getItem('themeMode');
+                if (storedThemeMode !== null) {
+                    setThemeMode(storedThemeMode);
+                    if (storedThemeMode === 'light') {
+                        setTheme(DefaultTheme);
+                    } else if (storedThemeMode === 'dark') {
+                        setTheme(DarkTheme);
+                    } else if (storedThemeMode === 'auto') {
+                        setTheme(getSystemTheme());
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching stored theme:', error);
+            }
+        };
+
+        fetchStoredTheme();
+    }, []);
 
     useEffect(() => {
         const handleSystemThemeChange = ({ colorScheme }) => {
@@ -32,7 +53,10 @@ export const ThemeProvider = ({ children }) => {
     useEffect(() => {
         StatusBar.setBarStyle(theme === DarkTheme ? 'light-content' : 'dark-content');
         StatusBar.setBackgroundColor(theme.colors.background);
-    }, [theme]);
+
+        // Salva il tema selezionato in AsyncStorage
+        AsyncStorage.setItem('themeMode', themeMode);
+    }, [theme, themeMode]);
 
     const toggleTheme = (mode, callback) => {
         setThemeMode(mode);

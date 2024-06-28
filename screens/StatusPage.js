@@ -272,7 +272,15 @@ const StatusPage = ({ navigation }) => {
                 data: needsData.map(item => {
                     const daysSatisfied = item.daysSatisfied;
                     return daysSatisfied; // Barra piena
-                })
+                }),
+                itemStyle: {
+                    normal: {
+                        color: function (params) {
+                            // Cambia colore basato sul valore negativo
+                            return params.data < 0 ? 'red' : 'blue';
+                        }
+                    }
+                }
             }
         ]
     };
