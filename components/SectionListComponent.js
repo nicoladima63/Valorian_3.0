@@ -244,7 +244,7 @@ const BisogniList = ({ session, setFabAction }) => {
 
             <Spinner
                 visible={loading}
-                textContent={'Loading...'}
+                textContent={'Aggiornamento in corso...'}
                 textStyle={styles.spinnerTextStyle}
             />
 

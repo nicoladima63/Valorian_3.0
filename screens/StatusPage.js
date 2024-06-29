@@ -1,101 +1,100 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
-import EChartsComponent from '../components/EChartsComponent';
+import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-import { AppContext } from '../context/AppContext';
+import * as BisController from '../controllers/bisogniController';
+import * as DetController from '../controllers/dettagliController';
+import EChartsComponent from '../components/EChartsComponent';
 import Layout from './Layout';
-
-// Funzione immaginaria per ottenere i dati dei bisogni dal controller
-const fetchNeedsData = async () => {
-    //esempio a zero
-    //return [
-    //    { name: 'Sport', daysSatisfied: -6, tolerance: 10 },    // Sport non soddisfatto per nessuno dei giorni consentiti
-    //    { name: 'Pizza', daysSatisfied: -4, tolerance: 4 },     // Pizza non soddisfatta per nessuno dei giorni consentiti
-    //    { name: 'Cinema', daysSatisfied: -5, tolerance: 5 },    // Cinema non soddisfatto per nessuno dei giorni consentiti
-    //    { name: 'Pollo', daysSatisfied: -1, tolerance: 3 },     // Pollo non soddisfatto per nessuno dei giorni consentiti
-    //    { name: 'Amici', daysSatisfied: 0, tolerance: 5 },     // Amici non soddisfatti per nessuno dei giorni consentiti
-    //    { name: 'Sesso', daysSatisfied: 0, tolerance: 4 },     // Sesso non soddisfatto per nessuno dei giorni consentiti
-    //    { name: 'Leggere', daysSatisfied: 3, tolerance: 3 },   // Leggere non soddisfatto per nessuno dei giorni consentiti
-    //    { name: 'nuotare', daysSatisfied: 2, tolerance: 2 },   // Nuotare non soddisfatto per nessuno dei giorni consentiti
-    //    { name: 'Cinema', daysSatisfied: 1, tolerance: 1 }     // Cinema non soddisfatto per nessuno dei giorni consentiti
-    //];
-
-    //esempio al 50
-    return [
-        { name: 'Sport', daysSatisfied: -3, tolerance: 10 },    // Sport non soddisfatto per nessuno dei giorni consentiti
-        { name: 'Pizza', daysSatisfied: -4, tolerance: 4 },     // Pizza non soddisfatta per nessuno dei giorni consentiti
-        { name: 'Cinema', daysSatisfied: -2, tolerance: 5 },    // Cinema non soddisfatto per nessuno dei giorni consentiti
-        { name: 'Pollo', daysSatisfied: -1, tolerance: 3 },     // Pollo non soddisfatto per nessuno dei giorni consentiti
-        { name: 'Amici', daysSatisfied: 2, tolerance: 5 },     // Amici soddisfatti per metà dei giorni consentiti
-        { name: 'Sesso', daysSatisfied: 2, tolerance: 4 },     // Sesso soddisfatto per metà dei giorni consentiti
-        { name: 'Leggere', daysSatisfied: 1, tolerance: 3 },   // Leggere soddisfatto per un terzo dei giorni consentiti
-        { name: 'nuotare', daysSatisfied: 1, tolerance: 2 },   // Nuotare soddisfatto per metà dei giorni consentiti
-        { name: 'Cinema', daysSatisfied: 1, tolerance: 1 }     // Cinema soddisfatto per l'unico giorno consentito
-    ];
-
-
-    // Esempio di dati simulati 100
-    //return [
-    //    { name: 'Sport', daysSatisfied: 10, tolerance: 10 },    // Sport soddisfatto per tutti i 10 giorni consentiti
-    //    { name: 'Pizza', daysSatisfied: 4, tolerance: 4 },      // Pizza soddisfatta per tutti i 4 giorni consentiti
-    //    { name: 'Cinema', daysSatisfied: 5, tolerance: 5 },     // Cinema soddisfatto per tutti i 5 giorni consentiti
-    //    { name: 'Pollo', daysSatisfied: 3, tolerance: 3 },      // Pollo soddisfatto per tutti i 3 giorni consentiti
-    //    { name: 'Amici', daysSatisfied: 5, tolerance: 5 },      // Amici soddisfatti per tutti i 5 giorni consentiti
-    //    { name: 'Sesso', daysSatisfied: 4, tolerance: 4 },      // Sesso soddisfatto per tutti i 4 giorni consentiti
-    //    { name: 'Leggere', daysSatisfied: 3, tolerance: 3 },    // Leggere soddisfatto per tutti i 3 giorni consentiti
-    //    { name: 'nuotare', daysSatisfied: 2, tolerance: 2 },    // Nuotare soddisfatto per tutti i 2 giorni consentiti
-    //    { name: 'Cinema', daysSatisfied: 1, tolerance: 1 }      // Cinema soddisfatto per l'unico giorno consentito
-    //]
-
-};
+import Spinner from 'react-native-loading-spinner-overlay';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const StatusPage = ({ navigation }) => {
     const { theme } = useTheme();
     const { session } = useAuth();
+    const [loading, setLoading] = useState(false);
+
     const [needsData, setNeedsData] = useState([]);
-    const [satisfactionIndex, setSatisfactionIndex] = useState(0);
+    const [soddisfazione, setSoddisfazione] = useState(0);
+    const [bisogno, setBisogno] = useState({});
+    const [bisogni, setBisogni] = useState([]);
+    const [dettaglio, setDettaglio] = useState({});
+    const [dettagli, setDettagli] = useState([]);
 
     useEffect(() => {
         if (!session) {
             navigation.replace('Login');
+        } else {
+            getBisogni();
         }
     }, [session]);
 
+
+    const getBisogni = async () => {
+        setLoading(true);
+
+        try {
+            const data = await BisController.getBisogni()
+            setBisogni(data)
+            setLoading(false);
+            return data
+        } catch (error) {
+            console.log('Errore nel reupero dei bisogni:', error)
+        }
+
+    };
+
+    const getDettagli = async (bisognoid) => {
+        try {
+            const data = await DetController.getDettagli(bisognoid)
+            setBisogni(data)
+            return data
+        } catch (error) {
+            console.log('Errore nel reupero dei bisogni:', error)
+        }
+    };
+
+    function calcolaDifferenzaGiorni(bisogno) {
+        const oggi = new Date();
+        const dataUltimaSoddisfazione = new Date(bisogno.soddisfattoil);
+        const differenzaGiorni = Math.floor((oggi - dataUltimaSoddisfazione) / (1000 * 60 * 60 * 24)); // Calcola la differenza in giorni
+        return differenzaGiorni;
+    }
+    function calcolaStato(bisogno) {
+        const oggi = new Date();
+        const dataUltimaSoddisfazione = new Date(bisogno.soddisfattoil);
+        const differenzaGiorni = calcolaDifferenzaGiorni(bisogno);
+        const stato = bisogno.tolleranza - differenzaGiorni;
+        console.log('stato', stato, bisogno.nome, bisogno.tolleranza)
+        return stato;
+    }
+
+
+
+
     useEffect(() => {
-        const calculateSatisfactionIndex = () => {
-            if (needsData.length === 0) return 0;
+        const calcolaIndiceSoddisfazione = () => {
+            if (bisogni.length === 0) return 0;
 
             // Calcola il totale dei giorni soddisfatti e il totale della tolleranza
-            const totalSatisfiedDays = needsData.reduce((acc, item) => acc + item.daysSatisfied, 0);
-            const totalTolerance = needsData.reduce((acc, item) => acc + item.tolerance, 0);
-
+            const totaleGiorniSoddisfatti = bisogni.reduce((acc, item) => acc + calcolaDifferenzaGiorni(item.soddisfattoil), 0);
+            console.log('totaleGiorniSoddisfatti', totaleGiorniSoddisfatti)
+            const totalToleranze = bisogni.reduce((acc, item) => acc + item.tolleranza, 0);
+            console.log('totalToleranze', totalToleranze)
             // Calcola l'indice di soddisfazione in base alla percentuale di giorni soddisfatti rispetto alla tolleranza totale
-            const satisfactionIndex = (totalSatisfiedDays / totalTolerance) * 100;
+            const indiceSoddisfazione = (totaleGiorniSoddisfatti / totalToleranze) * 100;
+            console.log('indiceSoddisfazione', indiceSoddisfazione)
 
             // Arrotonda l'indice di soddisfazione
-            return Math.round(satisfactionIndex);
+            return Math.round(indiceSoddisfazione);
         };
 
         // Aggiorna lo stato dell'indice di soddisfazione quando cambiano i dati dei bisogni
-        setSatisfactionIndex(calculateSatisfactionIndex());
+        setSoddisfazione(calcolaIndiceSoddisfazione());
     }, [needsData]);
 
-    useEffect(() => {
-        // Esegui il fetch dei dati dei bisogni quando il componente viene montato
-        const fetchData = async () => {
-            try {
-                const data = await fetchNeedsData();
-                setNeedsData(data);
-            } catch (error) {
-                console.error('Errore nel recupero dei dati dei bisogni:', error);
-            }
-        };
 
-        fetchData();
-    }, []);
-
-    const option1 = {
+    const optionGauge = {
         series: [
             {
                 type: 'gauge',
@@ -174,7 +173,7 @@ const StatusPage = ({ navigation }) => {
                 },
                 data: [
                     {
-                        value: Math.max(0, satisfactionIndex), // Mostra almeno 0 se satisfactionIndex è negativo
+                        value: Math.max(0, soddisfazione), // Mostra almeno 0 se satisfactionIndex è negativo
                         //name: 'Livello di benessere',
                         color: theme.colors.onBackground
                     }
@@ -183,7 +182,8 @@ const StatusPage = ({ navigation }) => {
         ]
     };
 
-    const option3 = {
+
+    const optionBar = {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -209,7 +209,7 @@ const StatusPage = ({ navigation }) => {
             axisLabel: { show: false },
             axisTick: { show: false },
             splitLine: { show: false },
-            data: needsData.map(item => item.name),
+            data: bisogni.map(item => item.nome),
         },
         series: [
             {
@@ -220,69 +220,22 @@ const StatusPage = ({ navigation }) => {
                     show: true,
                     formatter: '{b}'
                 },
-                data: needsData.map(item => {
-                    const daysRemaining = item.tolerance - item.daysSatisfied;
-                    if (daysRemaining >= 0) {
-                        return daysRemaining; // Barra piena
-                    } else {
-                        return { value: -Math.abs(daysRemaining), label: { position: 'insideLeft' } }; // Barra spostata a sinistra e negativa
+                data: bisogni.map(item => {
+                    const daysSatisfied = calcolaStato(item);
+                    return daysSatisfied; // Barra piena
+                }),
+                itemStyle: {
+                    color: function (params) {
+                        // Cambia colore basato sul valore negativo
+                        return params.data < 0 ? theme.colors.red12 : theme.colors.blue12;
                     }
-                })
+                }
             }
         ]
     };
 
-    const option2 = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        grid: {
-            top: 20,
-            bottom: 30
-        },
-        xAxis: {
-            type: 'value',
-            position: 'top',
-            splitLine: {
-                lineStyle: {
-                    type: 'dashed'
-                }
-            }
-        },
-        yAxis: {
-            type: 'category',
-            axisLine: { show: false },
-            axisLabel: { show: false },
-            axisTick: { show: false },
-            splitLine: { show: false },
-            data: needsData.map(item => item.name),
-        },
-        series: [
-            {
-                name: 'bisogni',
-                type: 'bar',
-                stack: 'Total',
-                label: {
-                    show: true,
-                    formatter: '{b}'
-                },
-                data: needsData.map(item => {
-                    const daysSatisfied = item.daysSatisfied;
-                    return daysSatisfied; // Barra piena
-                }),
-                itemStyle: {
-                    normal: {
-                        color: function (params) {
-                            // Cambia colore basato sul valore negativo
-                            return params.data < 0 ? 'red' : 'blue';
-                        }
-                    }
-                }
-            }
-        ]
+    const handlePressFab = () => {
+        getBisogni();
     };
 
     return (
@@ -292,8 +245,8 @@ const StatusPage = ({ navigation }) => {
             header={
                 <Text style={[theme.h4, theme.mb20, theme.mt10, theme.ml10,]}>Ecco come stai</Text>
             }
-        //fab={<Text>+</Text>}
-        //fabAction={handleFabPressHome}
+            fab={<MaterialIcons name="replay" size={24} color={theme.colors.onPrimary} />}
+            fabAction={handlePressFab}
         >
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
 
@@ -301,19 +254,30 @@ const StatusPage = ({ navigation }) => {
 
                     <Text style={theme.h5}>Livello di benessere:</Text>
                     <View style={{ height: 250 }}>
-                        <EChartsComponent option={option1} height={300} />
+                        <EChartsComponent option={optionGauge} height={300} />
                     </View>
 
                     <Text style={theme.h5}>Soddisfazione dei bisogni:</Text>
                     <View style={{ height: 300 }}>
-                        <EChartsComponent option={option2} height={300} />
+                        <EChartsComponent option={optionBar} height={300} />
                     </View>
                 </View>
             </View>
+            <Spinner
+                visible={loading}
+                textContent={'Aggiornamento in corso...'}
+                textStyle={styles.spinnerTextStyle}
+            />
 
         </Layout>
     );
 };
+const styles = StyleSheet.create({
+    spinnerTextStyle: {
+        color: '#00000090'
+    },
+});
+
 
 export default StatusPage;
 
