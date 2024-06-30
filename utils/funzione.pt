@@ -1,0 +1,47 @@
+from datetime import datetime
+
+# Funzione calcolaGiorniSoddisfazione
+def calcolaGiorniSoddisfazione(ultimaSoddisfazione):
+    oggi = datetime.strptime("2024-06-29", "%Y-%m-%d")
+    dataUltimaSoddisfazione = datetime.strptime(ultimaSoddisfazione, "%Y-%m-%d")
+    differenzaGiorni = (oggi - dataUltimaSoddisfazione).days  # Calcola la differenza in giorni
+    return differenzaGiorni
+
+# Funzione calculateSatisfactionIndex
+def calculateSatisfactionIndex(bisogni):
+    if len(bisogni) == 0:
+        return 0
+
+    # Calcola il totale dei giorni soddisfatti e il totale della tolleranza
+    totaleGiorniSoddisfatti = sum(calcolaGiorniSoddisfazione(item["soddisfattoil"]) for item in bisogni)
+    totalToleranze = sum(item["tolleranza"] for item in bisogni)
+    
+    # Calcola l'indice di soddisfazione in base alla percentuale di giorni soddisfatti rispetto alla tolleranza totale
+    satisfactionIndex = (totaleGiorniSoddisfatti / totalToleranze) * 100 if totalToleranze != 0 else 0
+    
+    # Arrotonda l'indice di soddisfazione
+    return round(satisfactionIndex)
+
+# Array dei bisogni fornito
+bisogni = [
+    {"colore": "#ffdc16", "creatoil": "2024-06-20", "enabled": True, "id": 41, "importanza": 4, "nome": "social", "soddisfattoil": "2024-06-20", "tolleranza": 1, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 42, "importanza": 5, "nome": "primo", "soddisfattoil": "2024-06-24", "tolleranza": 2, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 43, "importanza": 5, "nome": "corsa", "soddisfattoil": "2024-06-24", "tolleranza": 6, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 44, "importanza": 5, "nome": "", "soddisfattoil": "2024-06-24", "tolleranza": 5, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 45, "importanza": 5, "nome": "corsa", "soddisfattoil": "2024-06-24", "tolleranza": 6, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 46, "importanza": 5, "nome": "borsa", "soddisfattoil": "2024-06-24", "tolleranza": 6, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 47, "importanza": 5, "nome": "corsa", "soddisfattoil": "2024-06-24", "tolleranza": 5, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 50, "importanza": 5, "nome": "kollo", "soddisfattoil": "2024-06-24", "tolleranza": 6, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 51, "importanza": 8, "nome": "", "soddisfattoil": "2024-06-24", "tolleranza": 1, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 52, "importanza": 1, "nome": "", "soddisfattoil": "2024-06-24", "tolleranza": 1, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 53, "importanza": 6, "nome": "hio", "soddisfattoil": "2024-06-24", "tolleranza": 6, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "", "creatoil": "2024-06-24", "enabled": True, "id": 54, "importanza": 6, "nome": "hio", "soddisfattoil": "2024-06-24", "tolleranza": 6, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "#00c65c", "creatoil": "2024-06-24", "enabled": True, "id": 48, "importanza": 5, "nome": "corsa", "soddisfattoil": "2024-06-26", "tolleranza": 5, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "#1632e5", "creatoil": "2024-06-24", "enabled": True, "id": 49, "importanza": 6, "nome": "leggere", "soddisfattoil": "2024-06-26", "tolleranza": 5, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "#ed1c23", "creatoil": "2024-06-11", "enabled": True, "id": 39, "importanza": 5, "nome": "primo", "soddisfattoil": "2024-06-26", "tolleranza": 2, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"},
+    {"colore": "#ed1c23", "creatoil": "2024-06-18", "enabled": True, "id": 40, "importanza": 7, "nome": "stima", "soddisfattoil": "2024-06-27", "tolleranza": 6, "uuid": "300690ff-b325-49b7-9f9a-a38376ffa9fa"}
+]
+
+# Esegui il calcolo
+satisfactionIndex = calculateSatisfactionIndex(bisogni)
+print(satisfactionIndex)

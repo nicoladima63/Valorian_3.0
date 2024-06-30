@@ -1,10 +1,3 @@
-const br = { br2: 2, br4: 4, br6: 6, br8: 8, br12: 12, br16: 16, br20: 20 };
-const fs = { xxsmall: 10, xsmall: 12, small: 14, medium: 16, large: 18, xlarge: 20, xxlarge: 24 };
-const fw = { light: 300, regular: 400, medium: 500, semiBold: 600, bold: 700, extraBold: 800, black: 900 };
-const m = { m2: 2, m4: 4, m8: 8, m10: 10, m16: 16, m24: 24, m32: 32, m40: 40 };
-const p = { p2: 2, p4: 4, p8: 8, p16: 16, p20: 20, p24: 24, p32: 32, p40: 40 };
-const gap = { gap2: 2, gap4: 4, gap8: 8, gap16: 16, gap24: 24, gap32: 32, gap40: 40 };
-const lh = { lh1: 1.2, lh2: 1.4, lh3: 1.6, lh4: 1.8, lh5: 2.0 };
 
 export const BaseTheme = (colors) => ({
     safeAreaView: {

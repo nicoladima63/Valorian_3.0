@@ -32,18 +32,21 @@ const StatusPage = ({ navigation }) => {
 
     const getBisogni = async () => {
         setLoading(true);
-
         try {
-            const data = await BisController.getBisogni()
-            setBisogni(data)
-            setLoading(false);
-            return data
+            const data = await BisController.getBisogni();
+            if (Array.isArray(data)) {
+                setBisogni(data);
+            } else {
+                console.error('getBisogni non ha restituito un array:', data);
+                setBisogni([]);
+            }
         } catch (error) {
-            console.log('Errore nel reupero dei bisogni:', error)
+            console.error('Errore nel recupero dei bisogni:', error);
+            setBisogni([]);
+        } finally {
+            setLoading(false);
         }
-
     };
-
     const getDettagli = async (bisognoid) => {
         try {
             const data = await DetController.getDettagli(bisognoid)
@@ -58,6 +61,7 @@ const StatusPage = ({ navigation }) => {
         const oggi = new Date();
         const dataUltimaSoddisfazione = new Date(bisogno.soddisfattoil);
         const differenzaGiorni = Math.floor((oggi - dataUltimaSoddisfazione) / (1000 * 60 * 60 * 24)); // Calcola la differenza in giorni
+        //console.log('differenzagiorni di:',bisogno.nome,differenzaGiorni)
         return differenzaGiorni;
     }
     function calcolaStato(bisogno) {
@@ -65,33 +69,79 @@ const StatusPage = ({ navigation }) => {
         const dataUltimaSoddisfazione = new Date(bisogno.soddisfattoil);
         const differenzaGiorni = calcolaDifferenzaGiorni(bisogno);
         const stato = bisogno.tolleranza - differenzaGiorni;
-        console.log('stato', stato, bisogno.nome, bisogno.tolleranza)
+        //console.log('stato', stato, bisogno.nome, bisogno.tolleranza)
         return stato;
     }
 
+    function CalcolaSoddisfazione2(bisogni) {
+        const oggi = new Date(); // Data odierna
+        let sommaSoddisfazioni = 0; // Variabile per accumulare la somma delle soddisfazioni
+        const bisogniAggiornati = bisogni.map(bisogno => {
+            const soddisfattoil = bisogno.soddisfattoil ? new Date(bisogno.soddisfattoil) : null;
+            const tolleranza = bisogno.tolleranza;
 
+            if (!soddisfattoil) {
+                return { ...bisogno, soddisfazione: 0 };
+            }
+            // Calcolo della differenza in giorni
+            const differenzaInGiorni = Math.floor((oggi - soddisfattoil) / (1000 * 60 * 60 * 24));
+            // Calcolo della soddisfazione
+            let soddisfazione = 100 - (100 / tolleranza) * differenzaInGiorni;
 
+            soddisfazione = Math.max(0, Math.min(100, soddisfazione));
+            // Aggiungi la soddisfazione corrente alla somma totale
+            sommaSoddisfazioni += soddisfazione;
+
+            return { ...bisogno, soddisfazione, nome: bisogno.nome, globale: sommaSoddisfazioni };
+        });
+        return { bisogni, sommaSoddisfazioni };
+    }
+    function CalcolaSoddisfazione(bisogni) {
+        if (!bisogni || bisogni.length === 0) {
+            return { bisogniAggiornati: [], soddisfazioneMedia: 0 };
+        }
+
+        const oggi = new Date();
+        let soddisfazioneMedia = 0;
+
+        const bisogniAggiornati = bisogni.map(bisogno => {
+            const soddisfattoil = bisogno.soddisfattoil ? new Date(bisogno.soddisfattoil) : null;
+            const tolleranza = bisogno.tolleranza;
+
+            if (!soddisfattoil) {
+                return { ...bisogno, soddisfazione: 0 };
+            }
+
+            const differenzaInGiorni = Math.floor((oggi - soddisfattoil) / (1000 * 60 * 60 * 24));
+            let soddisfazione = 100 - (50 / tolleranza) * differenzaInGiorni;
+            soddisfazione = Math.max(0, Math.min(100, soddisfazione));
+
+            return { ...bisogno, soddisfazione };
+        });
+
+        soddisfazioneMedia = bisogniAggiornati.reduce((acc, bisogno) => acc + bisogno.soddisfazione, 0) / bisogni.length;
+
+        return { bisogniAggiornati, soddisfazioneMedia };
+    }
+
+    //useEffect(() => {
+    //    if (bisogni && bisogni.length > 0) {
+    //        const { bisogniAggiornati, soddisfazioneMedia } = CalcolaSoddisfazione(bisogni);
+    //        setSoddisfazione(soddisfazioneMedia);
+    //        setBisogni(bisogniAggiornati);
+    //    } else {
+    //        setSoddisfazione(0);
+    //    }
+    //}, [bisogni]);
 
     useEffect(() => {
-        const calcolaIndiceSoddisfazione = () => {
-            if (bisogni.length === 0) return 0;
+        //const bisogniAggiornati = CalcolaSoddisfazione(bisogni);
+        //setSoddisfazione(bisogniAggiornati.sommaSoddisfazioni);
 
-            // Calcola il totale dei giorni soddisfatti e il totale della tolleranza
-            const totaleGiorniSoddisfatti = bisogni.reduce((acc, item) => acc + calcolaDifferenzaGiorni(item.soddisfattoil), 0);
-            console.log('totaleGiorniSoddisfatti', totaleGiorniSoddisfatti)
-            const totalToleranze = bisogni.reduce((acc, item) => acc + item.tolleranza, 0);
-            console.log('totalToleranze', totalToleranze)
-            // Calcola l'indice di soddisfazione in base alla percentuale di giorni soddisfatti rispetto alla tolleranza totale
-            const indiceSoddisfazione = (totaleGiorniSoddisfatti / totalToleranze) * 100;
-            console.log('indiceSoddisfazione', indiceSoddisfazione)
+        const { bisogniAggiornati, soddisfazioneMedia } = CalcolaSoddisfazione(bisogni);
+        setSoddisfazione(soddisfazioneMedia);
+    }, [bisogni]);
 
-            // Arrotonda l'indice di soddisfazione
-            return Math.round(indiceSoddisfazione);
-        };
-
-        // Aggiorna lo stato dell'indice di soddisfazione quando cambiano i dati dei bisogni
-        setSoddisfazione(calcolaIndiceSoddisfazione());
-    }, [needsData]);
 
 
     const optionGauge = {
@@ -173,7 +223,7 @@ const StatusPage = ({ navigation }) => {
                 },
                 data: [
                     {
-                        value: Math.max(0, soddisfazione), // Mostra almeno 0 se satisfactionIndex è negativo
+                        value: Math.round(soddisfazione),
                         //name: 'Livello di benessere',
                         color: theme.colors.onBackground
                     }
@@ -222,12 +272,18 @@ const StatusPage = ({ navigation }) => {
                 },
                 data: bisogni.map(item => {
                     const daysSatisfied = calcolaStato(item);
-                    return daysSatisfied; // Barra piena
+                    return daysSatisfied;
                 }),
                 itemStyle: {
                     color: function (params) {
-                        // Cambia colore basato sul valore negativo
-                        return params.data < 0 ? theme.colors.red12 : theme.colors.blue12;
+                        // Cambia colore basato sul valore
+                        if (params.data < 0) {
+                            return theme.colors.red9; // Colore per valori negativi
+                        } else if (params.data === 0) {
+                            return theme.colors.yellow9; // Colore per valori zero
+                        } else {
+                            return theme.colors.green9; // Colore per valori positivi
+                        }
                     }
                 }
             }
@@ -243,40 +299,47 @@ const StatusPage = ({ navigation }) => {
             navigation={navigation}
             showTopBar={true}
             header={
-                <Text style={[theme.h4, theme.mb20, theme.mt10, theme.ml10,]}>Ecco come stai</Text>
+                <Text style={[theme.h4, theme.mb20, theme.mt10, theme.ml10]}>Ecco come stai</Text>
             }
             fab={<MaterialIcons name="replay" size={24} color={theme.colors.onPrimary} />}
-            fabAction={handlePressFab}
+            fabAction={getBisogni}
         >
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
-
-                <View style={{ flex: 1 }}>
-
-                    <Text style={theme.h5}>Livello di benessere:</Text>
-                    <View style={{ height: 250 }}>
-                        <EChartsComponent option={optionGauge} height={300} />
+                {bisogni.length === 0 ? (
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                        <View style={[theme.article.Default]}>
+                            <Text style={theme.h5}>Inserire bisogni</Text>
+                        </View>
                     </View>
+                ) : (
+                    <View style={{ flex: 1 }}>
+                        <Text style={theme.h5}>Livello di benessere:</Text>
+                        <View style={{ height: 250 }}>
+                            <EChartsComponent option={optionGauge} height={300} />
+                        </View>
 
-                    <Text style={theme.h5}>Soddisfazione dei bisogni:</Text>
-                    <View style={{ height: 300 }}>
-                        <EChartsComponent option={optionBar} height={300} />
+                            <Text style={theme.h5}>Soddisfazione { bisogni.length >1?'dei bisogni':'del bisogno'}</Text>
+                        <View style={{ height: 300 }}>
+                            <EChartsComponent option={optionBar} height={300} />
+                        </View>
                     </View>
-                </View>
+                )}
             </View>
+
             <Spinner
                 visible={loading}
                 textContent={'Aggiornamento in corso...'}
                 textStyle={styles.spinnerTextStyle}
             />
-
         </Layout>
-    );
-};
+    ); };
 const styles = StyleSheet.create({
     spinnerTextStyle: {
         color: '#00000090'
     },
 });
+
+
 
 
 export default StatusPage;

@@ -40,10 +40,8 @@ const CategoryItem = ({ categoria, isSelected, onSelect }) => {
 
 const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
     const [nome, setNome] = useState('');
-    const [importanza, setImportanza] = useState(1); // Cambiato da '' a 0
+    const [importanza, setImportanza] = useState(1);
     const [tolleranza, setTolleranza] = useState(1);
-    const [colore, setColore] = useState('');
-
     const [loading, setLoading] = useState(false);
     const { theme } = useTheme();
     const [errors, setErrors] = useState({});
@@ -54,12 +52,10 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
     useEffect(() => {
         if (!visible) {
             resetForm();
+        } else {
+            loadCategorie();
         }
     }, [visible]);
-
-    useEffect(() => {
-        loadCategorie();
-    }, []);
 
     const loadCategorie = async () => {
         try {
@@ -67,89 +63,111 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
             setCategorie(data);
         } catch (error) {
             console.error('Error fetching categories:', error);
+            alert('Errore nel caricamento delle categorie. Riprova più tardi.');
         }
     };
 
     const handlePressEmptySpace = () => {
-        Keyboard.dismiss(); // Nascondi la tastiera quando si tocca uno spazio vuoto
+        Keyboard.dismiss();
     };
 
+    const validateForm = () => {
+        let newErrors = {};
+        if (!nome.trim()) newErrors.nome = 'Nome richiesto.';
+        if (importanza < 1 || importanza > 10) newErrors.importanza = 'Importanza deve essere tra 1 e 10.';
+        if (tolleranza < 1) newErrors.tolleranza = 'Tolleranza deve essere almeno 1 giorno.';
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
-    const handleSubmit = async () => {
-        setLoading(true); // Inizia il caricamento
-        validateForm();
-
-        if (!isFormValid) {
-            setLoading(false);
-            return;
-        }
-
-        const insert = {
-            nome,
-            importanza,
-            tolleranza,
-            colore,
-            soddisfattoil: new Date(),
-            creatoil: new Date(),
-            enabled: true,
-            uuid: userId
-        };
-
+    const handleSubmitOld = async () => {
+        setLoading(true);
         try {
-            const data = await BisController.createBisogno(insert);
-
-
-            // Aggiungi controllo per verificare che data esista e non sia undefined
-            if (!data || !Array.isArray(data) || data.length === 0) {
-                alert('Errore nei dati ricevuti dalla chiamata createBisogno.');
-                setLoading(false);
+            if (!validateForm()) {
                 return;
             }
 
-            const insertedId = data[0].id; // Recupera l'ID del bisogno inserito
+            const insert = {
+                nome,
+                importanza,
+                tolleranza,
+                soddisfattoil: new Date(),
+                creatoil: new Date(),
+                enabled: true,
+                uuid: userId
+            };
 
-            try {
-                const updateResult = await CatController.aggiornaAssociazioni(insertedId, selectedCategories);
-
-                if (updateResult) {
-                    onAdd();
-                    handleClose();
-                }
-            } catch (error) {
-                console.error('152Errore durante l\'inserimento:', error);
-                // Gestisci l'errore qui, ad esempio mostrando un messaggio all'utente
+            const data = await BisController.createBisogno(insert);
+            console.log('Data from createBisogno:', data);
+            if (!data || !Array.isArray(data) || data.length === 0) {
+                throw new Error('Errore nei dati ricevuti dalla chiamata createBisogno.');
             }
+
+            const insertedId = data[0].id;
+
+            await CatController.aggiornaAssociazioni(insertedId, selectedCategories);
+
+            onAdd();
+            alert('Bisogno aggiunto con successo!');
+            handleClose();
         } catch (error) {
-            console.error('156 Error:', error);
-            alert('157 Errore durante la chiamata API.', error);
+            console.error('Errore durante l\'inserimento:', error);
+            alert(`Errore durante l'inserimento: ${error.message}`);
         } finally {
             setLoading(false);
-            handleClose();
-            resetForm();
         }
     };
 
+    const handleSubmit = async () => {
+        setLoading(true);
+        try {
+            if (!validateForm()) {
+                return;
+            }
 
-    const validateForm = () => {
-        let errors = {};
-        // Validate name field 
-        if (!nome) { errors.nome = 'Nome richiesto.'; }
-        // Validate importanza field 
-        if (!importanza) { errors.importanza = 'Importanza richiesta.'; }
-        // Validate tolleranza field 
-        if (!tolleranza) { errors.tolleranza = 'Tolleranza richiesta.'; }
-        // Validate colore field 
-        //if (!colore) {errors.colore = 'Colore richiesto.';}
-        // Set the errors and update form validity 
-        setErrors(errors);
-        setIsFormValid(Object.keys(errors).length === 0);
+            // Determina il colore basato sulla prima categoria selezionata e applica l'opacità
+            let colore = null;
+            if (selectedCategories.length > 0) {
+                const categoriaColore = selectedCategories[0].colore;
+                colore = Color(categoriaColore).alpha(0.5).string();
+            }
+
+            const insert = {
+                nome,
+                importanza,
+                tolleranza,
+                colore, // Colore con opacità al 50%
+                soddisfattoil: new Date(),
+                creatoil: new Date(),
+                enabled: true,
+                uuid: userId
+            };
+
+            const data = await BisController.createBisogno(insert);
+
+            if (!data || !Array.isArray(data) || data.length === 0) {
+                throw new Error('Errore nei dati ricevuti dalla chiamata createBisogno.');
+            }
+
+            const insertedId = data[0].id;
+
+            await CatController.aggiornaAssociazioni(insertedId, selectedCategories);
+
+            onAdd();
+            alert('Bisogno aggiunto con successo!');
+            handleClose();
+        } catch (error) {
+            console.error('Errore durante l\'inserimento:', error);
+            alert(`Errore durante l'inserimento: ${error.message}`);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const resetForm = () => {
         setNome('');
         setImportanza(1);
-        setTolleranza('');
-        setColore('');
+        setTolleranza(1);
         setErrors({});
         setIsFormValid(false);
         setSelectedCategories([]);
@@ -160,12 +178,9 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
         onClose();
     };
 
-    const handleSelectCategory = async (category) => {
-        // Verifica se la categoria è già stata associata
-        const isCategorySelected = selectedCategories.includes(category);
-
+    const handleSelectCategory = (category) => {
         setSelectedCategories((prevSelected) =>
-            isCategorySelected
+            prevSelected.includes(category)
                 ? prevSelected.filter((cat) => cat !== category)
                 : [...prevSelected, category]
         );
@@ -183,7 +198,6 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                         animationType="fade"
                         transparent={false}
                         onRequestClose={handleClose}
-                        background={theme.colors.background}
                     >
 
                         <View style={theme.container}>
@@ -197,7 +211,8 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                                         <Text style={theme.articleText}>Nome del bisogno</Text>
                                         <TextInput
                                             style={[styles.modalInput, errors.nome && styles.inputError, { color: theme.colors.onBackground, backgroundColor: '#f8f8f8' }]}
-                                            placeholder={<Text style={{ color: '#cccccc50' }}>esempio pizza o corsa</Text>}
+                                            placeholder="esempio pizza o corsa"
+                                            placeholderTextColor={ theme.colors.slate12}
                                             aria-label="Nome"
                                             value={nome}
                                             onChangeText={(text) => {
