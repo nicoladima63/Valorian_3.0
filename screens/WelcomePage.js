@@ -81,7 +81,7 @@ const WelcomePage = ({ navigation }) => {
                 </View>
 
                 <View style={[theme.article, theme.articleBottom]}>
-                    <OnePress title="Inizia la conoscenza di te" onPress={handleStart} />
+                    <OnePress title="Inizia la TUA conoscenza" onPress={handleStart} />
                 </View>
 
             </View>

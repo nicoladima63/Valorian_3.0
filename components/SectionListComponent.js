@@ -9,6 +9,7 @@ import EditBisogno from '../components/EditBisogno';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Snackbar from '../components/Snackbar';
+import { Color } from 'react-native';
 
 const BisogniList = ({ session, setFabAction }) => {
     const { theme } = useTheme();
@@ -27,22 +28,30 @@ const BisogniList = ({ session, setFabAction }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
             try {
-                const fetchedCategorie = await getCategorie();
-                setCategorie(fetchedCategorie);
+                // Ottieni le categorie
+                const categorie = await getCategorie();
 
+                // Ottieni i bisogni
                 const fetchedBisogni = await getBisogni();
-                setBisogni(fetchedBisogni);
 
+                // Se ci sono bisogni, ottieni le associazioni categorie-bisogni
                 if (fetchedBisogni && fetchedBisogni.length > 0) {
-                    const fetchedBisInCat = await getBisInCat();
-                    setBisInCat(fetchedBisInCat);
+                    const fetchedBisInCat = await CategorieController.getBisInCat();
+
+                    // Mappa le associazioni di categorie per ogni bisogno
+                    const bisogniConAssociazioni = fetchedBisogni.map(bisogno => {
+                        const associazioni = fetchedBisInCat.filter(associazione => associazione.bisognoid === bisogno.id);
+                        console.log(bisogno.nome, ', associato in:' , associazioni);
+                        return { ...bisogno, associazioni };
+                    });
+
+                    // Imposta lo stato di bisInCat con i bisogni contenenti le associazioni
+                    setBisInCat(bisogniConAssociazioni);
                 }
+
             } catch (error) {
                 console.error('Error fetching data:', error);
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -50,37 +59,62 @@ const BisogniList = ({ session, setFabAction }) => {
     }, []);
 
     const getCategorie = async () => {
+        setLoading(true);
         try {
             const data = await CategorieController.getCategorie();
-            return data;
+            if (Array.isArray(data)) {
+                setCategorie(data);
+            } else {
+                console.error('getCategorie non ha restituito un array:', data);
+                setCategorie([]);
+            }
         } catch (error) {
-            console.error('Error fetching categories:', error);
-            throw error;
+            console.error('Errore nel recupero delle categorie:', error);
+            setCategorie([]);
+        } finally {
+            setLoading(false);
         }
     };
 
     const getBisInCat = async () => {
+        setLoading(true);
         try {
             const data = await CategorieController.getBisInCat();
-            return data;
+            if (Array.isArray(data)) {
+                setBisInCat(data);
+            } else {
+                console.error('getBisInCat non ha restituito un array:', data);
+                setBisInCat([]);
+            }
         } catch (error) {
-            console.error('Error fetching bisInCat:', error);
-            throw error;
+            console.error('Errore nel recupero delle associazioni:', error);
+            setBisInCat([]);
+        } finally {
+            setLoading(false);
         }
     };
 
     const getBisogni = async () => {
+        setLoading(true);
         try {
             const data = await BisogniController.getBisogni();
-            setBisogni(data); // Aggiungi questo per aggiornare lo stato
-            return data;
+            //console.log('SectionListBisogni:', data    );
+            if (Array.isArray(data)) {
+                setBisogni(data);
+            } else {
+                console.error('getBisogni non ha restituito un array:', data);
+                setBisogni([]);
+            }
         } catch (error) {
-            console.error('Error fetching bisogni:', error);
-            throw error;
+            console.error('Errore nel recupero dei bisogni:', error);
+            setBisogni([]);
+        } finally {
+            setLoading(false);
         }
     };
 
     const transformData = (categorie, bisogni, bisInCat) => {
+        //console.log('categorie:', categorie.length, 'bisogni:', bisogni, 'bisInCat:', bisInCat);
         if (!bisogni || bisogni.length === 0) {
             return [];
         }
@@ -196,9 +230,9 @@ const BisogniList = ({ session, setFabAction }) => {
                 sections={DATA}
                 keyExtractor={(item, index) => item.uniqueKey}
                 renderItem={({ item, index, section }) => (
-                    <View style={[theme.article, theme.articleMiddle, theme.grid, index === section.data.length - 1 && theme.articleBottom]}>
+                    <View style={[theme.article, theme.articleMiddle, theme.grid, index === section.data.length - 1 && theme.articleBottom, { backgroundColor: item.colore+'30' }]}>
                         <View style={theme.left}>
-                            <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? "#24bb2180" : theme.colors.contetArticle} />
+                            <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? theme.colors.green10 : theme.colors.slate5} />
                         </View>
 
                         <Pressable onPress={() => updateBisogno(item)} style={theme.center}>
@@ -207,7 +241,7 @@ const BisogniList = ({ session, setFabAction }) => {
 
                         <Pressable onPress={() => selectBisogno(item)} style={theme.right}>
                             <View>
-                                <Icon name="angle-right" size={24} color="#c3c3c3" />
+                                <Icon name="angle-right" size={24} color={ theme.colors.slate9} />
                             </View>
                         </Pressable>
                     </View>
@@ -216,7 +250,7 @@ const BisogniList = ({ session, setFabAction }) => {
                 //ItemSeparatorComponent={<View style={theme.mb10} />}
                 renderSectionHeader={({ section: { title, color } }) => (
                     <View style={[theme.article, theme.articleTop]}>
-                        <Text style={[theme.h5, { color: color }]}>{title}</Text>
+                        <Text style={[theme.h5,theme.fwb, { color: color }]}>{title}</Text>
                     </View>
                 )}
                 ListEmptyComponent={renderEmptyComponent}

@@ -142,6 +142,16 @@ const StatusPage = ({ navigation }) => {
         setSoddisfazione(soddisfazioneMedia);
     }, [bisogni]);
 
+    const getColoreBar = (params) => {
+        if (params.data < 0) {
+            return theme.colors.red9; // Colore per valori negativi
+        } else if (params.data === 0) {
+            return theme.colors.yellow9; // Colore per valori zero
+        } else {
+            return theme.colors.green9; // Colore per valori positivi
+        }
+
+    }
 
 
     const optionGauge = {
@@ -274,21 +284,25 @@ const StatusPage = ({ navigation }) => {
                     const daysSatisfied = calcolaStato(item);
                     return daysSatisfied;
                 }),
-                itemStyle: {
-                    color: function (params) {
-                        // Cambia colore basato sul valore
-                        if (params.data < 0) {
-                            return theme.colors.red9; // Colore per valori negativi
-                        } else if (params.data === 0) {
-                            return theme.colors.yellow9; // Colore per valori zero
-                        } else {
-                            return theme.colors.green9; // Colore per valori positivi
-                        }
-                    }
-                }
+                //backgroundStyle: getColoreBar(calcolaStato(item)),
             }
-        ]
+        ],
+        color: {
+            type: 'linear',
+            x: 1,
+            y: 0,
+            x2: 0,
+            y2: 0,
+            colorStops: [{
+                offset: 0, color: 'blue' // color at 0%
+            }, {
+                offset: 1, color: 'red' // color at 100%
+            }],
+            global: true // default is false
+        }
     };
+
+
 
     const handlePressFab = () => {
         getBisogni();
@@ -317,8 +331,7 @@ const StatusPage = ({ navigation }) => {
                         <View style={{ height: 250 }}>
                             <EChartsComponent option={optionGauge} height={300} />
                         </View>
-
-                            <Text style={theme.h5}>Soddisfazione { bisogni.length >1?'dei bisogni':'del bisogno'}</Text>
+                        <Text style={theme.h5}>Soddisfazione {bisogni.length > 1 ? 'dei bisogni' : 'del bisogno'}</Text>
                         <View style={{ height: 300 }}>
                             <EChartsComponent option={optionBar} height={300} />
                         </View>
@@ -332,7 +345,8 @@ const StatusPage = ({ navigation }) => {
                 textStyle={styles.spinnerTextStyle}
             />
         </Layout>
-    ); };
+    );
+};
 const styles = StyleSheet.create({
     spinnerTextStyle: {
         color: '#00000090'

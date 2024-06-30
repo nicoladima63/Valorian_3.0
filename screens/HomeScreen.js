@@ -39,7 +39,7 @@ const HomeScreen = ({ route, navigation }) => {
                     <FlexibleView
                         format="testoTesto"
                         text={<Text style={[theme.h4,theme.fwb]}>I tuoi bisogni</Text>}
-                        textR={<Text style={[theme.h5, { color:theme.colors.green10 }]}>Aiuto</Text>}
+                        textR={<MaterialIcons name="help" size={30} color={theme.colors.green11} />}
                         onPressRightIcon={() => navigation.navigate('HelpHome')}
                     />
                 </View>
@@ -69,7 +69,7 @@ const HomeScreen = ({ route, navigation }) => {
                 <View style={[theme.article, theme.articleTop]}>
                     <FlexibleView
                         format="iconaTesto"
-                        leftIcon={<MaterialIcons name="info-outline" size={24} color={theme.colors.green11}  /> }
+                        leftIcon={<MaterialIcons name="info" size={24} color={theme.colors.green9}  /> }
                         text={<Text style={[theme.text, theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text> }
                     />
                 </View>
