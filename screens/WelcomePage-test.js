@@ -32,7 +32,7 @@ const WelcomeTest = () => {
 
 
                     <ScrollView>
-                        <Text style={[theme.text, theme.h1, theme.fwb]}> Title h3</Text>
+                        <Text style={[theme.text, theme.h1, theme.fwb]}> Title h1</Text>
                         <Text style={[theme.text, theme.h2, theme.fwb]}> Title h2</Text>
                         <Text style={[theme.text, theme.h3, theme.fwb]}> Title h3</Text>
                         <Text style={[theme.text, theme.h4, theme.fwb]}> Title h4</Text>
