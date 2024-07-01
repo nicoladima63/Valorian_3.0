@@ -8,11 +8,6 @@ const FlexibleView = ({ format, leftIcon, rightIcon, text, textR, onPressLeftIco
 
     return (
         <View style={styles.container}>
-            {/*{leftIcon && (*/}
-            {/*    <Pressable onPress={onPressLeftIcon} style={styles.icon}>*/}
-            {/*        <MaterialIcons name={leftIcon} size={24} color="black" />*/}
-            {/*    </Pressable>*/}
-            {/*)}*/}
             {format === 'testoTesto' && (
                 <>
                     {text && (
@@ -27,7 +22,6 @@ const FlexibleView = ({ format, leftIcon, rightIcon, text, textR, onPressLeftIco
                     )}
                 </>
             )}
-
 
             {format === 'iconaTesto' && (
                 <>
