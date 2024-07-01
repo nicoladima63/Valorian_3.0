@@ -20,10 +20,12 @@ const WelcomeTest = () => {
 
     async function loadFonts() {
         await Font.loadAsync({
-            'Inter-Light': require('../assets/fonts/Inter/static/Inter-Light.ttf'),
-            'Inter-Black': require('../assets/fonts/Inter/static/Inter-Black.ttf'),
-            'Manrope-Light': require('../assets/fonts/Inter/static/Inter-Light.ttf'),
-            'Manrope-Bold': require('../assets/fonts/Inter/static/Inter-Black.ttf'),
+            'Inter-Light': require('../assets/fonts/Inter/Inter-Light.ttf'),
+            'Inter-Black': require('../assets/fonts/Inter/Inter-Black.ttf'),
+            'Manrope-Light': require('../assets/fonts/Manrope/Manrope-Light.ttf'),
+            'Manrope-Bold': require('../assets/fonts/Manrope/Manrope-Bold.ttf'),
+            'Poppins-Light': require('../assets/fonts/Poppins/Poppins-Light.ttf'),
+            'Poppins-Bold': require('../assets/fonts/Poppins/Poppins-Black.ttf'),
         });
     }
     useEffect(() => {
@@ -97,6 +99,23 @@ const WelcomeTest = () => {
                             <Text style={{ fontSize: 20 }}>Platform Default size 20</Text>
                             <Text style={{ fontSize: 22 }}>Platform Default size 22</Text>
                             <Text style={{ fontSize: 24 }}>Platform Default size 24</Text>
+                            <Text style={{ fontFamily: 'Poppins-Light', fontSize: 10 }}>Manrope Light size 10</Text>
+                            <Text style={{ fontFamily: 'Poppins-Light', fontSize: 12 }}>Manrope Light size 12</Text>
+                            <Text style={{ fontFamily: 'Poppins-Light', fontSize: 14 }}>Manrope Light size 14</Text>
+                            <Text style={{ fontFamily: 'Poppins-Light', fontSize: 16 }}>Manrope Light size 16</Text>
+                            <Text style={{ fontFamily: 'Poppins-Light', fontSize: 18 }}>Manrope Light size 18</Text>
+                            <Text style={{ fontFamily: 'Poppins-Light', fontSize: 20 }}>Manrope Light size 20</Text>
+                            <Text style={{ fontFamily: 'Poppins-Light', fontSize: 22 }}>Manrope Light size 22</Text>
+                            <Text style={{ fontFamily: 'Poppins-Light', fontSize: 24 }}>Manrope Light size 24</Text>
+                            <Text style={{ fontFamily: 'Poppins-Black', fontSize: 10 }}>Inter Black size 10</Text>
+                            <Text style={{ fontFamily: 'Poppins-Black', fontSize: 12 }}>Inter Black size 12</Text>
+                            <Text style={{ fontFamily: 'Poppins-Black', fontSize: 14 }}>Inter Black size 14</Text>
+                            <Text style={{ fontFamily: 'Poppins-Black', fontSize: 16 }}>Inter Black size 16</Text>
+                            <Text style={{ fontFamily: 'Poppins-Black', fontSize: 18 }}>Inter Black size 18</Text>
+                            <Text style={{ fontFamily: 'Poppins-Black', fontSize: 20 }}>Inter Black size 20</Text>
+                            <Text style={{ fontFamily: 'Poppins-Black', fontSize: 22 }}>Inter Black size 22</Text>
+                            <Text style={{ fontFamily: 'Poppins-Black', fontSize: 24 }}>Inter Black size 24</Text>
+
                         </View>
 
 

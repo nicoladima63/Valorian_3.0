@@ -18,14 +18,14 @@ const SettingsScreen = ({ navigation }) => {
             }
         >
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
-                <Text style={[theme.text, theme.mb10, theme.ml10, { color: theme.colors.slate11 }]}>Tema</Text>
+                <Text style={[theme.text,theme.text16, theme.mb10, theme.ml10, { color: theme.colors.slate11 }]}>Tema</Text>
                 <RadioButton.Group onValueChange={toggleTheme} value={themeMode}>
                     <TouchableOpacity onPress={() => toggleTheme('auto')}>
                         <View style={[theme.article, theme.articleTop]}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="adjust" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={theme.text}>Automatico</Text>
+                                    <Text style={[theme.text, theme.text14]}>Automatico</Text>
                                 </View>
                                 <RadioButton value="auto" />
                             </View>
@@ -36,7 +36,7 @@ const SettingsScreen = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="sun-o" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={theme.text}>Chiaro</Text>
+                                    <Text style={[theme.text,theme.text14]}>Chiaro</Text>
                                 </View>
                                 <RadioButton value="light" color={theme.colors.slate12} />
                             </View>
@@ -47,7 +47,7 @@ const SettingsScreen = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="moon-o" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={theme.text}>Scuro</Text>
+                                    <Text style={[theme.text, theme.text14]}>Scuro</Text>
                                 </View>
                                 <RadioButton value="dark" />
                             </View>
@@ -55,8 +55,10 @@ const SettingsScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </RadioButton.Group>
                 <Text style={{ marginTop: 10, marginLeft: 15, color: theme.colors.slate10 }}>
-                    <Text style={{ color: theme.colors.slate12 }}>Automatico </Text>
-                    è supportato solo sui sistemi operativi che consentono di controllare i colori a livello di sistema.
+                    <Text style={[theme.text, theme.text12,theme.fwb, { color: theme.colors.slate12 }]}>Automatico </Text>
+                    <Text style={[theme.text, theme.text12]}>
+                        &egrave; supportato solo sui sistemi operativi che consentono di controllare i colori a livello di sistema.
+                    </Text>
                 </Text>
             </View>
         </Layout>

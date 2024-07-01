@@ -1,3 +1,5 @@
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 export const BaseTheme = (colors) => ({
     safeAreaView: {
@@ -22,7 +24,6 @@ export const BaseTheme = (colors) => ({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: colors.slate2,
-        //    paddingHorizontal: 10,
     },
     body: {
         flex: 1,
@@ -84,12 +85,12 @@ export const BaseTheme = (colors) => ({
     },
 
     // tag H
-    h1: { fontSize: 24, color: colors.slate12 },
-    h2: { fontSize: 22, color: colors.slate12 },
-    h3: { fontSize: 20, color: colors.slate12 },
-    h4: { fontSize: 18, color: colors.slate12 },
-    h5: { fontSize: 16, color: colors.slate12 },
-    h6: { fontSize: 14, color: colors.slate12 },
+    h1: { fontSize: RFValue(24), color: colors.slate12 },
+    h2: { fontSize: RFValue(22), color: colors.slate12 },
+    h3: { fontSize: RFValue(20), color: colors.slate12 },
+    h4: { fontSize: RFValue(18), color: colors.slate12 },
+    h5: { fontSize: RFValue(16), color: colors.slate12 },
+    h6: { fontSize: RFValue(14), color: colors.slate12 },
     headerTitle: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -101,14 +102,14 @@ export const BaseTheme = (colors) => ({
 
     //text
     text: { color: colors.slate12, },
-    text10: { fontSize: 10, },
-    text12: { fontSize: 12, },
-    text14: { fontSize: 14, },
-    text16: { fontSize: 16, },
-    text18: { fontSize: 18, },
-    text20: { fontSize: 20, },
-    text22: { fontSize: 22, },
-    text24: { fontSize: 24, },
+    text10: { fontSize: RFValue(10) },
+    text12: { fontSize: RFValue(12) },
+    text14: { fontSize: RFValue(14) },
+    text16: { fontSize: RFValue(16) },
+    text18: { fontSize: RFValue(18) },
+    text20: { fontSize: RFValue(20) },
+    text22: { fontSize: RFValue(22) },
+    text24: { fontSize: RFValue(24) },
     textArticle: { color: colors.slate12, },
     textSuccess: { color: colors.green11, },
     textDanger: { color: colors.red11, },

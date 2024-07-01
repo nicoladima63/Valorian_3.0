@@ -10,6 +10,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Snackbar from '../components/Snackbar';
 import { Color } from 'react-native';
+import IconaTestoIconaView from '../components/IconaTestoIconaView';
 
 const BisogniList = ({ session, setFabAction }) => {
     const { theme } = useTheme();
@@ -42,14 +43,14 @@ const BisogniList = ({ session, setFabAction }) => {
                     // Mappa le associazioni di categorie per ogni bisogno
                     const bisogniConAssociazioni = fetchedBisogni.map(bisogno => {
                         const associazioni = fetchedBisInCat.filter(associazione => associazione.bisognoid === bisogno.id);
-                        console.log(bisogno.nome, ', associato in:' , associazioni);
+                        console.log(bisogno.nome, ', associato in:', associazioni);
                         return { ...bisogno, associazioni };
                     });
 
                     // Imposta lo stato di bisInCat con i bisogni contenenti le associazioni
                     setBisInCat(bisogniConAssociazioni);
                 }
-
+                onRefresh
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -202,16 +203,13 @@ const BisogniList = ({ session, setFabAction }) => {
     }, []);
 
     const renderEmptyComponent = () => (
-        <View>
-            <View style={theme.articleTop}>
-                <Text style={theme.articleTitle}>Nessun bisogno inserito:</Text>
-            </View>
-            <View style={theme.articleBottom}>
+        <View style={[theme.article]}>
+            <View style={[theme.mb20]}>
+                <Text style={[theme.text, theme.text16, theme.mb20]}>Nessun bisogno inserito:</Text>
                 <View style={theme.checkTextContainer}>
-                    <Icon name="info-circle" size={22} color="#2ECC71" style={theme.checkIcon} />
-                    <Text style={theme.articleText}>Clicca sul pulsante</Text>
-                    <Icon name="plus-circle" size={24} color="#D8BFD8" style={[theme.ml20, theme.checkIcon]} />
-                    <Text style={theme.articleText}>in basso a destra</Text>
+                    <Text style={[theme.text, theme.text14]}>Clicca sul pulsante</Text>
+                    <Icon name="plus-circle" size={24} color={theme.colors.primary} style={[theme.ml20]} />
+                    <Text style={[theme.text, theme.text14, theme.ml20]}>in basso a destra</Text>
                 </View>
             </View>
         </View>
@@ -225,32 +223,32 @@ const BisogniList = ({ session, setFabAction }) => {
     };
 
     return (
-        <View >
+        <View  >
             <SectionList
                 sections={DATA}
                 keyExtractor={(item, index) => item.uniqueKey}
                 renderItem={({ item, index, section }) => (
-                    <View style={[theme.article, theme.articleMiddle, theme.grid, index === section.data.length - 1 && theme.articleBottom, { backgroundColor: item.colore+'30' }]}>
-                        <View style={theme.left}>
-                            <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? theme.colors.green10 : theme.colors.slate5} />
-                        </View>
+                    <View style={[theme.articl, theme.articleMiddle, theme.grid, index === section.data.length - 1 && theme.articleBottom, { backgroundColor: item.colore + '30' }]}>
 
-                        <Pressable onPress={() => updateBisogno(item)} style={theme.center}>
-                            <Text style={theme.articleText}>{item.nome}</Text>
-                        </Pressable>
-
-                        <Pressable onPress={() => selectBisogno(item)} style={theme.right}>
-                            <View>
-                                <Icon name="angle-right" size={24} color={ theme.colors.slate9} />
-                            </View>
-                        </Pressable>
+                        <IconaTestoIconaView
+                            leftIcon={
+                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? theme.colors.green10 : theme.colors.slate5} />
+                            }
+                            text={
+                                <Text style={[theme.text, theme.text14]}>{item.nome}</Text>
+                            }
+                            rightIcon={
+                                <Icon name="angle-right" size={24} color={theme.colors.slate9}  />
+                            }
+                            onPressLeftIcon={() => updateBisogno(item)}
+                            onPressRightIcon={() => selectBisogno(item)}
+                        />
                     </View>
-
                 )}
-                //ItemSeparatorComponent={<View style={theme.mb10} />}
+                ItemSeparatorComponent={<View style={theme.mt10} ><Text>--------------</Text></View>}
                 renderSectionHeader={({ section: { title, color } }) => (
                     <View style={[theme.article, theme.articleTop]}>
-                        <Text style={[theme.h5,theme.fwb, { color: color }]}>{title}</Text>
+                        <Text style={[theme.h5, theme.fwb, { color: color }]}>{title}</Text>
                     </View>
                 )}
                 ListEmptyComponent={renderEmptyComponent}
@@ -285,7 +283,6 @@ const BisogniList = ({ session, setFabAction }) => {
             <Snackbar
                 visible={snackbarVisible}
                 onDismiss={() => setSnackbarVisible(false)}
-                duration={3000}
             >
                 {snackbarMessage}
             </Snackbar>

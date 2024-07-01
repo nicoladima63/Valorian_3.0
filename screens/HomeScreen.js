@@ -73,12 +73,8 @@ const HomeScreen = ({ route, navigation }) => {
                         text={<Text style={[theme.text, theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text> }
                     />
                 </View>
-                <View style={[theme.article, theme.articleMiddle]}>
+                <View style={[theme.article, theme.articleBottom]}>
                     <SectionListComponent session={session} setFabAction={setFabAction} />
-                </View>
-
-                <View style={theme.articleBottom}>
-                
                 </View>
             </View>
         </Layout>

@@ -62,11 +62,10 @@ const WelcomePage = ({ navigation }) => {
                             Tutti questi dati saranno utilizzati per definire il tuo stato di benessere generale e saranno visualizzati attraverso un grafico.
                         </Text>
                         <Text style={[theme.paragraph, theme.text16, theme.lh15]}>
-                            Inizia subito a esplorare la tua vita in modo pi&#249;  consapevole e a lavorare verso un benessere pi&#249;  completo!{'\n'}{'\n'}
+                            Inizia subito a esplorare la tua vita in modo pi&#249;  consapevole e a lavorare verso un benessere pi&#249;  completo!
                         </Text>
                     </View>
                     <View style={[theme.article, theme.articleMiddle]}>
-
                         <View style={theme.grid}>
                             <Text style={[theme.text, theme.ml20]}>Mostra la prossima volta</Text>
                             <Switch style={theme.gap10}
@@ -76,11 +75,10 @@ const WelcomePage = ({ navigation }) => {
                                 trackColor={{ false: '#767577', true: theme.colors.secondary }}
                             />
                         </View>
-
                     </View>
 
                     <View style={[theme.article, theme.articleBottom]}>
-                        <OnePress title="Inizia la TUA conoscenza" onPress={handleStart} />
+                        <OnePress title="Inizia a conoscerti..." onPress={handleStart} />
                     </View>
                 </View>
             </ScrollView>

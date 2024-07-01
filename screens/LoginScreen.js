@@ -122,11 +122,11 @@ export default function LoginScreen({ navigation }) {
                         <View style={theme.article}>
                             <View style={theme.column}>
                                 <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
-                                <Text style={[theme.text, theme.h5, theme.fwb, theme.mb20]}>Form di accesso</Text>
+                                <Text style={[theme.text, theme.h3, theme.fwb, theme.mb20]}>Form di accesso</Text>
                             </View>
 
                             <Input
-                                style={theme.text}
+                                style={[theme.text,theme.text16]}
                                 label="Email"
                                 placeholder='email@esempio.com'
                                 placeholderTextColor={theme.colors.slate9}
@@ -143,7 +143,7 @@ export default function LoginScreen({ navigation }) {
 
 
                             <Input
-                                style={theme.text}
+                                style={[theme.text, theme.text16]}
                                 ref={passwordRef}
                                 label="Password"
                                 placeholder='password'
@@ -157,7 +157,7 @@ export default function LoginScreen({ navigation }) {
                                 autoCorrect={false}
                                 rightIcon={
                                     <Icon
-                                        color={theme.onBackground}
+                                        color={theme.colors.slate10}
                                         type='font-awesome'
                                         name={showPassword ? 'eye' : 'eye-slash'}
                                         onPress={() => setShowPassword(!showPassword)}
@@ -172,7 +172,7 @@ export default function LoginScreen({ navigation }) {
                                 : null}
                             <View style={[theme.center,theme.mb20]}>
                                 <Pressable onPress={() => navigation.navigate('ForgotPassword')}>
-                                    <Text style={[theme.link, theme.alignRight]}>Password dimenticata?</Text>
+                                    <Text style={[theme.text14,theme.link, theme.alignRight]}>Password dimenticata?</Text>
                                 </Pressable>
                             </View>
                             <View style={[theme.article, theme.grid]}>
