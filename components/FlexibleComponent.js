@@ -56,13 +56,13 @@ const FlexibleView = ({ format, leftIcon, rightIcon, text, textR, onPressLeftIco
                 <>
                     {leftIcon && (
                         <Pressable onPress={onPressLeftIcon} style={styles.icon}>
-                            <MaterialIcons name={leftIcon} size={24} color={theme.colors.slate11} />
+                            {leftIcon}
                         </Pressable>
                     )}
                     <View style={styles.spacer} />
                     {rightIcon && (
                         <Pressable onPress={onPressRightIcon} >
-                            <MaterialIcons name={rightIcon} size={24} color={theme.colors.slate11} />
+                            {rightIcon}
                         </Pressable>
                     )}
                 </>
