@@ -19,6 +19,15 @@ const TwoPress = ({ titles, onPresses }) => {
     );
 };
 
+const TwoPressStyled = ({ titles, onPresses, backgroundColors }) => {
+    return (
+        <View style={styles.container}>
+            <StyledPressable title={titles[0]} onPress={onPresses[0]} backgroundColor={backgroundColors[0]} />
+            <StyledPressable title={titles[1]} onPress={onPresses[1]} backgroundColor={backgroundColors[1]} />
+        </View>
+    );
+};
+
 const ThreePress = ({ titles, onPresses }) => {
     return (
         <View style={styles.container}>
@@ -39,4 +48,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export { OnePress, TwoPress, ThreePress };
+export { OnePress, TwoPress, TwoPressStyled,ThreePress };

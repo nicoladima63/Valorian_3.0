@@ -16,8 +16,6 @@ const BisogniList = ({ session, setFabAction }) => {
     const { theme } = useTheme();
     const [modalVisibleAdd, setModalVisibleAdd] = useState(false);
     const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
-    const [user, setUser] = useState(session.user);
-
     const [bisogni, setBisogni] = useState([]);
     const [bisogno, setBisogno] = useState({});
     const [categorie, setCategorie] = useState([]);
@@ -161,7 +159,7 @@ const BisogniList = ({ session, setFabAction }) => {
         getBisogni(); // Aggiorna i bisogni dopo la chiusura della modal di modifica
     };
 
-    const updateBisogno = async (bisogno) => {
+    const updateBisognoOld = async (bisogno) => {
         setLoading(true);
         try {
             const updatedBisogno = { ...bisogno, soddisfattoil: new Date() };
@@ -188,6 +186,49 @@ const BisogniList = ({ session, setFabAction }) => {
             setLoading(false);
         }
     };
+    const updateBisogno = async (bisogno) => {
+        setLoading(true);
+        try {
+            // Aggiungi una condizione per verificare se il bisogno è già stato aggiornato oggi
+            const today = new Date();
+            const todayStart = new Date(today.setHours(0, 0, 0, 0));
+            const bisognoUpdatedDate = new Date(bisogno.soddisfattoil);
+            const bisognoUpdatedStart = new Date(bisognoUpdatedDate.setHours(0, 0, 0, 0));
+
+            // Verifica se il bisogno è già stato aggiornato oggi
+            if (bisognoUpdatedStart.getTime() === todayStart.getTime()) {
+                setSnackbarMessage(`Bisogno "${bisogno.nome}" è già stato aggiornato oggi`);
+                setSnackbarVisible(true);
+                setLoading(false);
+                console.log(snackbarMessage)
+                return;
+            }
+
+            const updatedBisogno = { ...bisogno, soddisfattoil: new Date() };
+            const { id, nome, soddisfattoil, colore } = updatedBisogno;
+            const dataToUpdate = { nome, soddisfattoil, colore };
+
+            await BisogniController.updateBisogno(id, dataToUpdate);
+
+            const dettaglio = {
+                bisognoid: bisogno.id,
+                soddisfattoil: new Date(),
+            };
+            await DettagliController.createDettaglio(dettaglio);
+
+            setSnackbarMessage(`Bisogno "${nome}" aggiornato`);
+            setSnackbarVisible(true);
+
+            getBisogni();
+        } catch (error) {
+            console.error('Error updating bisogno:', error);
+            setSnackbarMessage('Error updating bisogno:', error.message || 'Unknown error');
+            setSnackbarVisible(true);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     useEffect(() => {
         if (setFabAction) {
@@ -232,13 +273,13 @@ const BisogniList = ({ session, setFabAction }) => {
 
                         <IconaTestoIconaView
                             leftIcon={
-                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? theme.colors.green10 : theme.colors.slate5} />
+                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? theme.colors.green10 : theme.colors.slate5} style={theme.mrl0} />
                             }
                             text={
                                 <Text style={[theme.text, theme.text14]}>{item.nome}</Text>
                             }
                             rightIcon={
-                                <Icon name="angle-right" size={24} color={theme.colors.slate9}  />
+                                <Icon name="angle-right" size={24} color={theme.colors.slate9} style={theme.mr20} />
                             }
                             onPressLeftIcon={() => updateBisogno(item)}
                             onPressRightIcon={() => selectBisogno(item)}
@@ -281,10 +322,10 @@ const BisogniList = ({ session, setFabAction }) => {
             />
 
             <Snackbar
-                visible={snackbarVisible}
+                //visible={snackbarVisible}
+                visible={true}
                 onDismiss={() => setSnackbarVisible(false)}
             >
-                {snackbarMessage}
             </Snackbar>
         </View>
 

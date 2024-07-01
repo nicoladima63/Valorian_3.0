@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as BisogniController from '../controllers/bisogniController';
+import * as DettagliController from '../controllers/dettagliController';
 import { useTheme } from '../context/ThemeContext';
 import { ScrollView, RefreshControl, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
@@ -14,6 +15,7 @@ import { GestureHandlerRootView, PanGestureHandler, State as GestureState } from
 
 export default function CalendarPage({ navigation }) {
     const [bisogni, setBisogni] = useState([]);
+    const [dettagli, setDettagli] = useState([]);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [headerText, setHeaderText] = useState('');
     const [refreshing, setRefreshing] = useState(false);
@@ -22,6 +24,7 @@ export default function CalendarPage({ navigation }) {
 
     useEffect(() => {
         getBisogni();
+        getDettagli();
         updateHeader(currentDate);
     }, [currentDate]);
 
@@ -33,7 +36,7 @@ export default function CalendarPage({ navigation }) {
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        getBisogni().then(() => {
+        getDettagli().then(() => {
             setRefreshing(false);
         });
     }, []);
@@ -51,6 +54,23 @@ export default function CalendarPage({ navigation }) {
         } catch (error) {
             console.error('Errore nel recupero dei bisogni:', error);
             setBisogni([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+    const getDettagli = async () => {
+        setLoading(true);
+        try {
+            const data = await DettagliController.getDettagli();
+            if (Array.isArray(data)) {
+                setDettagli(data);
+            } else {
+                console.error('getBisogni non ha restituito un array:', data);
+                setDettagli([]);
+            }
+        } catch (error) {
+            console.error('Errore nel recupero dei bisogni:', error);
+            setDettagli([]);
         } finally {
             setLoading(false);
         }
@@ -80,8 +100,31 @@ export default function CalendarPage({ navigation }) {
             color: bisogno.colore,
         }));
     };
+    //onst events = transformBisogniToEvents();
 
-    const events = transformBisogniToEvents();
+    const transformDettagliToEvents = () => {
+        return dettagli.map(dettaglio => {
+            const bisogno = bisogni.find(b => b.id === dettaglio.bisognoid);
+            if (bisogno) {
+                return {
+                    title: bisogno.nome,
+                    start: new Date(dettaglio.soddisfattoil),
+                    end: new Date(dettaglio.soddisfattoil),
+                    color: bisogno.colore,
+                };
+            } else {
+                // Se non trovi il bisogno corrispondente, puoi gestirlo come preferisci
+                return {
+                    title: 'Bisogno non trovato',
+                    start: new Date(dettaglio.soddisfattoil),
+                    end: new Date(dettaglio.soddisfattoil),
+                    color: 'grey', // Colore di default o puoi anche non specificarlo
+                };
+            }
+        });
+    };
+    const events = transformDettagliToEvents();
+
     const eventCellStyle = (event, start, end, isSelected) => {
         return {
             height: 20,

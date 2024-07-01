@@ -400,8 +400,6 @@ const WelcomeTest = () => {
 
                                 </View>
                             </View>
-
-
                         </View>
 
                         <View style={theme.article}>
@@ -415,21 +413,9 @@ const WelcomeTest = () => {
 
                             </View>
                         </View>
-
                         <ColorsBarComponent></ColorsBarComponent>
-
-
                     </ScrollView>
 
-                    <View>
-                        <Text>Main Content</Text>
-                        <Text style={{ fontSize: RFValue(16) }}>
-                            Testo RFValue(16)
-                        </Text>
-                        <Text style={{ fontSize: fontSizeScaler(16) }}>
-                            Testo fontSizeScaler(16)
-                        </Text>
-                    </View>
                 </View>
             </View >
 

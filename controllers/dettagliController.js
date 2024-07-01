@@ -25,13 +25,29 @@ export const createDettaglio = async (dettaglio) => {
 };
 
 // Fetch all dettagli for a specific bisogno
-export const getDettagli = async (bisognoId) => {
+export const getDettagliOfUser = async (bisognoId) => {
     try {
         const user = await getCurrentUser();
         const { data, error } = await supabase
             .from('dettagli')
             .select('*')
             .eq('bisognoid', bisognoId)
+            .eq('uuid', user.id);
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error fetching dettagli:', error);
+        throw error;
+    }
+};
+
+// Fetch all dettagli for a specific user
+export const getDettagli = async () => {
+    try {
+        const user = await getCurrentUser();
+        const { data, error } = await supabase
+            .from('dettagli')
+            .select('*')
             .eq('uuid', user.id);
         if (error) throw error;
         return data;

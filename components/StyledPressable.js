@@ -2,11 +2,11 @@ import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 
-const StyledPressable = ({ title, onPress }) => {
+const StyledPressable = ({ title, onPress, backgroundColor }) => {
     const { theme } = useTheme();
 
     return (
-        <Pressable style={[styles.pressable, { backgroundColor: theme.colors.primary }]} onPress={onPress}>
+        <Pressable style={[styles.pressable, { backgroundColor: backgroundColor }]} onPress={onPress}>
             <Text style={[theme.text, theme.text16, {color: theme.colors.onPrimary}]}>{title}</Text>
         </Pressable>
     );
