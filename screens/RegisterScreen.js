@@ -66,7 +66,7 @@ export default function RegisterScreen({ navigation }) {
                 Alert.alert('Controlla la tua email per verificare il tuo account!');
                 navigation.replace('Welcome');
             } else {
-                navigation.replace('Home');
+                navigation.replace('Tabs');
             }
         }
         setLoading(false);

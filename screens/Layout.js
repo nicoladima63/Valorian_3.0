@@ -11,7 +11,7 @@ const Layout = ({ children, navigation, showTopBar, showBodyFooter, header, body
         <SafeAreaView style={theme.safeAreaView}>
             <View style={theme.container}>
                 {showTopBar && <TopBar navigation={navigation} />}
-                    {header}
+                {header && <View style={theme.header}>{header}</View>}
 
                 {/*{leftSide &&*/}
                 {/*    <View style={styles.leftSide}>*/}

@@ -1,26 +1,29 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as BisogniController from '../controllers/bisogniController';
 import { useTheme } from '../context/ThemeContext';
-import { ScrollView, RefreshControl, View, Text, StyleSheet, Alert } from 'react-native';
+import { ScrollView, RefreshControl, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-big-calendar';
+import { MaterialIcons } from '@expo/vector-icons';
+
 import 'dayjs/locale/it';
 import dayjs from 'dayjs';
 import Layout from './Layout';
 import FlexibleView from '../components/FlexibleComponent';
-import { MaterialIcons } from '@expo/vector-icons'; // Puoi cambiare la libreria di icone se preferisci
+import IconaTestoIconaView from '../components/IconaTestoIconaView';
 import { GestureHandlerRootView, PanGestureHandler, State as GestureState } from 'react-native-gesture-handler';
 
 export default function CalendarPage({ navigation }) {
     const [bisogni, setBisogni] = useState([]);
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [headerText, setHeaderText] = useState(renderHeader(currentDate));
+    const [headerText, setHeaderText] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false);
     const { theme } = useTheme();
 
     useEffect(() => {
         getBisogni();
-    }, []);
+        updateHeader(currentDate);
+    }, [currentDate]);
 
     const updateHeader = (date) => {
         const monthName = date.toLocaleString('default', { month: 'long' });
@@ -39,7 +42,6 @@ export default function CalendarPage({ navigation }) {
         setLoading(true);
         try {
             const data = await BisogniController.getBisogni();
-            //console.log('SectionListBisogni:', data    );
             if (Array.isArray(data)) {
                 setBisogni(data);
             } else {
@@ -55,19 +57,11 @@ export default function CalendarPage({ navigation }) {
     };
 
     const handlePrevMonth = () => {
-        setCurrentDate(prevDate => {
-            const newDate = dayjs(prevDate).subtract(1, 'month').toDate();
-            renderHeader(newDate); // Passa la nuova data qui
-            return newDate;
-        });
+        setCurrentDate(prevDate => dayjs(prevDate).subtract(1, 'month').toDate());
     };
 
     const handleNextMonth = () => {
-        setCurrentDate(prevDate => {
-            const newDate = dayjs(prevDate).add(1, 'month').toDate();
-            renderHeader(newDate); // Passa la nuova data qui
-            return newDate;
-        });
+        setCurrentDate(prevDate => dayjs(prevDate).add(1, 'month').toDate());
     };
 
     const onSwipeEnd = useCallback((date) => {
@@ -78,15 +72,6 @@ export default function CalendarPage({ navigation }) {
         }
     }, [currentDate]);
 
-    const renderHeader = (date) => {
-        const monthName = date.toLocaleString('default', { month: 'long' });
-        const year = date.getFullYear();
-        return (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
-                <Text style={[theme.text, theme.h2, theme.fwb, { color: theme.colors.blue11 }]}>{monthName} {year}</Text>
-            </View>
-        );
-    };
     const transformBisogniToEvents = () => {
         return bisogni.map(bisogno => ({
             title: bisogno.nome,
@@ -105,6 +90,7 @@ export default function CalendarPage({ navigation }) {
             color: 'red',
         };
     };
+
     const Header = () => (
         <Text style={[theme.h3, theme.mb20, theme.mt10, theme.ml20, { backgroundColor: theme.colors.slate2 }]}>
             Calendario delle soddisfazioni
@@ -142,40 +128,43 @@ export default function CalendarPage({ navigation }) {
             showBodyFooter={false}
             bodyFooter={<BodyFooter />}
         >
-
             <View style={theme.body}>
-
-                <FlexibleView
-                    format="iconaTestoIcona"
-                    leftIcon={<MaterialIcons name="navigate-before" size={36} color={theme.colors.blue10} style={theme.ml20} />}
-                    text={<Text style={[theme.text, theme.ml40]}>{renderHeader(currentDate)}</Text>}
-                    rightIcon={<MaterialIcons name="chevron-right" size={36} color={theme.colors.blue10} style={theme.mr20} />}
-                    onPressLeftIcon={() => handlePrevMonth()}
-                    onPressRightIcon={() => handleNextMonth()}
-                />
-                <ScrollView
-                    style={[theme.container, theme.mt20]}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }
-                >
-                    <Calendar
-                        events={events}
-                        height={600}  // Altezza del calendario
-                        mode="month"  // Modalità di visualizzazione mensile
-                        locale="it"
-                        weekStartsOn={1}  // Imposta il primo giorno della settimana a lunedì
-                        eventCellStyle={eventCellStyle} // Applica lo stile personalizzato agli eventi
-                        currentDate={currentDate} // Usa lo stato aggiornato
-                        swipeEnabled={true} // Abilita lo swipe nativo del calendario
-                        onSwipeEnd={onSwipeEnd} // Gestisce l'evento di fine swipe
+                <View style={{ backgroundColor: '#fff' }}>
+                    <IconaTestoIconaView
+                        leftIcon={<MaterialIcons name="navigate-before" size={36} color={theme.colors.blue10} style={theme.ml20} />}
+                        text={<Text style={[theme.text, theme.h3,theme.ml40,theme.fwb, {color:theme.colors.blue10}]}>{headerText}</Text>}
+                        rightIcon={<MaterialIcons name="chevron-right" size={36} color={theme.colors.blue10} style={theme.mr20} />}
+                        onPressLeftIcon={handlePrevMonth}
+                        onPressRightIcon={handleNextMonth}
                     />
-                </ScrollView>
+                    <View style={{ backgroundColor: '#fff' }}>
+
+                        <ScrollView
+                            style={{ backgroundColor: '#fff' }}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                        >
+
+                            <Calendar
+                                events={events}
+                                height={600}  // Altezza del calendario
+                                mode="month"  // Modalità di visualizzazione mensile
+                                locale="it"
+                                weekStartsOn={1}  // Imposta il primo giorno della settimana a lunedì
+                                eventCellStyle={eventCellStyle} // Applica lo stile personalizzato agli eventi
+                                date={currentDate} // Usa lo stato aggiornato
+                                swipeEnabled={true} // Abilita lo swipe nativo del calendario
+                                onSwipeEnd={onSwipeEnd} // Gestisce l'evento di fine swipe
+                            />
+                        </ScrollView>
+                    </View>
+                </View>
             </View>
-        </Layout>
+        </Layout >
     );
 };
 
