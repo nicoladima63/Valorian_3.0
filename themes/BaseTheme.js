@@ -10,9 +10,6 @@ export const BaseTheme = (colors) => ({
         flex: 1,
         backgroundColor: colors.slate2,
         padding: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-
     },
     header: {
         height: 60,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet, Text, ScrollView, StatusBar, TouchableOpacity, Image, TextInput, Pressable, Switch, PixelRatio } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RadioButton } from 'react-native-paper';
@@ -8,12 +8,27 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { OnePress, TwoPress, ThreePress } from '../components/Pressables';
 import FlexibleView from '../components/FlexibleComponent';
 import { MaterialIcons } from '@expo/vector-icons'; // Puoi cambiare la libreria di icone se preferisci
+import * as Font from 'expo-font';
 
 const WelcomeTest = () => {
+    const [loading, setLoading] = useState(true);
+
     const logo = require("../assets/images/logo.png")
     const { theme } = useTheme();
     const fontSizeScaler = (size) => size * PixelRatio.getFontScale();
 
+
+    async function loadFonts() {
+        await Font.loadAsync({
+            'Inter-Light': require('../assets/fonts/Inter/static/Inter-Light.ttf'),
+            'Inter-Black': require('../assets/fonts/Inter/static/Inter-Black.ttf'),
+            'Manrope-Light': require('../assets/fonts/Inter/static/Inter-Light.ttf'),
+            'Manrope-Bold': require('../assets/fonts/Inter/static/Inter-Black.ttf'),
+        });
+    }
+    useEffect(() => {
+        loadFonts();
+    }, []);
 
     return (
         <View style={theme.container}>
@@ -39,7 +54,50 @@ const WelcomeTest = () => {
                         <Text style={[theme.text, theme.h5, theme.fwb]}> Title h5</Text>
                         <Text style={[theme.text, theme.h6, theme.fwb]}> Title h6</Text>
 
-
+                        <View style={theme.article}>
+                            <Text style={styles.lightText}>Questo è il testo con Inter-Light</Text>
+                            <Text style={styles.blackText}>Questo è il testo con Inter-Black</Text>
+                            <Text style={{ fontFamily: 'Inter-Light', fontSize: 10 }}>Inter Light size 10</Text>
+                            <Text style={{ fontFamily: 'Inter-Light', fontSize: 12 }}>Inter Light size 12</Text>
+                            <Text style={{ fontFamily: 'Inter-Light', fontSize: 14 }}>Inter Light size 14</Text>
+                            <Text style={{ fontFamily: 'Inter-Light', fontSize: 16 }}>Inter Light size 16</Text>
+                            <Text style={{ fontFamily: 'Inter-Light', fontSize: 18 }}>Inter Light size 18</Text>
+                            <Text style={{ fontFamily: 'Inter-Light', fontSize: 20 }}>Inter Light size 20</Text>
+                            <Text style={{ fontFamily: 'Inter-Light', fontSize: 22 }}>Inter Light size 22</Text>
+                            <Text style={{ fontFamily: 'Inter-Light', fontSize: 24 }}>Inter Light size 24</Text>
+                            <Text style={{ fontFamily: 'Manrope-Light', fontSize: 10 }}>Manrope Light size 10</Text>
+                            <Text style={{ fontFamily: 'Manrope-Light', fontSize: 12 }}>Manrope Light size 12</Text>
+                            <Text style={{ fontFamily: 'Manrope-Light', fontSize: 14 }}>Manrope Light size 14</Text>
+                            <Text style={{ fontFamily: 'Manrope-Light', fontSize: 16 }}>Manrope Light size 16</Text>
+                            <Text style={{ fontFamily: 'Manrope-Light', fontSize: 18 }}>Manrope Light size 18</Text>
+                            <Text style={{ fontFamily: 'Manrope-Light', fontSize: 20 }}>Manrope Light size 20</Text>
+                            <Text style={{ fontFamily: 'Manrope-Light', fontSize: 22 }}>Manrope Light size 22</Text>
+                            <Text style={{ fontFamily: 'Manrope-Light', fontSize: 24 }}>Manrope Light size 24</Text>
+                            <Text style={{ fontFamily: 'Inter-Black', fontSize: 10 }}>Inter Black size 10</Text>
+                            <Text style={{ fontFamily: 'Inter-Black', fontSize: 12 }}>Inter Black size 12</Text>
+                            <Text style={{ fontFamily: 'Inter-Black', fontSize: 14 }}>Inter Black size 14</Text>
+                            <Text style={{ fontFamily: 'Inter-Black', fontSize: 16 }}>Inter Black size 16</Text>
+                            <Text style={{ fontFamily: 'Inter-Black', fontSize: 18 }}>Inter Black size 18</Text>
+                            <Text style={{ fontFamily: 'Inter-Black', fontSize: 20 }}>Inter Black size 20</Text>
+                            <Text style={{ fontFamily: 'Inter-Black', fontSize: 22 }}>Inter Black size 22</Text>
+                            <Text style={{ fontFamily: 'Inter-Black', fontSize: 24 }}>Inter Black size 24</Text>
+                            <Text style={{ fontFamily: 'Manrope-Bold', fontSize: 10 }}>Manrope Bold size 10</Text>
+                            <Text style={{ fontFamily: 'Manrope-Bold', fontSize: 12 }}>Manrope Bold size 12</Text>
+                            <Text style={{ fontFamily: 'Manrope-Bold', fontSize: 14 }}>Manrope Bold size 14</Text>
+                            <Text style={{ fontFamily: 'Manrope-Bold', fontSize: 16 }}>Manrope Bold size 16</Text>
+                            <Text style={{ fontFamily: 'Manrope-Bold', fontSize: 18 }}>Manrope Bold size 18</Text>
+                            <Text style={{ fontFamily: 'Manrope-Bold', fontSize: 20 }}>Manrope Bold size 20</Text>
+                            <Text style={{ fontFamily: 'Manrope-Bold', fontSize: 22 }}>Manrope Bold size 22</Text>
+                            <Text style={{ fontFamily: 'Manrope-Bold', fontSize: 24 }}>Manrope Bold size 24</Text>
+                            <Text style={{ fontSize: 10 }}>Platform Default size 10</Text>
+                            <Text style={{ fontSize: 12 }}>Platform Default size 12</Text>
+                            <Text style={{ fontSize: 14 }}>Platform Default size 14</Text>
+                            <Text style={{ fontSize: 16 }}>Platform Default size 16</Text>
+                            <Text style={{ fontSize: 18 }}>Platform Default size 18</Text>
+                            <Text style={{ fontSize: 20 }}>Platform Default size 20</Text>
+                            <Text style={{ fontSize: 22 }}>Platform Default size 22</Text>
+                            <Text style={{ fontSize: 24 }}>Platform Default size 24</Text>
+                        </View>
 
 
                         <View style={[theme.article]}>
@@ -570,6 +628,13 @@ const lh5 = lineHeight.lh5;
 
 
 const styles = StyleSheet.create({
+    lightText: {
+        fontFamily: 'Inter-Light',
+    },
+    blackText: {
+        fontFamily: 'Inter-Black',
+    },
+
     safeAreaView: {
         flex: 1,
         backgroundColor: colors.slate0,
