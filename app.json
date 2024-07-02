@@ -40,7 +40,15 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ec27b725-7d63-47b6-ab5f-a4d8fe32dfcf"
+        "projectId": "ec27b725-7d63-47b6-ab5f-a4d8fe32dfcf",
+        "expo.notification.manifest": {
+          "pushNotificationContent": {
+            "title": "{{remoteNotification.title}}",
+            "body": "{{remoteNotification.body}}",
+            "sound": "default"
+          }
+        },
+        "expo.notification.server": "https://docs.expo.dev/push-notifications/overview/"
       }
     }
   }

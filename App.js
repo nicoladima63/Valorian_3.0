@@ -3,6 +3,9 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { AppContext } from './context/AppContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
+import { Linking } from 'react-native';
+import * as Notifications from 'expo-notifications';
+
 import { StatusBar, AppState } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,6 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import NotificationScheduler from './components/NotificationScheduler';
 import WelcomePage from './screens/WelcomePage';
 import StatusPage from './screens/StatusPage';
 import HomeScreen from './screens/HomeScreen';
@@ -40,12 +44,14 @@ function AuthLoadingScreen({ navigation }) {
         checkWelcomePage();
     }, [session, navigation]);
 
+
     return null;
 }
 
 export default function App() {
     return (
         <ThemeProvider>
+            <NotificationScheduler />
             <AppWithTheme />
         </ThemeProvider>
     );
@@ -54,7 +60,7 @@ export default function App() {
 function AppWithTheme() {
     const { theme, themeMode } = useTheme();
     const [appState, setAppState] = useState(AppState.currentState);
-    const [statusBarStyle, setStatusBarStyle] = useState  ('default' );
+    const [statusBarStyle, setStatusBarStyle] = useState('default');
     useEffect(() => {
         const handleAppStateChange = (nextAppState) => {
             if (appState.match(/inactive|background/) && nextAppState === 'active') {
@@ -77,9 +83,63 @@ function AppWithTheme() {
     return (
         <AppContext.Provider value={{ themeMode }}>
             <SafeAreaProvider>
-                <StatusBar/>
+                <StatusBar />
                 <AuthProvider>
-                    <NavigationContainer theme={theme}>
+                    <NavigationContainer
+                        theme={theme}
+                        linking={{
+                            config: {
+                                // Configuration for linking
+                            },
+                            async getInitialURL() {
+                                // First, you may want to do the default deep link handling
+                                // Check if app was opened from a deep link
+                                const url = await Linking.getInitialURL();
+
+                                if (url != null) {
+                                    return url;
+                                }
+
+                                // Handle URL from expo push notifications
+                                const response = await Notifications.getLastNotificationResponseAsync();
+                                //return response?.notification.request.content.data.url;
+
+                                //mia modifica
+                                const url2 = response?.notification.request.content.data.url;
+
+                                if (url2) {
+                                    // Always navigate to HomeScreen regardless of the URL content
+                                    return 'HomeScreen'; // Replace with 'HomeScreen' if screen names differ
+                                }
+
+                                return null; // No URL found, default behavior
+
+                                //fine mia modifica
+                            },
+                            subscribe(listener) {
+                                const onReceiveURL = ({ url }) => listener(url);
+
+                                // Listen to incoming links from deep linking
+                                const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
+
+                                // Listen to expo push notifications
+                                const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+                                    const url = response.notification.request.content.data.url;
+
+                                    // Any custom logic to see whether the URL needs to be handled
+                                    //...
+
+                                    // Let React Navigation handle the URL
+                                    listener(url);
+                                });
+
+                                return () => {
+                                    // Clean up the event listeners
+                                    eventListenerSubscription.remove();
+                                    subscription.remove();
+                                };
+                            },
+                        }}>
                         <Stack.Navigator initialRouteName='AuthLoading' screenOptions={{ headerShown: false }}>
                             <Stack.Screen
                                 name='AuthLoading'

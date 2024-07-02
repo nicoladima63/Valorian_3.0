@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Layout from './Layout';
 import { useTheme } from '../context/ThemeContext';
 import { OnePress } from '../components/Pressables';
-
+import { Linking } from 'react-native';
 
 const WelcomePage = ({ navigation }) => {
     const [showNextTime, setShowNextTime] = useState(true);
