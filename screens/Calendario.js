@@ -28,6 +28,10 @@ export default function CalendarPage({ navigation }) {
         updateHeader(currentDate);
     }, [currentDate]);
 
+    useEffect(() => {
+        onRefresh();
+    }, []);
+
     const updateHeader = (date) => {
         const monthName = date.toLocaleString('default', { month: 'long' });
         const year = date.getFullYear();
@@ -125,17 +129,8 @@ export default function CalendarPage({ navigation }) {
     };
     const events = transformDettagliToEvents();
 
-    const eventCellStyle = (event, start, end, isSelected) => {
-        return {
-            height: 20,
-            alignItems: 'center',
-            backgroundColor: event.color,
-            color: 'red',
-        };
-    };
-
     const Header = () => (
-        <Text style={[theme.h3, theme.mb20, theme.mt10, theme.ml20, { backgroundColor: theme.colors.slate2 }]}>
+        <Text style={[theme.h4, theme.mb20, theme.mt10, theme.ml20, { backgroundColor: theme.colors.slate2 }]}>
             Calendario delle soddisfazioni
         </Text>
     );
@@ -161,6 +156,41 @@ export default function CalendarPage({ navigation }) {
         <Text style={theme.fabText}>+</Text>
     );
 
+    const eventCellStyle = (event, start, end, isSelected) => {
+        return {
+            height: 10,
+            alignItems: 'center',
+            borderRadius: 0,
+            marginBottm: 0,
+            backgroundColor: event.color,
+            fontSize: 1,
+        };
+    };
+
+    const calendarCellStyle = (day) => {
+        return {
+            backgroundColor: theme.colors.slate4,
+            borderColor: theme.colors.slate1,
+            borderWidth: 6,
+        }
+    };
+    const dayHeaderStyle = () => {
+        return {
+            backgroundColor: theme.colors.red10,
+            color: theme.colors.slate12,
+        }
+    };
+    const eventCellTextColor = (event) => {
+        return theme.colors.white;
+    };
+    const calendarContainerStyle = () => {
+        return {
+            backgroundColor: theme.colors.slate1,
+            borderColor: theme.colors.white,
+            borderWidth: 6,
+        }
+    };
+
     return (
         <Layout
             navigation={navigation}
@@ -172,40 +202,34 @@ export default function CalendarPage({ navigation }) {
             bodyFooter={<BodyFooter />}
         >
             <View style={theme.body}>
-                <View style={{ backgroundColor: '#fff' }}>
-                    <IconaTestoIconaView
-                        leftIcon={<MaterialIcons name="navigate-before" size={36} color={theme.colors.blue10} style={theme.ml20} />}
-                        text={<Text style={[theme.text, theme.h3,theme.ml40,theme.fwb, {color:theme.colors.blue10}]}>{headerText}</Text>}
-                        rightIcon={<MaterialIcons name="chevron-right" size={36} color={theme.colors.blue10} style={theme.mr20} />}
-                        onPressLeftIcon={handlePrevMonth}
-                        onPressRightIcon={handleNextMonth}
+
+                <IconaTestoIconaView
+                    leftIcon={<MaterialIcons name="navigate-before" size={36} color={theme.colors.blue10} style={theme.ml20} />}
+                    text={<Text style={[theme.text, theme.h4, theme.ml40, theme.fwb, { color: theme.colors.blue10 }]}>{headerText}</Text>}
+                    rightIcon={<MaterialIcons name="chevron-right" size={36} color={theme.colors.blue10} style={theme.mr20} />}
+                    onPressLeftIcon={handlePrevMonth}
+                    onPressRightIcon={handleNextMonth}
+                />
+
+                <ScrollView refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
+                >
+                    <Calendar
+                        activeDate={currentDate}
+                        dayHeaderStyle={{color: '#fff', fontSize: 22}}
+                        events={events}
+                        height={600}  // Altezza del calendario
+                        mode="month"  // Modalità di visualizzazione mensile
+                        locale="it"
+                        weekStartsOn={1}  // Imposta il primo giorno della settimana a lunedì
+                        eventCellStyle={eventCellStyle} // Applica lo stile personalizzato agli eventi
+                        calendarCellStyle={calendarCellStyle}
+                        date={currentDate} // Usa lo stato aggiornato
+                        swipeEnabled={true} // Abilita lo swipe nativo del calendario
+                        onSwipeEnd={onSwipeEnd} // Gestisce l'evento di fine swipe
                     />
-                    <View style={{ backgroundColor: '#fff' }}>
-
-                        <ScrollView
-                            style={{ backgroundColor: '#fff' }}
-                            refreshControl={
-                                <RefreshControl
-                                    refreshing={refreshing}
-                                    onRefresh={onRefresh}
-                                />
-                            }
-                        >
-
-                            <Calendar
-                                events={events}
-                                height={600}  // Altezza del calendario
-                                mode="month"  // Modalità di visualizzazione mensile
-                                locale="it"
-                                weekStartsOn={1}  // Imposta il primo giorno della settimana a lunedì
-                                eventCellStyle={eventCellStyle} // Applica lo stile personalizzato agli eventi
-                                date={currentDate} // Usa lo stato aggiornato
-                                swipeEnabled={true} // Abilita lo swipe nativo del calendario
-                                onSwipeEnd={onSwipeEnd} // Gestisce l'evento di fine swipe
-                            />
-                        </ScrollView>
-                    </View>
-                </View>
+                </ScrollView>
             </View>
         </Layout >
     );

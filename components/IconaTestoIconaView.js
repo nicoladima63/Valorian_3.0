@@ -14,7 +14,10 @@ const MyView = ({ leftIcon, rightIcon, text, onPressLeftIcon, onPressRightIcon }
                     {leftIcon}
                 </Pressable>
             )}
-            <Text style={styles.text}>{text}</Text>
+            <Pressable onPress={onPressLeftIcon} style={styles.text} >
+                <Text style={styles.text}>{text}</Text>
+            </Pressable>
+
             {rightIcon && (
                 <Pressable onPress={onPressRightIcon} >
                     {rightIcon}

@@ -44,7 +44,7 @@ const HomeScreen = ({ route, navigation }) => {
                     />
                 </View>
             }
-            fab={<Text style={theme.fabText}>+</Text>}
+            fab={<MaterialIcons name="add" size={24} color={theme.colors.onPrimary} />}
             fabAction={handleFabPressHome}
             showBodyFooter={false}
             bodyFooter={
@@ -66,16 +66,16 @@ const HomeScreen = ({ route, navigation }) => {
         >
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
 
-                <View style={[theme.article, theme.articleTop]}>
+                <View style={[theme.mb20]}>
                     <FlexibleView
                         format="iconaTesto"
-                        leftIcon={<MaterialIcons name="info" size={24} color={theme.colors.green9}  /> }
+                        leftIcon={<MaterialIcons name="info" size={22} color={theme.colors.green9}  /> }
                         text={<Text style={[theme.text, theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text> }
                     />
                 </View>
-                <View style={[theme.article, theme.articleBottom]}>
-                    <SectionListComponent session={session} setFabAction={setFabAction} />
-                </View>
+
+                <SectionListComponent session={session} setFabAction={setFabAction} />
+
             </View>
         </Layout>
     ); };

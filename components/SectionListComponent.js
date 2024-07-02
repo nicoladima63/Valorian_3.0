@@ -269,27 +269,28 @@ const BisogniList = ({ session, setFabAction }) => {
                 sections={DATA}
                 keyExtractor={(item, index) => item.uniqueKey}
                 renderItem={({ item, index, section }) => (
-                    <View style={[theme.articl, theme.articleMiddle, theme.grid, index === section.data.length - 1 && theme.articleBottom, { backgroundColor: item.colore + '30' }]}>
-
-                        <IconaTestoIconaView
-                            leftIcon={
-                                <Icon name="check" size={18} color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? theme.colors.green10 : theme.colors.slate5} style={theme.mrl0} />
-                            }
-                            text={
-                                <Text style={[theme.text, theme.text14]}>{item.nome}</Text>
-                            }
-                            rightIcon={
-                                <Icon name="angle-right" size={24} color={theme.colors.slate9} style={theme.mr20} />
-                            }
-                            onPressLeftIcon={() => updateBisogno(item)}
-                            onPressRightIcon={() => selectBisogno(item)}
-                        />
-                    </View>
-                )}
-                ItemSeparatorComponent={<View style={theme.mt10} ><Text>--------------</Text></View>}
-                renderSectionHeader={({ section: { title, color } }) => (
-                    <View style={[theme.article, theme.articleTop]}>
-                        <Text style={[theme.h5, theme.fwb, { color: color }]}>{title}</Text>
+                    <View style={[theme.grid, theme.mb10]}>
+                        <View style={{ width: 8, alignSelf: 'stretch', backgroundColor: item.colore, height: '100%',borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}/>
+                        <View style={{ flex: 1, backgroundColor: theme.colors.slate5, height: 60, justifyContent: 'center', borderTopRightRadius: 8, borderBottomRightRadius: 8 }}>
+                            <IconaTestoIconaView
+                                leftIcon={
+                                    <Icon
+                                        name="check"
+                                        size={18}
+                                        color={item.soddisfattoil && isToday(new Date(item.soddisfattoil)) ? theme.colors.green10 : theme.colors.slate5}
+                                        style={theme.mrl0}
+                                    />
+                                }
+                                text={
+                                    <Text style={[theme.text, theme.text14]}>{item.nome}</Text>
+                                }
+                                rightIcon={
+                                    <Icon name="angle-right" size={24} color={theme.colors.slate9} style={theme.mr20} />
+                                }
+                                onPressLeftIcon={() => updateBisogno(item)}
+                                onPressRightIcon={() => selectBisogno(item)}
+                            />
+                        </View>
                     </View>
                 )}
                 ListEmptyComponent={renderEmptyComponent}
@@ -335,6 +336,17 @@ const BisogniList = ({ session, setFabAction }) => {
 const styles = StyleSheet.create({
     spinnerTextStyle: {
         color: '#FFF'
+    },
+    itemContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white', // o qualsiasi colore di sfondo desideri
+    },
+    colorBar: {
+        width: 5, alignSelf: 'stretch',
+    },
+    contentContainer: {
+        flex: 1,
     },
 });
 

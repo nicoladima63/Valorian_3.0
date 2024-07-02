@@ -39,29 +39,29 @@ const WelcomePage = ({ navigation }) => {
                         <Image source={logo} style={theme.logoImage80} resizeMode='contain' />
                     </View>
                     <View style={theme.center}>
-                        <Text style={[theme.h1, theme.fwb, theme.mb20, theme.mt20]}>Benvenuto in Valorian!</Text>
+                        <Text style={[theme.h3, theme.fwb, theme.mb10, theme.mt10]}>Benvenuto in Valorian!</Text>
                     </View>
                     <View style={[theme.article, theme.articleTop]}>
 
-                        <Text style={[theme.h4, theme.mb20, theme.fwb]}>
+                        <Text style={[theme.h5, theme.mb10, theme.fwb]}>
                             Sono entusiasta di averti con me.
                         </Text>
-                        <Text style={[theme.paragraph, theme.text16, theme.lh10]}>
+                        <Text style={[theme.paragraph, theme.text14, theme.lh10]}>
                             Ciao mi chiamo Nicola,{'\n'}e dopo un master di due anni in health coaching presso la
                             <Text style={theme.link} onPress={() => { Linking.openURL('https://www.healthcoaching.it/') }}> Health Coaching Academy </Text>
                             ho deciso di creare un progetto ambizioso:
-                            <Text style={[theme.h4, theme.fwb, theme.colors.primary]}> Valorian</Text>.
+                            <Text style={[theme.text14, theme.fwb, { color: theme.colors.primary }]}> Valorian</Text>.
                             {'\n'}Credo molto che lo stato di benessere psicofisico di una persona sia importante per la sua salute.
                         </Text>
-                        <Text style={[theme.paragraph, theme.text16, theme.lh15]}>
+                        <Text style={[theme.paragraph, theme.text14, theme.lh15]}>
                             Tenere sotto controllo il tuo stato psicofisico &egrave; una operazione facile con la mia applicazione.{'\n'}
                             Dopo aver inserito i tuoi bisogni dovrai solo cliccare sul nome del bisogno per comunicare alla app che lo hai soddisfatto.{'\n'}
                             In questo modo tieni traccia delle soddisfazioni.
                         </Text>
-                        <Text style={[theme.paragraph, theme.text16, theme.lh15]}>
+                        <Text style={[theme.paragraph, theme.text14, theme.lh15]}>
                             Tutti questi dati saranno utilizzati per definire il tuo stato di benessere generale e saranno visualizzati attraverso un grafico.
                         </Text>
-                        <Text style={[theme.paragraph, theme.text16, theme.lh15]}>
+                        <Text style={[theme.paragraph, theme.text14, theme.lh15]}>
                             Inizia subito a esplorare la tua vita in modo pi&#249;  consapevole e a lavorare verso un benessere pi&#249;  completo!
                         </Text>
                     </View>
@@ -78,7 +78,7 @@ const WelcomePage = ({ navigation }) => {
                     </View>
 
                     <View style={[theme.article, theme.articleBottom]}>
-                        <OnePress title="Inizia a conoscerti..." onPress={handleStart} />
+                        <OnePress title="Inizia a conoscerti..." onPress={handleStart} backgroundColor={theme.colors.primary}/>
                     </View>
                 </View>
             </ScrollView>

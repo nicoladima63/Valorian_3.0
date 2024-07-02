@@ -14,7 +14,7 @@ const SettingsScreen = ({ navigation }) => {
             navigation={navigation}
             showTopBar={false}
             header={
-                <Text style={[theme.h4, theme.mb20, theme.mt10, theme.ml20]}>Impostazioni</Text>
+                <Text style={[theme.h4,theme.fwb, theme.mb20, theme.mt10, theme.ml20]}>Impostazioni</Text>
             }
         >
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>

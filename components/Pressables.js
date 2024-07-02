@@ -2,10 +2,10 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import StyledPressable from './StyledPressable';
 
-const OnePress = ({ title, onPress }) => {
+const OnePress = ({ title, onPress,backgroundColor }) => {
     return (
         <View style={styles.container}>
-            <StyledPressable title={title} onPress={onPress} />
+            <StyledPressable title={title} onPress={onPress} backgroundColor={backgroundColor}/>
         </View>
     );
 };
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         paddingHorizontal: 5,
+        
     },
 });
 

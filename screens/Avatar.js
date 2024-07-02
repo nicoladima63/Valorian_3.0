@@ -88,14 +88,13 @@ export default function Avatar({ url, size = 200, onUpload }) {
 
     return (
 
-        <View style={[theme.grid, theme.overflowHidden]}>
-            <View style={[theme.grid, theme.overflowHidden]}>
-                <View style={[theme.gap2, theme.mb20]}>
+            <View style={[theme.grid, theme.center]}>
+                <View style={[theme.mb20, {alignItems: 'center',marginRight:80}]}>
                     {avatarUrl ? (
                         <Image
                             source={{ uri: avatarUrl }}
                             accessibilityLabel="Avatar"
-                            style={[avatarSize, theme.avatar, theme.br50]}
+                            style={[avatarSize, styles.avatar,styles.image]}
                         />
                     ) : (
                         <View style={[avatarSize, styles.avatar, styles.noImage]} />
@@ -111,14 +110,6 @@ export default function Avatar({ url, size = 200, onUpload }) {
                     />
                 </View>
             </View>
-        </View>
-
-
-
-
-
-
-
     );
 }
 
@@ -143,6 +134,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: 'rgb(200, 200, 200)',
-        borderRadius: 50,
+        borderRadius: 100,
     },
 });

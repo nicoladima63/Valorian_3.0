@@ -213,13 +213,13 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                     >
                         <View style={theme.container}>
                             <View style={theme.header}>
-                                <Text style={theme.h3}>Modifica Bisogno</Text>
+                                <Text style={[theme.h4,theme.fwb]}>Modifica Bisogno</Text>
                             </View>
 
                             <View style={theme.content}>
                                 <View style={theme.body}>
                                     <View style={[theme.article, theme.articleTop]}>
-                                        <Text style={[theme.text, theme.h5, theme.mb20]}>Nome del bisogno</Text>
+                                        <Text style={[theme.text, theme.text14, theme.mb10]}>Nome del bisogno</Text>
                                         <TextInput
                                             style={[theme.article, errors.nome && theme.articleDanger, { color: theme.colors.onBackground }]}
                                             placeholder="esempio pizza o corsa"
@@ -279,19 +279,22 @@ const EditBisogno = ({ visible, onClose, bisogno, onSave, userId }) => {
                                             </Text>
                                         ) : null}
                                         <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
-                                        <FlatList
-                                            data={categorie}
-                                            keyExtractor={(item) => item.id.toString()}
-                                            numColumns={2}
-                                            renderItem={({ item }) => (
-                                                <CategoryItem
-                                                    categoria={item}
-                                                    isSelected={selectedCategories.includes(item)}
-                                                    onSelect={() => handleSelectCategory(item)}
-                                                    colore={item.colore}
-                                                />
-                                            )}
-                                        />
+                                        <View style={[theme.article]}>
+                                            <Text style={[theme.text, theme.text12, theme.mb10]}>Associalo ad una catagoria di bisogni</Text>
+                                            <FlatList
+                                                data={categorie}
+                                                keyExtractor={(item) => item.id.toString()}
+                                                numColumns={3}
+                                                renderItem={({ item }) => (
+                                                    <CategoryItem
+                                                        categoria={item}
+                                                        isSelected={selectedCategories.includes(item)}
+                                                        onSelect={handleSelectCategory}
+                                                        colore={item.colore}
+                                                    />
+                                                )}
+                                            />
+                                        </View>
                                     </View>
                                     <View style={[theme.article, theme.articleBottom]}>
                                         <TwoPressStyled

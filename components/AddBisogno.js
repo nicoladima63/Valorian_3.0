@@ -168,13 +168,13 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
 
                         <View style={theme.container}>
                             <View style={theme.header}>
-                                <Text style={[theme.h3]}>Nuovo Bisogno</Text>
+                                <Text style={[theme.h4,theme.fwb]}>Nuovo Bisogno</Text>
                             </View>
 
                             <View style={theme.content}>
                                 <View style={theme.body}>
                                     <View style={[theme.article, theme.articleTop]}>
-                                        <Text style={[theme.text, theme.h5, theme.mb20]}>Nome del bisogno</Text>
+                                        <Text style={[theme.text, theme.text14, theme.mb10]}>Nome del bisogno</Text>
                                         <TextInput
                                             style={[theme.article, errors.nome && theme.articleDanger, { color: theme.colors.onBackground }]}
                                             placeholder="esempio pizza o corsa"
@@ -196,7 +196,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                                         ) : null}
                                         <Text style={[theme.text, theme.text14, theme.mt20, theme.mb10]}>Quanto è importante per te in una scala da 1 a 10?</Text>
                                         <Text style={[theme.text, theme.text14, theme.fwb, theme.mb20, { textAlign: 'center', color: theme.colors.blue10 }]}>{importanza}</Text>
-                                        <View style={[theme.article, theme.mb20, { backgroundColor: theme.colors.slate9 }]}>
+                                        <View style={[theme.article, theme.mb20, { backgroundColor: theme.colors.slate8 }]}>
                                             <Slider
                                                 style={[theme.text, theme.text16, { height: 58, color: theme.colors.slate9 }]}
                                                 minimumValue={0}
