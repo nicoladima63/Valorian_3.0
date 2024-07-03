@@ -54,8 +54,8 @@ const NotificationScheduler = () => {
                 body: 'Hai soddisfatto qualche bisogno oggi?',
             },
             trigger: {
-                hour: 1,
-                minute: 21,
+                hour: 14,
+                minute: 39,
                 repeats: true,
             },
         };

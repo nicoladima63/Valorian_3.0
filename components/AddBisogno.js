@@ -103,7 +103,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                 importanza,
                 tolleranza,
                 colore, // Colore con opacità al 50%
-                soddisfattoil,
+                soddisfattoil:null,
                 creatoil: new Date(),
                 enabled: true,
                 uuid: userId

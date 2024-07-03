@@ -51,7 +51,7 @@ function AuthLoadingScreen({ navigation }) {
 export default function App() {
     return (
         <ThemeProvider>
-            <NotificationScheduler />
+            <NotificationScheduler/>
             <AppWithTheme />
         </ThemeProvider>
     );
