@@ -74,8 +74,8 @@ const HomeScreen = ({ route, navigation }) => {
                     />
                 </View>
 
-                <SectionListComponent session={session} setFabAction={setFabAction} />
-
+                {/*<SectionListComponent session={session} setFabAction={setFabAction} />*/}
+                <SectionListComponent session={session} setFabAction={setFabAction} showModalAddBisogno={route.params?.showModalAddBisogno} />
             </View>
         </Layout>
     ); };

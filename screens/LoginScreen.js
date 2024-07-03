@@ -117,9 +117,8 @@ export default function LoginScreen({ navigation }) {
                     style={{ flex: 1 }}
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 >
-                    <View style={theme.contentPadding} ></View>
                     <View style={theme.body}>
-                        <View style={theme.article}>
+                        <View style={theme.articl}>
                             <View style={theme.column}>
                                 <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
                                 <Text style={[theme.text, theme.h3, theme.fwb, theme.mb20]}>Form di accesso</Text>
@@ -175,7 +174,7 @@ export default function LoginScreen({ navigation }) {
                                     <Text style={[theme.text14,theme.link, theme.alignRight]}>Password dimenticata?</Text>
                                 </Pressable>
                             </View>
-                            <View style={[theme.article, theme.grid]}>
+                            <View style={[theme.articleDefault, theme.grid]}>
                                 <View>
                                     <Text style={theme.text}>Ricordami</Text>
                                 </View>
@@ -184,13 +183,13 @@ export default function LoginScreen({ navigation }) {
                                 </View>
                             </View>
 
-                            <View style={[theme.article, theme.mt20]}>
+                            <View style={[theme.articleDefaul, theme.mt20]}>
                                 <Pressable onPress={() => signInWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { justifyContent: 'space-evenly' }]}>
                                     <Text style={theme.h5}>Accedi</Text>
                                 </Pressable>
                             </View>
 
-                            <View style={[theme.article, theme.mt20,theme.mb20, theme.grid]}>
+                            <View style={[theme.articleDefault, theme.mt20,theme.mb20, theme.grid]}>
                                 <Text style={[theme.text, theme.mt20]}>Non hai un Account?</Text>
                                 <Pressable onPress={() => navigation.navigate('Register')}>
                                     <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>

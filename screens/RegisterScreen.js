@@ -96,9 +96,8 @@ export default function RegisterScreen({ navigation }) {
                     style={{ flex: 1 }}
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 >
-                    <View style={theme.contentPadding} ></View>
                     <View style={theme.body}>
-                        <View style={theme.article}>
+                        <View style={theme.articl}>
                             <View style={theme.column}>
                                 <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
                                 <Text style={[theme.text, theme.h5, theme.fwb, theme.mb20]}>Form di registrazione</Text>
@@ -149,14 +148,14 @@ export default function RegisterScreen({ navigation }) {
                                 <Text style={theme.textDanger}>{passwordError}</Text>
                                 : null}
 
-                            <View style={[theme.article, theme.mt20]}>
+                            <View style={[theme.articl, theme.mt20]}>
                                 <Pressable onPress={() => signUpWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { justifyContent: 'space-evenly' }]}>
                                     <Text style={theme.h5}>Registrati</Text>
                                 </Pressable>
                             </View>
 
 
-                            <View style={[theme.article, theme.mt20, theme.mb20, theme.grid]}>
+                            <View style={[theme.articleDefault, theme.mt20, theme.mb20, theme.grid]}>
                                 <Text style={[theme.text, theme.mt20]}>Hai un Account?</Text>
                                 <Pressable onPress={() => navigation.navigate('Login')}>
                                     <Text style={[theme.link, theme.alignRight]}>  Accedi</Text>

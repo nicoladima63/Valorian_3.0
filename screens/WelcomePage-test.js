@@ -20,12 +20,12 @@ const WelcomeTest = () => {
 
     async function loadFonts() {
         await Font.loadAsync({
-        //    'Inter-Light': require('../assets/fonts/Inter/Inter-Light.ttf'),
-        //    'Inter-Black': require('../assets/fonts/Inter/Inter-Black.ttf'),
-        //    'Manrope-Light': require('../assets/fonts/Manrope/Manrope-Light.ttf'),
-        //    'Manrope-Bold': require('../assets/fonts/Manrope/Manrope-Bold.ttf'),
-        //    'Poppins-Light': require('../assets/fonts/Poppins/Poppins-Light.ttf'),
-        //    'Poppins-Bold': require('../assets/fonts/Poppins/Poppins-Black.ttf'),
+            //    'Inter-Light': require('../assets/fonts/Inter/Inter-Light.ttf'),
+            //    'Inter-Black': require('../assets/fonts/Inter/Inter-Black.ttf'),
+            //    'Manrope-Light': require('../assets/fonts/Manrope/Manrope-Light.ttf'),
+            //    'Manrope-Bold': require('../assets/fonts/Manrope/Manrope-Bold.ttf'),
+            //    'Poppins-Light': require('../assets/fonts/Poppins/Poppins-Light.ttf'),
+            //    'Poppins-Bold': require('../assets/fonts/Poppins/Poppins-Black.ttf'),
         });
     }
     useEffect(() => {
@@ -47,11 +47,7 @@ const WelcomeTest = () => {
 
                 <View style={theme.body}>
 
-<View style={styles.containerxy}>
-      <View style={[styles.barra, { backgroundColor: theme.colors.red10 }]} />
-      <Text style={theme.text}>cicciopirillo</Text>
-    </View>
-    <ScrollView>
+                    <ScrollView>
                         <Text style={[theme.text, theme.h1, theme.fwb]}> Title h1</Text>
                         <Text style={[theme.text, theme.h2, theme.fwb]}> Title h2</Text>
                         <Text style={[theme.text, theme.h3, theme.fwb]}> Title h3</Text>
@@ -129,6 +125,10 @@ const WelcomeTest = () => {
                         </View>
 
 
+                        <View style={styles.containerxy}>
+                            <View style={[styles.barra, { backgroundColor: theme.colors.red10 }]} />
+                            <Text style={theme.text}>cicciopirillo</Text>
+                        </View>
 
 
 
@@ -136,19 +136,19 @@ const WelcomeTest = () => {
                             <Text style={theme.text}>text article default</Text>
                         </View>
                         <View style={[theme.article, theme.articleSuccess]}>
-                            <Text style={[theme.text, theme.h5, theme.fwb, theme.textSuccess]}> Title h5</Text>
+                            <Text style={[theme.text, theme.h6, theme.fwb, theme.textSuccess]}>Email Confermata</Text>
                             <Text style={theme.textSuccess}>text article success</Text>
                         </View>
                         <View style={[theme.article, theme.articleInfo]}>
-                            <Text style={[theme.text, theme.h3, theme.fwb, theme.textInfo]}> Title h3</Text>
+                            <Text style={[theme.text, theme.h6, theme.fwb, theme.textInfo]}>Biometria Disponibile</Text>
                             <Text style={[theme.textInfo]}>text article Info</Text>
                         </View>
                         <View style={[theme.article, theme.articleDanger]}>
-                            <Text style={[theme.text, theme.h4, theme.fwb, theme.textDanger]}> Title h4</Text>
+                            <Text style={[theme.text, theme.h6, theme.fwb, theme.textDanger]}>Delete Account</Text>
                             <Text style={theme.textDanger}>text article danger</Text>
                         </View>
                         <View style={[theme.article, theme.articleWarning]}>
-                            <Text style={[theme.text, theme.h6, theme.fwb, theme.textWarning]}> Title h6</Text>
+                            <Text style={[theme.text, theme.h6, theme.fwb, theme.textWarning]}>Attenzion elettronica</Text>
                             <Text style={theme.textWarning}>text article warning</Text>
                         </View>
 
@@ -576,22 +576,22 @@ const lh5 = lineHeight.lh5;
 
 const styles = StyleSheet.create({
 
- containerxy: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 50,
-  },
-  barra: {
-    width: 8,
-    height: '100%',
-            borderTopLeftRadius: 6,
+    containerxy: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 50,
+    },
+    barra: {
+        width: 8,
+        height: '100%',
+        borderTopLeftRadius: 6,
         borderBottomLeftRadius: 6,
 
-  },
-  testo: {
-    marginLeft: 10,
-    fontSize: 16,
-  },
+    },
+    testo: {
+        marginLeft: 10,
+        fontSize: 16,
+    },
 
 
 

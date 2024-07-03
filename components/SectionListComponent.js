@@ -12,7 +12,7 @@ import Snackbar from '../components/Snackbar';
 import { Color } from 'react-native';
 import IconaTestoIconaView from '../components/IconaTestoIconaView';
 
-const BisogniList = ({ session, setFabAction }) => {
+const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
     const { theme } = useTheme();
     const [modalVisibleAdd, setModalVisibleAdd] = useState(false);
     const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
@@ -24,6 +24,19 @@ const BisogniList = ({ session, setFabAction }) => {
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [refreshing, setRefreshing] = useState(false);
+
+    useEffect(() => {
+        if (setFabAction) {
+            setFabAction(() => () => setModalVisibleAdd(true));
+        }
+    }, [setFabAction]);
+
+    // Apre il modal se showModalAddBisogno è vero
+    useEffect(() => {
+        if (showModalAddBisogno) {
+            setModalVisibleAdd(true);
+        }
+    }, [showModalAddBisogno]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -230,11 +243,6 @@ const BisogniList = ({ session, setFabAction }) => {
     };
 
 
-    useEffect(() => {
-        if (setFabAction) {
-            setFabAction(() => () => setModalVisibleAdd(true));
-        }
-    }, [setFabAction]);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -246,7 +254,7 @@ const BisogniList = ({ session, setFabAction }) => {
     const renderEmptyComponent = () => (
         <View style={[theme.article]}>
             <View style={[theme.mb20]}>
-                <Text style={[theme.text, theme.text16, theme.mb20]}>Nessun bisogno inserito:</Text>
+                <Text style={[ theme.h6, theme.mb20]}>Nessun bisogno inserito:</Text>
                 <View style={theme.checkTextContainer}>
                     <Text style={[theme.text, theme.text14]}>Clicca sul pulsante</Text>
                     <Icon name="plus-circle" size={24} color={theme.colors.primary} style={[theme.ml20]} />

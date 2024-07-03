@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,Linking } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import * as BisController from '../controllers/bisogniController';
@@ -321,9 +321,12 @@ const StatusPage = ({ navigation }) => {
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
                 {bisogni.length === 0 ? (
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <View style={[theme.article.Default]}>
-                            <Text style={theme.h5}>Inserire bisogni</Text>
-                        </View>
+                        <Text style={theme.h6}>Nessun bisogno inserito</Text>
+                        <View style={theme.mt20} />
+                        <Text style={[theme.text14,theme.link,theme.mt20]}
+                            onPress={() => navigation.navigate('Home', { showModalAddBisogno: true })}
+                        > Aggiungi bisogno </Text>
+
                     </View>
                 ) : (
                     <View style={{ flex: 1 }}>

@@ -48,20 +48,20 @@ export const BaseTheme = (colors) => ({
 
     },
     articleSuccess: {
-        backgroundColor: colors.green3,
+        backgroundColor: colors.green2,
         borderColor: colors.green8,
     },
     articleDanger: {
-        backgroundColor: colors.red3,
+        backgroundColor: colors.red2,
         borderColor: colors.red8,
     },
     articleInfo: {
-        backgroundColor: colors.blue3,
+        backgroundColor: colors.blue2,
         borderColor: colors.blue8,
     },
     articleWarning: {
-        backgroundColor: colors.yellow3,
-        borderColor: colors.yellow7,
+        backgroundColor: colors.yellow2,
+        borderColor: colors.yellow8,
     },
     articleTop: {
         borderTopLeftRadius: 8,
@@ -110,14 +110,14 @@ export const BaseTheme = (colors) => ({
     text20: { fontSize: RFValue(20) },
     text22: { fontSize: RFValue(22) },
     text24: { fontSize: RFValue(24) },
-    textArticle: { color: colors.slate12, },
-    textSuccess: { color: colors.green11, },
-    textDanger: { color: colors.red11, },
+    textArticle: { color: colors.slate10, },
+    textSuccess: { color: colors.green10, },
+    textDanger: { color: colors.red10, },
     textWarning: { color: colors.yellow10, },
-    textInfo: { color: colors.blue11, },
-    textSecondary: { color: colors.slate11, },
-    textTertiary: { color: colors.slate10, },
-    textQuaternary: { color: colors.slate9, },
+    textInfo: { color: colors.blue10, },
+    textSecondary: { color: colors.slate10, },
+    textTertiary: { color: colors.slate8, },
+    textQuaternary: { color: colors.slate7, },
     textLink: { color: colors.blue11, },
 
 
