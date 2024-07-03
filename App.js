@@ -16,6 +16,7 @@ import HomeScreen from './screens/HomeScreen';
 import HelpHomeScreen from './screens/HelpHomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
+import RecoveryPassword from './screens/RecoveryPassword';
 import RegisterScreen from './screens/RegisterScreen';
 import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
@@ -114,6 +115,11 @@ function AppWithTheme() {
                             <Stack.Screen
                                 name='Register'
                                 component={RegisterScreen}
+                                options={{ headerShown: false, title: 'Recupera Password' }}
+                            />
+                            <Stack.Screen
+                                name='Recovery'
+                                component={RecoveryPassword}
                                 options={{ headerShown: false, title: 'Registrati' }}
                             />
                             <Stack.Screen

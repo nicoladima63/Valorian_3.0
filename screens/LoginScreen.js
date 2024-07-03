@@ -121,7 +121,7 @@ export default function LoginScreen({ navigation }) {
                         <View style={theme.articl}>
                             <View style={theme.column}>
                                 <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
-                                <Text style={[theme.text, theme.h3, theme.fwb, theme.mb20]}>Form di accesso</Text>
+                                <Text style={[theme.text, theme.h4, theme.fwb, theme.mb20]}>Form di accesso</Text>
                             </View>
 
                             <Input
@@ -133,7 +133,8 @@ export default function LoginScreen({ navigation }) {
                                 onChangeText={handleEmailChange}
                                 autoCorrect={false}
                                 autoCapitalize='none'
-                                returnKeyType="next" // Imposta il tipo di tasto di ritorno
+                                returnKeyType="next"
+                                keyboardType="email-address"
                                 onSubmitEditing={() => passwordRef.current.focus()} // Passa al prossimo TextInput quando viene premuto il tasto "Vai"
                             />
                             {emailError ?
@@ -170,7 +171,7 @@ export default function LoginScreen({ navigation }) {
                                 <Text style={theme.textDanger}>{passwordError}</Text>
                                 : null}
                             <View style={[theme.center,theme.mb20]}>
-                                <Pressable onPress={() => navigation.navigate('ForgotPassword')}>
+                                <Pressable onPress={() => navigation.navigate('Recovery')}>
                                     <Text style={[theme.text14,theme.link, theme.alignRight]}>Password dimenticata?</Text>
                                 </Pressable>
                             </View>
