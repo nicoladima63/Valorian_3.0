@@ -19,7 +19,7 @@ import FlexibleView from '../components/FlexibleComponent';
 const CategoryItem = ({ categoria, isSelected, onSelect }) => {
     const { theme } = useTheme();
     return (
-        <View style={[theme.article, {width:115}]}>
+        <View style={[theme.article, { width: 115 }]}>
             <TouchableOpacity
                 onPress={() => onSelect(categoria)}
             >
@@ -103,7 +103,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                 importanza,
                 tolleranza,
                 colore, // Colore con opacità al 50%
-                soddisfattoil:null,
+                soddisfattoil: null,
                 creatoil: new Date(),
                 enabled: true,
                 uuid: userId
@@ -168,7 +168,7 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
 
                         <View style={theme.container}>
                             <View style={theme.header}>
-                                <Text style={[theme.h4,theme.fwb]}>Nuovo Bisogno</Text>
+                                <Text style={[theme.h4, theme.fwb]}>Nuovo Bisogno</Text>
                             </View>
 
                             <View style={theme.content}>
@@ -233,23 +233,20 @@ const AddBisogno = ({ visible, onClose, onAdd, userId }) => {
                                                 {errors.tolleranza}
                                             </Text>
                                         ) : null}
-                                        <Text style={{ textAlign: 'center', marginBottom: 10, marginTop: 30 }}>Seleziona una o più categorie da associare al bisogno</Text>
-                                        <View style={[theme.article]}>
-                                            <Text style={[theme.text, theme.text12,theme.mb10]}>Associalo ad una catagoria di bisogni</Text>
-                                            <FlatList
-                                                data={categorie}
-                                                keyExtractor={(item) => item.id.toString()}
-                                                numColumns={3}
-                                                renderItem={({ item }) => (
-                                                    <CategoryItem
-                                                        categoria={item}
-                                                        isSelected={selectedCategories.includes(item)}
-                                                        onSelect={handleSelectCategory}
-                                                        colore={item.colore}
-                                                    />
-                                                )}
-                                            />
-                                        </View>
+                                        <Text style={[theme.text, theme.text12, theme.mb20, { textAlign: 'center', marginBottom: 10, marginTop: 30 }]}>Seleziona una o più categorie da associare al bisogno</Text>
+                                        <FlatList
+                                            data={categorie}
+                                            keyExtractor={(item) => item.id.toString()}
+                                            numColumns={3}
+                                            renderItem={({ item }) => (
+                                                <CategoryItem
+                                                    categoria={item}
+                                                    isSelected={selectedCategories.includes(item)}
+                                                    onSelect={handleSelectCategory}
+                                                    colore={item.colore}
+                                                />
+                                            )}
+                                        />
 
                                     </View>
 
