@@ -252,13 +252,15 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
     }, []);
 
     const renderEmptyComponent = () => (
-        <View style={[theme.article]}>
-            <View style={[theme.mb20]}>
-                <Text style={[ theme.text12, theme.mb20]}>Nessun bisogno inserito:</Text>
-                <View style={theme.checkTextContainer}>
-                    <Text style={[theme.text, theme.text12]}>Clicca sul pulsante</Text>
-                    <Icon name="plus-circle" size={24} color={theme.colors.primary} style={[theme.ml20]} />
-                    <Text style={[theme.text, theme.text12, theme.ml20]}>in basso a destra</Text>
+        <View style={[theme.mb20]}>
+            <View style={[theme.article, theme.articleTop]}>
+                <Text style={[theme.text]}>Nessun bisogno inserito:</Text>
+            </View>
+            <View style={[theme.article, theme.articleBottom]}>
+                <View style={theme.grid3 }>
+                <Text style={[theme.text, theme.text12]}>Clicca sul pulsante</Text>
+                <Icon name="plus-circle" size={24} color={theme.colors.primary} />
+                <Text style={[theme.text, theme.text12]}>in basso a destra</Text>
                 </View>
             </View>
         </View>
@@ -278,7 +280,7 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
                 keyExtractor={(item, index) => item.uniqueKey}
                 renderItem={({ item, index, section }) => (
                     <View style={[theme.grid, theme.mb10]}>
-                        <View style={{ width: 8, alignSelf: 'stretch', backgroundColor: item.colore, height: '100%',borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}/>
+                        <View style={{ width: 8, alignSelf: 'stretch', backgroundColor: item.colore, height: '100%', borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
                         <View style={{ flex: 1, backgroundColor: theme.colors.slate5, height: 60, justifyContent: 'center', borderTopRightRadius: 8, borderBottomRightRadius: 8 }}>
                             <IconaTestoIconaView
                                 leftIcon={
