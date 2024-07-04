@@ -33,21 +33,61 @@ const WelcomeTest = () => {
     }, []);
 
     return (
-        <View style={theme.container}>
+        <View style={[theme.container,]}>
             <StatusBar
                 barStyle="light-content" // Stile delle icone (può essere 'default', 'light-content', 'dark-content')
-                backgroundColor={colors.slate0} // Colore di sfondo della Status Bar (solo Android)
+                backgroundColor={colors.background} // Colore di sfondo della Status Bar (solo Android)
             />
-            <View style={[theme.header, theme.bbs6]}>
-                <Image source={logo} style={theme.logo} resizeMode='contain' />
-                <Text style={theme.h5}>header</Text>
+            <View style={[theme.header]}>
+                <Image source={logo} style={[theme.articleDefault, theme.logo, theme.mr20]} resizeMode='contain' />
+                <Text style={[theme.h6, theme.fwb]}>Expo Go</Text>
             </View>
             <View style={theme.content}>
-                <Text style={theme.text}>content</Text>
-
                 <View style={theme.body}>
-
                     <ScrollView>
+
+                        <View style={[theme.mb10]}></View>
+                        <View style={[theme.mb20]}></View>
+
+                        <FlexibleView
+                            format="testoTesto"
+                            text={<Text style={[theme.text, theme.fwb, theme.mb20]}>Development server</Text>}
+                            textR={<Text style={[theme.text, { color: theme.colors.slate10 }]}>Help</Text>}
+                            onPressRightIcon={() => navigation.navigate('HelpHome')}
+                        />
+                        <View style={[theme.mb10]}></View>
+                        <View style={[theme.article, theme.articleTop]}>
+                            <Image source={logo} style={[theme.articleDefault, theme.logoImage50, theme.mr20]} resizeMode='contain' />
+                        </View>
+                        <View style={[theme.article, theme.articleMiddle]}>
+                            <Text style={[theme.text10,theme.textSuccess,theme.Success]}>Scar QR code</Text>
+                        </View>
+                        <View style={[theme.article, theme.articleBottom]}>
+                            <Text style={[theme.text]}>Enter URL manually</Text>
+                        </View>
+                        <ColorsBarComponent></ColorsBarComponent>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <Text style={[theme.text, theme.h1, theme.fwb]}> Title h1</Text>
                         <Text style={[theme.text, theme.h2, theme.fwb]}> Title h2</Text>
                         <Text style={[theme.text, theme.h3, theme.fwb]}> Title h3</Text>

@@ -3,7 +3,7 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { AppContext } from './context/AppContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
-import { StatusBar, AppState } from 'react-native';
+import { StatusBar, AppState,Linking } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,6 +17,8 @@ import HelpHomeScreen from './screens/HelpHomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
 import RecoveryPassword from './screens/RecoveryPassword';
+import SetNewPassword from './screens/SetNewPasswordScreen';
+import PasswordReset from './screens/PasswordResetScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
@@ -75,13 +77,39 @@ function AppWithTheme() {
         };
     }, [appState]);
 
+    useEffect(() => {
+        const handleDeepLink = (event) => {
+            let data = Linking.parse(event.url);
+            if (data.path === 'reset-password') {
+                // Naviga alla schermata di reset della password
+                 navigation.navigate('SetNewPassword', { token: data.queryParams.token });
+            }
+        };
+
+        Linking.addEventListener('url', handleDeepLink);
+        return () => {
+            Linking.removeEventListener('url', handleDeepLink);
+        };
+    }, []);
+
     return (
         <AppContext.Provider value={{ themeMode }}>
             <SafeAreaProvider>
                 <StatusBar/>
                 <AuthProvider>
                     <NavigationContainer theme={theme}>
-                        <Stack.Navigator initialRouteName='AuthLoading' screenOptions={{ headerShown: false }}>
+                        <Stack.Navigator initialRouteName='AuthLoading'
+                            screenOptions={{
+                                headerStyle: {
+                                    backgroundColor: theme.colors.slate3, // Imposta il colore di sfondo dell'header
+                                },
+                                headerTintColor: theme.colors.onBackground, // Imposta il colore del testo nell'header
+                                headerTitleStyle: {
+                                    fontWeight: 'bold',
+                                },
+                            }}
+
+                        >
                             <Stack.Screen
                                 name='AuthLoading'
                                 component={AuthLoadingScreen}
@@ -120,6 +148,16 @@ function AppWithTheme() {
                             <Stack.Screen
                                 name='Recovery'
                                 component={RecoveryPassword}
+                                options={{ headerShown: false, title: 'Registrati' }}
+                            />
+                            <Stack.Screen
+                                name='PasswordReset'
+                                component={PasswordReset}
+                                options={{ headerShown: true, title: 'Registrati' }}
+                            />
+                            <Stack.Screen
+                                name='SetNewPassword'
+                                component={SetNewPassword}
                                 options={{ headerShown: false, title: 'Registrati' }}
                             />
                             <Stack.Screen

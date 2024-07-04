@@ -1,21 +1,20 @@
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 export const BaseTheme = (colors) => ({
     safeAreaView: {
         flex: 1,
-        backgroundColor: colors.background,
+        backgroundColor: colors.slate3,
     },
 
     //page component
     container: {
         flex: 1,
-        backgroundColor: colors.slate2,
+        backgroundColor: colors.background,
         padding: 0,
     },
     header: {
-        height: 60,
-        backgroundColor: colors.slate2,
+        height: 65,
+        //backgroundColor: colors.slate3,
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 20,
@@ -32,13 +31,14 @@ export const BaseTheme = (colors) => ({
         paddingHorizontal: 20,
     },
     article: {
-        paddingVertical: 10,
+        paddingTop: 15,
+        paddingBottom: 17,
         paddingHorizontal: 16,
         borderRadius: 8,
         borderWidth: 1,
         marginBottom: 0,
         backgroundColor: colors.slate3,
-        borderColor: colors.slate7,
+        borderColor: colors.slate9,
     },
     articleDefault: {
         backgroundColor: colors.background,
@@ -49,31 +49,31 @@ export const BaseTheme = (colors) => ({
     },
     articleSuccess: {
         backgroundColor: colors.green2,
-        borderColor: colors.green8,
+        borderColor: colors.green9,
     },
     articleDanger: {
         backgroundColor: colors.red2,
-        borderColor: colors.red8,
+        borderColor: colors.red9,
     },
     articleInfo: {
         backgroundColor: colors.blue2,
-        borderColor: colors.blue8,
+        borderColor: colors.blue9,
     },
     articleWarning: {
         backgroundColor: colors.yellow2,
-        borderColor: colors.yellow8,
+        borderColor: colors.yellow9,
     },
     articleTop: {
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        borderColor: colors.slate7,
+        borderColor: colors.slate9,
     },
     articleMiddle: {
         borderRadius: 0,
         borderTopWidth: 0,
-        borderColor: colors.slate7,
+        borderColor: colors.slate9,
     },
     articleBottom: {
         borderTopLeftRadius: 0,
@@ -81,16 +81,17 @@ export const BaseTheme = (colors) => ({
         borderBottomLeftRadius: 8,
         borderBottomRightRadius: 8,
         borderTopWidth: 0,
-        borderColor: colors.slate7,
+        borderColor: colors.slate9,
     },
 
     // tag H
-    h1: { fontSize: RFValue(24), color: colors.slate12 },
-    h2: { fontSize: RFValue(22), color: colors.slate12 },
-    h3: { fontSize: RFValue(20), color: colors.slate12 },
-    h4: { fontSize: RFValue(18), color: colors.slate12 },
-    h5: { fontSize: RFValue(16), color: colors.slate12 },
-    h6: { fontSize: RFValue(14), color: colors.slate12 },
+    h0: { fontSize: RFValue(24), color: colors.slate12,fontWeight: 'bold' },
+    h1: { fontSize: RFValue(22), color: colors.slate12, fontWeight: 'bold' },
+    h2: { fontSize: RFValue(20), color: colors.slate12, fontWeight: 'bold' },
+    h3: { fontSize: RFValue(18), color: colors.slate12, fontWeight: 'bold' },
+    h4: { fontSize: RFValue(16), color: colors.slate12, fontWeight: 'bold' },
+    h5: { fontSize: RFValue(14), color: colors.slate12, fontWeight: 'bold' },
+    h6: { fontSize: RFValue(12), color: colors.slate12, fontWeight: 'bold' },
     headerTitle: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -127,18 +128,37 @@ export const BaseTheme = (colors) => ({
         flexDirection: 'column',
         fonstSize: 14,
     },
-    //margin
+    //margin top
     mt10: { marginTop: 10 },
+    mt15: { marginTop: 15 },
     mt20: { marginTop: 20 },
-
+    mt25: { marginTop: 25 },
+    mt30: { marginTop: 30 },
+    mt40: { marginTop: 40 },
+    //margin bottom
     mb10: { marginBottom: 10 },
-    ml10: { marginLeft: 10 },
-    mr10: { marginRight: 10 },
-    ml40: { marginLeft: 40 },
-    mr40: { marginRight: 40 },
+    mb15: { marginBottom: 15 },
     mb20: { marginBottom: 20 },
+    mb25: { marginBottom: 25 },
+    mb30: { marginBottom: 30 },
+    mb40: { marginBottom: 20 },
+
+    //margin left
+    ml10: { marginLeft: 10 },
+    ml15: { marginLeft: 15 },
     ml20: { marginLeft: 20 },
+    ml25: { marginLeft: 25 },
+    ml30: { marginLeft: 30 },
+    ml40: { marginLeft: 40 },
+
+    //margin right
+    mr10: { marginRight: 10 },
+    mr15: { marginRight: 15 },
     mr20: { marginRight: 20 },
+    mr25: { marginRight: 25 },
+    mr30: { marginRight: 30 },
+    mr40: { marginRight: 40 },
+
 
     lh10: { lineheight: 10 },
     lh15: { lineheight: 15 },
@@ -166,7 +186,7 @@ export const BaseTheme = (colors) => ({
     space200: { height: 200 },
     space250: { height: 250 },
     contentPadding: { height: 100, },
-    center: { alignItems: 'center', justifyContent: 'center', },
+    center: { alignSelf: 'center', justifyContent: 'center', },
     right: { alignSelf: 'flex-end', },
     left: { alignSelf: 'flex-start', },
     //border
@@ -199,10 +219,12 @@ export const BaseTheme = (colors) => ({
     ph2: { paddingHorizontal: 2 },
     //logo
     logo: { width: 28, height: 28, },
-    logoImage100: { width: 100, height: 100, },
+    logoImage40: { width: 40, height: 40, },
+    logoImage50: { width: 50, height: 50, },
+    logoImage60: { width: 60, height: 60, },
     logoImage80: { width: 80, height: 80, },
-    logoImage60: { width: 100, height: 60, },
-    logoImage40: { width: 100, height: 40, },
+    logoImage100: { width: 100, height: 100, },
+
     logoImageContainer: {
         flexDirection: 'row',
         alignItems: 'center',

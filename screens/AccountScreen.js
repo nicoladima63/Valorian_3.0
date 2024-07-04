@@ -81,7 +81,7 @@ export default function AccountScreen({ navigation }) {
 
     const Header = () => (
         <Text style={[theme.h4, theme.mb20, theme.mt10, theme.ml20, { backgroundColor: theme.colors.slate2 }]}>
-            titolo header
+            Bentornato, {username}
         </Text>
     );
 
@@ -138,7 +138,7 @@ export default function AccountScreen({ navigation }) {
                 <Layout
                     navigation={navigation}
                     showTopBar={false}
-                    //header={<Header />}
+                    header={<Header />}
                     //fab={<Fab />}
                     //fabAction={handlePressFab}
                     showBodyFooter={false}
@@ -148,10 +148,8 @@ export default function AccountScreen({ navigation }) {
 
 
                     <View style={theme.body}>
-
-                        <View style={[theme.article, theme.articleTop]}>
-                            <Text style={[theme.text, theme.h4, theme.fwb]}> Bentornato, {username}</Text>
                             <View style={[theme.article, theme.articleTop]}>
+                                <Text style={[theme.h6, theme.textSecondary]}>AVATAR</Text>
                                 <Avatar style={[theme.left, theme.mr20]}
                                     size={80}
                                     url={avatarUrl}
@@ -161,11 +159,8 @@ export default function AccountScreen({ navigation }) {
                                     }}
                                 />
                             </View>
-
-
-
                             <View style={[theme.article, theme.articleMiddle]}>
-                                <TextInput
+                                    <TextInput style={[theme.text]}
                                     label="Email"
                                     value={session?.user?.email}
                                     editable={false}
@@ -176,18 +171,18 @@ export default function AccountScreen({ navigation }) {
 
                             </View>
                             <View style={[theme.article, theme.articleMiddle]}>
-                                <Text style={[theme.text, theme.h6]}>Username</Text>
+                                <Text style={[theme.h6, theme.textSecondary]}>Username</Text>
                                 <TextInput
-                                    style={theme.article}
+                                    style={theme.text}
                                     label="Username"
                                     value={username}
                                     onChangeText={(text) => setUsername(text)}
                                 />
                             </View>
                             <View style={[theme.article, theme.articleMiddle]}>
-                                <Text style={[theme.text, theme.h6]}>Sito Web</Text>
+                                <Text style={[theme.h6, theme.textSecondary]}>Sito Web</Text>
                                 <TextInput
-                                    style={theme.article}
+                                    style={theme.text}
                                     label="Website"
                                     value={website}
                                     onChangeText={(text) => setWebsite(text)}
@@ -200,8 +195,8 @@ export default function AccountScreen({ navigation }) {
                                 </View>
 
                             </View>
+
                         </View>
-                    </View>
                 </Layout>
 
             )}
