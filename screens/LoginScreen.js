@@ -5,12 +5,11 @@ import Layout from './Layout';
 import {
     View, Text, Alert, Pressable, Image,
     Switch, ScrollView, TouchableWithoutFeedback, Keyboard,
-    KeyboardAvoidingView, Platform, 
+    KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { Input, Icon } from '@rneui/themed';
 import * as SecureStore from 'expo-secure-store';
 import Spinner from 'react-native-loading-spinner-overlay';
-
 
 export default function LoginScreen({ navigation }) {
     const [click, setClick] = useState(false);
@@ -18,13 +17,10 @@ export default function LoginScreen({ navigation }) {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const { theme } = useTheme();
-
     const [loading, setLoading] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-
-    const passwordRef = useRef(null); 
-
+    const passwordRef = useRef(null);
     const logo = require("../assets/images/logo.png")
 
     useEffect(() => {
@@ -117,15 +113,17 @@ export default function LoginScreen({ navigation }) {
                     style={{ flex: 1 }}
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 >
+
+                    <View style={theme.contentPadding} ></View>
                     <View style={theme.body}>
-                        <View style={theme.articl}>
+                        <View style={theme.article}>
                             <View style={theme.column}>
                                 <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
-                                <Text style={[theme.text, theme.h4, theme.fwb, theme.mb20]}>Form di accesso</Text>
+                                <Text style={[theme.text, theme.h3, theme.fwb, theme.mb20]}>Form di accesso</Text>
                             </View>
 
                             <Input
-                                style={[theme.text,theme.text16]}
+                                style={[theme.text, theme.text16]}
                                 label="Email"
                                 placeholder='email@esempio.com'
                                 placeholderTextColor={theme.colors.slate9}
@@ -133,8 +131,7 @@ export default function LoginScreen({ navigation }) {
                                 onChangeText={handleEmailChange}
                                 autoCorrect={false}
                                 autoCapitalize='none'
-                                returnKeyType="next"
-                                keyboardType="email-address"
+                                returnKeyType="next" // Imposta il tipo di tasto di ritorno
                                 onSubmitEditing={() => passwordRef.current.focus()} // Passa al prossimo TextInput quando viene premuto il tasto "Vai"
                             />
                             {emailError ?
@@ -170,12 +167,12 @@ export default function LoginScreen({ navigation }) {
                             {passwordError ?
                                 <Text style={theme.textDanger}>{passwordError}</Text>
                                 : null}
-                            <View style={[theme.center,theme.mb20]}>
-                                <Pressable onPress={() => navigation.navigate('Recovery')}>
-                                    <Text style={[theme.text14,theme.link, theme.alignRight]}>Password dimenticata?</Text>
+                            <View style={[theme.center, theme.mb20]}>
+                                <Pressable onPress={() => navigation.navigate('ForgotPassword')}>
+                                    <Text style={[theme.text14, theme.link, theme.alignRight]}>Password dimenticata?</Text>
                                 </Pressable>
                             </View>
-                            <View style={[theme.articleDefault, theme.grid]}>
+                            <View style={[theme.article, theme.grid]}>
                                 <View>
                                     <Text style={theme.text}>Ricordami</Text>
                                 </View>
@@ -184,19 +181,18 @@ export default function LoginScreen({ navigation }) {
                                 </View>
                             </View>
 
-                            <View style={[theme.articleDefaul, theme.mt20]}>
+                            <View style={[theme.article, theme.mt20]}>
                                 <Pressable onPress={() => signInWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { justifyContent: 'space-evenly' }]}>
                                     <Text style={theme.h5}>Accedi</Text>
                                 </Pressable>
                             </View>
 
-                            <View style={[theme.articleDefault, theme.mt20,theme.mb20, theme.grid]}>
+                            <View style={[theme.article, theme.mt20, theme.mb20, theme.grid]}>
                                 <Text style={[theme.text, theme.mt20]}>Non hai un Account?</Text>
                                 <Pressable onPress={() => navigation.navigate('Register')}>
                                     <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>
                                 </Pressable>
                             </View>
-
                         </View>
                         <Spinner
                             visible={loading} // Visualizza lo spinner quando loading è true
