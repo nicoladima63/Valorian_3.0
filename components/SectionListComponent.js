@@ -254,11 +254,11 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
     const renderEmptyComponent = () => (
         <View style={[theme.article]}>
             <View style={[theme.mb20]}>
-                <Text style={[ theme.h6, theme.mb20]}>Nessun bisogno inserito:</Text>
+                <Text style={[ theme.text12, theme.mb20]}>Nessun bisogno inserito:</Text>
                 <View style={theme.checkTextContainer}>
-                    <Text style={[theme.text, theme.text14]}>Clicca sul pulsante</Text>
+                    <Text style={[theme.text, theme.text12]}>Clicca sul pulsante</Text>
                     <Icon name="plus-circle" size={24} color={theme.colors.primary} style={[theme.ml20]} />
-                    <Text style={[theme.text, theme.text14, theme.ml20]}>in basso a destra</Text>
+                    <Text style={[theme.text, theme.text12, theme.ml20]}>in basso a destra</Text>
                 </View>
             </View>
         </View>
@@ -290,7 +290,7 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
                                     />
                                 }
                                 text={
-                                    <Text style={[theme.text, theme.text14]}>{item.nome}</Text>
+                                    <Text style={[theme.text]}>{item.nome}</Text>
                                 }
                                 rightIcon={
                                     <Icon name="angle-right" size={24} color={theme.colors.slate9} style={theme.mr20} />

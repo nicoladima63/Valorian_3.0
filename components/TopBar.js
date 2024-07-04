@@ -74,7 +74,7 @@ const TopBar = ({ navigation }) => {
             <FlexibleView
                 format="iconaTestoIcona"
                 leftIcon={<Image source={logo} style={[theme.article,theme.logo, theme.ml20]} resizeMode='contain' />}
-                text={<View style={theme.header}><Text style={[theme.h3, theme.fwb]}>Valorian</Text></View>}
+                text={<View style={theme.header}><Text style={[theme.h4, theme.fwb]}>Valorian</Text></View>}
                 rightIcon={
                     <View style={theme.mr20}>
                         <Avatar

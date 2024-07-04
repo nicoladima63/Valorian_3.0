@@ -38,7 +38,7 @@ const HomeScreen = ({ route, navigation }) => {
                 <View style={[theme.header]}>
                     <FlexibleView
                         format="testoTesto"
-                        text={<Text style={[theme.h4,theme.fwb]}>I tuoi bisogni</Text>}
+                        text={<Text style={[theme.h6]}>I tuoi bisogni</Text>}
                         textR={<MaterialIcons name="help" size={30} color={theme.colors.green11} />}
                         onPressRightIcon={() => navigation.navigate('HelpHome')}
                     />

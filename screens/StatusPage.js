@@ -313,7 +313,7 @@ const StatusPage = ({ navigation }) => {
             navigation={navigation}
             showTopBar={true}
             header={
-                <Text style={[theme.h4, theme.mb20, theme.mt10, theme.ml10]}>Ecco come stai</Text>
+                <Text style={[theme.h5, theme.mb20, theme.mt10, theme.ml10]}>Ecco come stai</Text>
             }
             fab={<MaterialIcons name="replay" size={24} color={theme.colors.onPrimary} />}
             fabAction={getBisogni}
@@ -330,11 +330,11 @@ const StatusPage = ({ navigation }) => {
                     </View>
                 ) : (
                     <View style={{ flex: 1 }}>
-                        <Text style={theme.h5}>Livello di benessere:</Text>
+                        <Text style={[theme.text]}>Livello di benessere:</Text>
                         <View style={{ height: 250 }}>
                             <EChartsComponent option={optionGauge} height={300} />
                         </View>
-                        <Text style={theme.h5}>Soddisfazione {bisogni.length > 1 ? 'dei bisogni' : 'del bisogno'}</Text>
+                        <Text style={theme.text}>Soddisfazione {bisogni.length > 1 ? 'dei bisogni' : 'del bisogno'}</Text>
                         <View style={{ height: 300 }}>
                             <EChartsComponent option={optionBar} height={300} />
                         </View>
