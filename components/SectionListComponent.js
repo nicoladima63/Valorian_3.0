@@ -257,10 +257,10 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
                 <Text style={[theme.text]}>Nessun bisogno inserito:</Text>
             </View>
             <View style={[theme.article, theme.articleBottom]}>
-                <View style={theme.grid3 }>
-                <Text style={[theme.text, theme.text12]}>Clicca sul pulsante</Text>
-                <Icon name="plus-circle" size={24} color={theme.colors.primary} />
-                <Text style={[theme.text, theme.text12]}>in basso a destra</Text>
+                <View style={theme.grid}>
+                    <Text style={[theme.text, theme.text12]}>Clicca sul pulsante</Text>
+                    <Icon name="plus-circle" size={24} color={theme.colors.primary} />
+                    <Text style={[theme.text, theme.text12]}>in basso a destra</Text>
                 </View>
             </View>
         </View>
@@ -281,7 +281,7 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
                 renderItem={({ item, index, section }) => (
                     <View style={[theme.grid, theme.mb10]}>
                         <View style={{ width: 8, alignSelf: 'stretch', backgroundColor: item.colore, height: '100%', borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
-                        <View style={{ flex: 1, backgroundColor: theme.colors.slate5, height: 60, justifyContent: 'center', borderTopRightRadius: 8, borderBottomRightRadius: 8 }}>
+                        <View style={{ flex: 1, backgroundColor: theme.colors.slate5, height: 50, justifyContent: 'center', borderTopRightRadius: 8, borderBottomRightRadius: 8, borderWidth: 1, borderColor: theme.colors.slate9 }}>
                             <IconaTestoIconaView
                                 leftIcon={
                                     <Icon
@@ -302,6 +302,7 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
                             />
                         </View>
                     </View>
+
                 )}
                 ListEmptyComponent={renderEmptyComponent}
                 ListFooterComponent={<View style={theme.contentPadding} />}
