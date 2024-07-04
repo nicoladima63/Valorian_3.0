@@ -109,92 +109,79 @@ export default function LoginScreen({ navigation }) {
             bodyFooter
         >
             <TouchableWithoutFeedback onPress={handlePressEmptySpace}>
-                <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                >
-
-                    <View style={theme.contentPadding} ></View>
+                <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                     <View style={theme.body}>
-                        <View style={theme.articl}>
-                            <View style={theme.column}>
-                                <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
-                                <Text style={[theme.text, theme.h4, theme.fwb, theme.mb20]}>Form di accesso</Text>
-                            </View>
+                        <View style={theme.column}>
+                            <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
+                            <Text style={[theme.text, theme.h4, theme.fwb, theme.mb20]}>Form di accesso</Text>
+                        </View>
 
-                            <Input
-                                style={[theme.text, theme.text16]}
-                                label="Email"
-                                placeholder='email@esempio.com'
-                                placeholderTextColor={theme.colors.slate9}
-                                value={email}
-                                onChangeText={handleEmailChange}
-                                autoCorrect={false}
-                                autoCapitalize='none'
-                                returnKeyType="next"
-                                keyboardType="email-address"
-                                onSubmitEditing={() => passwordRef.current.focus()} // Passa al prossimo TextInput quando viene premuto il tasto "Vai"
-                            />
-                            {emailError ?
-                                <Text style={theme.textDanger}>{emailError}</Text>
-                                : null}
+                        <Input
+                            style={[theme.text, theme.text16]}
+                            label="Email"
+                            placeholder='email@esempio.com'
+                            placeholderTextColor={theme.colors.slate9}
+                            value={email}
+                            onChangeText={handleEmailChange}
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            returnKeyType="next"
+                            keyboardType="email-address"
+                            onSubmitEditing={() => passwordRef.current.focus()} // Passa al prossimo TextInput quando viene premuto il tasto "Vai"
+                        />
+                        {emailError ?
+                            <Text style={theme.textDanger}>{emailError}</Text>
+                            : null}
+                        <Input
+                            style={[theme.text, theme.text16]}
+                            ref={passwordRef}
+                            label="Password"
+                            placeholder='password'
+                            placeholderTextColor={theme.colors.slate9}
+                            secureTextEntry={!showPassword}
+                            value={password}
+                            onChangeText={(text) => {
+                                setPassword(text);
+                                setPasswordError('');
+                            }}
+                            autoCorrect={false}
+                            rightIcon={
+                                <Icon
+                                    color={theme.colors.slate10}
+                                    type='font-awesome'
+                                    name={showPassword ? 'eye' : 'eye-slash'}
+                                    onPress={() => setShowPassword(!showPassword)}
+                                />
+                            }
+                            autoCapitalize="none"
+                            returnKeyType="go" // Imposta il tipo di tasto di ritorno
+                            onSubmitEditing={signInWithEmail} // Chiamata alla funzione di registrazione quando viene premuto "Vai"
+                        />
 
+                        {passwordError ?
+                            <Text style={theme.textDanger}>{passwordError}</Text>
+                            : null}
+                        <View style={[theme.center, theme.mb20]}>
+                            <Pressable onPress={() => navigation.navigate('ResetPasswordScreen')}>
+                                <Text style={[theme.text14, theme.link, theme.alignRight]}>Password dimenticata?</Text>
+                            </Pressable>
+                        </View>
 
-                            <Input
-                                style={[theme.text, theme.text16]}
-                                ref={passwordRef}
-                                label="Password"
-                                placeholder='password'
-                                placeholderTextColor={theme.colors.slate9}
-                                secureTextEntry={!showPassword}
-                                value={password}
-                                onChangeText={(text) => {
-                                    setPassword(text);
-                                    setPasswordError('');
-                                }}
-                                autoCorrect={false}
-                                rightIcon={
-                                    <Icon
-                                        color={theme.colors.slate10}
-                                        type='font-awesome'
-                                        name={showPassword ? 'eye' : 'eye-slash'}
-                                        onPress={() => setShowPassword(!showPassword)}
-                                    />
-                                }
-                                autoCapitalize="none"
-                                returnKeyType="go" // Imposta il tipo di tasto di ritorno
-                                onSubmitEditing={signInWithEmail} // Chiamata alla funzione di registrazione quando viene premuto "Vai"
-                            />
-                            {passwordError ?
-                                <Text style={theme.textDanger}>{passwordError}</Text>
-                                : null}
-                            <View style={[theme.center,theme.mb20]}>
-                                <Pressable onPress={() => navigation.navigate('Recovery')}>
-                                    <Text style={[theme.text14,theme.link, theme.alignRight]}>Password dimenticata?</Text>
-                                </Pressable>
-                            </View>
-                            <View style={[theme.articleDefault, theme.grid]}>
-                                <View>
-                                    <Text style={theme.text}>Ricordami</Text>
-                                </View>
-                                <View style={theme.Loginswitch}>
-                                    <Switch value={click} onValueChange={setClick} trackColor={{ true: "green", false: "gray" }} />
-                                </View>
-                            </View>
+                        <View style={[theme.grid]}>
+                            <Text style={theme.text}>Ricordami</Text>
+                            <Switch value={click} onValueChange={setClick} trackColor={{ true: "green", false: "gray" }} />
+                        </View>
+                        <View style={[theme.mt40,theme.center]}>
+                            <Pressable onPress={() => signInWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { alignContent: 'center' , paddingHorizontal:60,paddingVertical:12}]}>
+                                <Text style={theme.h5}>Accedi</Text>
+                            </Pressable>
+                        </View>
 
-                            <View style={[theme.articleDefaul, theme.mt20]}>
-                                <Pressable onPress={() => signInWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { justifyContent: 'space-evenly' }]}>
-                                    <Text style={theme.h5}>Accedi</Text>
-                                </Pressable>
-                            </View>
-
-                            <View style={[theme.articleDefault, theme.mt20,theme.mb20, theme.grid]}>
-                            <View style={[theme.article, theme.mt20, theme.mb20, theme.grid]}>
-                                <Text style={[theme.text, theme.mt20]}>Non hai un Account?</Text>
-                                <Pressable onPress={() => navigation.navigate('Register')}>
-                                    <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>
-                                </Pressable>
-                            </View>
+                        <View style={[theme.article, theme.mt40, theme.mb20, theme.grid]}>
+                            <Text style={[theme.text,]}>Non hai un Account?</Text>
+                            <Pressable onPress={() => navigation.navigate('Register')}>
+                                <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>
+                            </Pressable>
                         </View>
                         <Spinner
                             visible={loading} // Visualizza lo spinner quando loading è true

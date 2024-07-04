@@ -16,9 +16,11 @@ import HomeScreen from './screens/HomeScreen';
 import HelpHomeScreen from './screens/HelpHomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
-import RecoveryPassword from './screens/RecoveryPassword';
-import SetNewPassword from './screens/SetNewPasswordScreen';
-import PasswordReset from './screens/PasswordResetScreen';
+import ResetPasswordScreen from './screens/ResetPasswordScreen';
+
+//import RecoveryPassword from './screens/RecoveryPassword';
+//import SetNewPassword from './screens/SetNewPasswordScreen';
+//import PasswordReset from './screens/PasswordResetScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
@@ -143,23 +145,28 @@ function AppWithTheme() {
                             <Stack.Screen
                                 name='Register'
                                 component={RegisterScreen}
-                                options={{ headerShown: false, title: 'Recupera Password' }}
+                                options={{ headerShown: false, title: 'Register' }}
                             />
+                            {/*<Stack.Screen*/}
+                            {/*    name='Recovery'*/}
+                            {/*    component={RecoveryPassword}*/}
+                            {/*    options={{ headerShown: false, title: 'Recovery' }}*/}
+                            {/*/>*/}
                             <Stack.Screen
-                                name='Recovery'
-                                component={RecoveryPassword}
-                                options={{ headerShown: false, title: 'Registrati' }}
+                                name='ResetPasswordScreen'
+                                component={ResetPasswordScreen}
+                                options={{ headerShown: true, title: 'ResetPasswordScreen' }}
                             />
-                            <Stack.Screen
-                                name='PasswordReset'
-                                component={PasswordReset}
-                                options={{ headerShown: true, title: 'Registrati' }}
-                            />
-                            <Stack.Screen
-                                name='SetNewPassword'
-                                component={SetNewPassword}
-                                options={{ headerShown: false, title: 'Registrati' }}
-                            />
+                            {/*<Stack.Screen*/}
+                            {/*    name='PasswordReset'*/}
+                            {/*    component={PasswordReset}*/}
+                            {/*    options={{ headerShown: true, title: 'PasswordReset' }}*/}
+                            {/*/>*/}
+                            {/*<Stack.Screen*/}
+                            {/*    name='SetNewPassword'*/}
+                            {/*    component={SetNewPassword}*/}
+                            {/*    options={{ headerShown: false, title: 'SetNewPassword' }}*/}
+                            {/*/>*/}
                             <Stack.Screen
                                 name='Account'
                                 component={AccountScreen}

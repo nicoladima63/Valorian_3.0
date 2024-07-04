@@ -25,12 +25,16 @@ const SettingsScreen = ({ navigation }) => {
         })();
     });
     //fine biometria expo
-
+    
     //biometria reactnative
-    const rnBiometrics = new ReactNativeBiometrics()
-    console.log('biometria reactnative:', rnBiometrics)
-    const { biometryType } = await rnBiometrics.isSensorAvailable()
-    console.log('biometria reactnative:', biometryType)
+    //const rnBiometrics = new ReactNativeBiometrics()
+   // console.log('biometria reactnative:', rnBiometrics)
+    //const { biometryType } = await rnBiometrics.isSensorAvailable()
+    //console.log('biometria reactnative:', biometryType)
+
+
+
+
     return (
         <Layout
             navigation={navigation}
@@ -40,14 +44,14 @@ const SettingsScreen = ({ navigation }) => {
             }
         >
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
-                <Text style={[theme.text, theme.text16, theme.mb10, theme.ml10, { color: theme.colors.slate11 }]}>Tema</Text>
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb15]}>Tema</Text>
                 <RadioButton.Group onValueChange={toggleTheme} value={themeMode}>
                     <TouchableOpacity onPress={() => toggleTheme('auto')}>
                         <View style={[theme.article, theme.articleTop]}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="adjust" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={[theme.text, theme.text14]}>Automatico</Text>
+                                    <Text style={[theme.text]}>Automatico</Text>
                                 </View>
                                 <RadioButton value="auto" />
                             </View>
@@ -58,7 +62,7 @@ const SettingsScreen = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="sun-o" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={[theme.text, theme.text14]}>Chiaro</Text>
+                                    <Text style={[theme.text]}>Chiaro</Text>
                                 </View>
                                 <RadioButton value="light" color={theme.colors.slate12} />
                             </View>
@@ -69,21 +73,22 @@ const SettingsScreen = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="moon-o" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={[theme.text, theme.text14]}>Scuro</Text>
+                                    <Text style={[theme.text]}>Scuro</Text>
                                 </View>
                                 <RadioButton value="dark" />
                             </View>
                         </View>
                     </TouchableOpacity>
                 </RadioButton.Group>
-                <Text style={{ marginTop: 10, marginLeft: 15, color: theme.colors.slate10 }}>
-                    <Text style={[theme.text, theme.text12, theme.fwb, { color: theme.colors.slate12 }]}>Automatico </Text>
-                    <Text style={[theme.text, theme.text12]}>
+                <Text style={[theme.mt10,theme.mb30,theme.ml15]}>
+                    <Text style={[theme.text, theme.fwb, { color: theme.colors.slate12 }]}>Automatico </Text>
+                    <Text style={[theme.text, theme.textSecondary]}>
                         &egrave; supportato solo sui sistemi operativi che consentono di controllare i colori a livello di sistema.
                     </Text>
                 </Text>
 
-                <Text style={[theme.text, theme.text16, theme.mb10, theme.ml10, theme.mt20, { color: theme.colors.slate11 }]}>Biometria expo</Text>
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb15]}>Biometria</Text>
+
                 {isBiometricSupported ?
                     <View style={[theme.article, theme.articleInfo]}>
                         <Text style={[theme.text, theme.text12, { color: theme.colors.blue10 }]}>Il tuo dispositovo &egrave; compatibile con la biometria.</Text>

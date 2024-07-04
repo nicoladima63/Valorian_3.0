@@ -3,13 +3,13 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 export const BaseTheme = (colors) => ({
     safeAreaView: {
         flex: 1,
-        backgroundColor: colors.slate3,
+        //backgroundColor: colors.slate3,
     },
 
     //page component
     container: {
         flex: 1,
-        backgroundColor: colors.background,
+        //backgroundColor: colors.background,
         padding: 0,
     },
     header: {
@@ -22,11 +22,11 @@ export const BaseTheme = (colors) => ({
     content: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: colors.slate2,
+        //backgroundColor: colors.slate2,
     },
     body: {
         flex: 1,
-        backgroundColor: colors.slate2,
+        //backgroundColor: colors.slate2,
         position: 'relative',
         paddingHorizontal: 20,
     },
