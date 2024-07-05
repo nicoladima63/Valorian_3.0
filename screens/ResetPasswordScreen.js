@@ -12,18 +12,17 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { MaterialIcons } from '@expo/vector-icons'; // Puoi cambiare la libreria di icone se preferisci
 import { OnePress } from '../components/Pressables';
 
-const ResetPasswordScreen = ({ route, navigation }) => {
+const ResetPasswordScreen = ({route,  navigation }) => {
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [resetToken, setResetToken] = useState(''); 
-    //const { token } = route.params;
     const passwordRef = useRef(null);
     const logo = require("../assets/images/logo.png")
     const { theme } = useTheme();
     const [loading, setLoading] = useState(false);
+    const token = route.params?.token;
 
     const handleResetPassword = async () => {
         try {
@@ -52,35 +51,28 @@ const ResetPasswordScreen = ({ route, navigation }) => {
                 return;
             }
 
-            const { data, error } = await supabase.auth.updateUser({
-                password: newPassword,
-            }, { access_token: token });
-
-            if (error) {
-                throw new Error('Error resetting password: ' + error.message);
+            if (!email) {
+                Alert.alert('Errore', 'Per favore, inserisci la tua email.');
+                return;
             }
 
-            Alert.alert('Success', 'Password reset successfully');
-            navigation.navigate('Home');
+            setLoading(true);
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: 'https://your-app.com/reset-password',
+            });
+            setLoading(false);
+
+            if (error) {
+                Alert.alert('Errore', error.message);
+            } else {
+                Alert.alert('Successo', 'Email di reset inviata. Controlla la casella di posta e segui il link per reimpostare la password.');
+                navigation.navigate('Home');
+            }
+
         } catch (error) {
             Alert.alert('Error', error.message);
         }
     };
-    const handleForgotPassword = async () => {
-        setLoading(true);
-        const { data, error } = await supabase.auth.resetPasswordForEmail(email);
-        setLoading(false);
-
-        if (error) {
-            Alert.alert('Error', error.message);
-        } else {
-            Alert.alert('Success', 'Check your email for the password reset link.');
-            // Assuming the email contains a link with a token
-            const token = 'mock-token'; // Replace with actual token from the email
-            navigation.navigate('ResetPasswordScreen');
-        }
-    };
-
 
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -137,34 +129,6 @@ const ResetPasswordScreen = ({ route, navigation }) => {
                         />
                         {emailError ?
                             <Text style={theme.textDanger}>{emailError}</Text>
-                            : null}
-                        <Text style={[theme.text, theme.mb15, theme.mt30]}>La nuova password</Text>
-                        <TextInput
-                            style={[theme.article, theme.text, theme.text16]}
-                            ref={passwordRef}
-                            placeholder="Password"
-                            placeholderTextColor={theme.colors.slate9}
-                            secureTextEntry={!showPassword}
-                            value={newPassword}
-                            onChangeText={(text) => {
-                                setNewPassword(text);
-                                setPasswordError('');
-                            }}
-                            secureTextEntry={!showPassword}
-                            rightIcon={
-                                <MaterialIcons
-                                    name={showPassword ? 'eye' : 'eye-slash'}
-                                    size={22}
-                                    color={theme.colors.slate10}
-                                    onPress={() => setShowPassword(!showPassword)}
-                                />
-                            }
-                            autoCapitalize="none"
-                            returnKeyType="go"
-                            onSubmitEditing={handleResetPassword}
-                        />
-                        {passwordError ?
-                            <Text style={theme.textDanger}>{passwordError}</Text>
                             : null}
                         <View style={[theme.mt40]}>
                             <TouchableOpacity

@@ -14,7 +14,7 @@ const WelcomePage = ({ navigation }) => {
     const handleStart = async () => {
         try {
             if (!showNextTime) {
-                await AsyncStorage.setItem('hasSeenWelcome', 'true');
+                await AsyncStorage.setItem('seeWelcome', 'true');
             }
         } catch (e) {
             console.error(e);

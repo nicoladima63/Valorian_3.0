@@ -160,12 +160,13 @@ export default function LoginScreen({ navigation }) {
                         </View>
                         <View style={theme.LoginbuttonView}>
                             <CustomButton title="Accedi" onPress={() => signInWithEmail()} />
-                            <Pressable onPress={() => navigation.navigate('Register')}>
-                                <Text style={[theme.text, theme.mt20]}>Non hai un Account?
-                                    <Text style={theme.linkText}>  Registrati</Text>
-                                </Text>
-                            </Pressable>
                         </View>
+                        <Pressable onPress={() => navigation.navigate('Register')}>
+                            <Text style={[theme.text, theme.mt20]}>Non hai un Account?
+                                <Text style={theme.linkText}>  Registrati</Text>
+                            </Text>
+                        </Pressable>
+
                         {/*<Text style={theme.LoginoptionsText}>Oppure entra con</Text>*/}
                         {/*<View style={theme.LoginmediaIcons}>*/}
                         {/*    <Image source={facebook} style={theme.Loginicons} />*/}

@@ -179,8 +179,8 @@ export default function LoginScreen({ navigation }) {
                         </View>
 
                         <View style={[theme.article, theme.mt40, theme.mb20, theme.grid]}>
-                            <Text style={[theme.text,]}>Non hai un Account?</Text>
                             <Pressable onPress={() => navigation.navigate('Register')}>
+                                <Text style={[theme.text,]}>Non hai un Account?</Text>
                                 <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>
                             </Pressable>
                         </View>

@@ -111,6 +111,7 @@ export default function RegisterScreen({ navigation }) {
                                 value={email}
                                 onChangeText={handleEmailChange}
                                 autoCorrect={false}
+                                keyboardType="email-address"
                                 autoCapitalize='none'
                                 returnKeyType="next" // Imposta il tipo di tasto di ritorno
                                 onSubmitEditing={() => passwordRef.current.focus()} // Passa al prossimo TextInput quando viene premuto il tasto "Vai"
@@ -155,10 +156,11 @@ export default function RegisterScreen({ navigation }) {
                             </View>
 
 
-                            <View style={[theme.articleDefault, theme.mt20, theme.mb20, theme.grid]}>
-                                <Text style={[theme.text, theme.mt20]}>Hai un Account?</Text>
+                            <View style={[theme.article, theme.mt40, theme.mb20,{alignContent:'center'}]}>
                                 <Pressable onPress={() => navigation.navigate('Login')}>
-                                    <Text style={[theme.link, theme.alignRight]}>  Accedi</Text>
+                                    <Text style={[theme.text, theme.mt20]}>Hai un Account?<Text style={[theme.link, theme.alignRight]}>  Accedi</Text></Text>
+
+                                    
                                 </Pressable>
                             </View>
                         </View>

@@ -20,7 +20,7 @@ import ResetPasswordScreen from './screens/ResetPasswordScreen';
 
 //import RecoveryPassword from './screens/RecoveryPassword';
 //import SetNewPassword from './screens/SetNewPasswordScreen';
-//import PasswordReset from './screens/PasswordResetScreen';
+//import PasswordResetScreen from './screens/PasswordResetScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import AccountScreen from './screens/AccountScreen';
 import CategorieScreen from './screens/CategorieScreen';
@@ -32,7 +32,11 @@ function AuthLoadingScreen({ navigation }) {
 
     useEffect(() => {
         const checkWelcomePage = async () => {
-            const hasSeenWelcome = await AsyncStorage.getItem('hasSeenWelcome');
+            const hasSeenWelcome = await AsyncStorage.getItem('seeWelcome');
+
+            console.log(hasSeenWelcome)
+            console.log(session)
+
             if (!hasSeenWelcome) {
                 navigation.replace('WelcomePage');
             } else if (session) {
@@ -84,7 +88,7 @@ function AppWithTheme() {
             let data = Linking.parse(event.url);
             if (data.path === 'reset-password') {
                 // Navigate to ResetPasswordScreen and pass the token
-                navigation.navigate('ResetPassword', { token: data.queryParams.token });
+                navigation.navigate('ResetPasswordScreen');
             }
         };
 
@@ -160,9 +164,9 @@ function AppWithTheme() {
                                 options={{ headerShown: true, title: 'ResetPasswordScreen' }}
                             />
                             {/*<Stack.Screen*/}
-                            {/*    name='PasswordReset'*/}
-                            {/*    component={PasswordReset}*/}
-                            {/*    options={{ headerShown: true, title: 'PasswordReset' }}*/}
+                            {/*    name='PasswordResetScreen'*/}
+                            {/*    component={PasswordResetScreen}*/}
+                            {/*    options={{ headerShown: true, title: 'PasswordResetScreen' }}*/}
                             {/*/>*/}
                             {/*<Stack.Screen*/}
                             {/*    name='SetNewPassword'*/}
