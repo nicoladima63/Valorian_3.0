@@ -110,3 +110,70 @@ const handleAssociate = async () => {
                             <Text style={{ fontFamily: 'Poppins-Black', fontSize: 24 }}>Inter Black size 24</Text>
 
                         </View>
+
+
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Button, Alert } from 'react-native';
+import { supabase } from './supabaseClient';
+import * as LocalAuthentication from 'expo-local-authentication';
+
+const ResetPasswordScreen = ({ route, navigation }) => {
+    const [newPassword, setNewPassword] = useState('');
+    const { token } = route.params;
+
+    const handleResetPassword = async () => {
+        try {
+            const isBiometricSupported = await LocalAuthentication.hasHardwareAsync();
+            if (!isBiometricSupported) {
+                Alert.alert('Error', 'Biometric authentication is not supported on this device');
+                return;
+            }
+
+            const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
+            if (!savedBiometrics) {
+                Alert.alert('Error', 'No biometrics found. Please set up biometrics and try again.');
+                return;
+            }
+
+            const biometricAuth = await LocalAuthentication.authenticateAsync({
+                promptMessage: 'Authenticate to reset password',
+                fallbackLabel: 'Enter password',
+                cancelLabel: 'Cancel',
+            });
+
+            if (!biometricAuth.success) {
+                if (biometricAuth.error !== 'user_cancel' && biometricAuth.error !== 'system_cancel') {
+                    Alert.alert('Error', 'Biometric authentication failed');
+                }
+                return;
+            }
+
+            const { data, error } = await supabase.auth.updateUser({
+                password: newPassword,
+            }, { access_token: token });
+
+            if (error) {
+                throw new Error('Error resetting password: ' + error.message);
+            }
+
+            Alert.alert('Success', 'Password reset successfully');
+            navigation.navigate('Home');
+        } catch (error) {
+            Alert.alert('Error', error.message);
+        }
+    };
+
+    return (
+        <View>
+            <TextInput
+                placeholder="New Password"
+                value={newPassword}
+                onChangeText={setNewPassword}
+                secureTextEntry
+            />
+            <Button title="Reset Password" onPress={handleResetPassword} />
+        </View>
+    );
+};
+
+export default ResetPasswordScreen;

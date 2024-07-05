@@ -83,16 +83,18 @@ function AppWithTheme() {
         const handleDeepLink = (event) => {
             let data = Linking.parse(event.url);
             if (data.path === 'reset-password') {
-                // Naviga alla schermata di reset della password
-                 navigation.navigate('SetNewPassword', { token: data.queryParams.token });
+                // Navigate to ResetPasswordScreen and pass the token
+                navigation.navigate('ResetPassword', { token: data.queryParams.token });
             }
         };
 
         Linking.addEventListener('url', handleDeepLink);
+
         return () => {
             Linking.removeEventListener('url', handleDeepLink);
         };
     }, []);
+
 
     return (
         <AppContext.Provider value={{ themeMode }}>

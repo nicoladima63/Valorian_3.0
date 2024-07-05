@@ -9,7 +9,6 @@ import { OnePress, TwoPress, ThreePress } from '../components/Pressables';
 import FlexibleView from '../components/FlexibleComponent';
 import { MaterialIcons } from '@expo/vector-icons'; // Puoi cambiare la libreria di icone se preferisci
 import * as Font from 'expo-font';
-import LoginGPT from './LoginGPT';
 
 
 const WelcomeTest = () => {
@@ -41,7 +40,6 @@ const WelcomeTest = () => {
                 backgroundColor={colors.background} // Colore di sfondo della Status Bar (solo Android)
             />
 
-            <LoginGPT />
 
             <View style={[theme.header]}>
                 <Image source={logo} style={[theme.articleDefault, theme.logo, theme.mr20]} resizeMode='contain' />

@@ -98,6 +98,7 @@ export default function LoginScreen({ navigation }) {
     };
 
 
+
     return (
         <Layout
             navigation={navigation}
@@ -162,7 +163,7 @@ export default function LoginScreen({ navigation }) {
                             <Text style={theme.textDanger}>{passwordError}</Text>
                             : null}
                         <View style={[theme.center, theme.mb20]}>
-                            <Pressable onPress={() => navigation.navigate('ResetPasswordScreen')}>
+                            <Pressable onPress={()=>navigation.navigate('ResetPasswordScreen')}>
                                 <Text style={[theme.text14, theme.link, theme.alignRight]}>Password dimenticata?</Text>
                             </Pressable>
                         </View>
