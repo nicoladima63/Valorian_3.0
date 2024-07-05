@@ -39,7 +39,7 @@ const HomeScreen = ({ route, navigation }) => {
                     <FlexibleView
                         format="testoTesto"
                         text={<Text style={[theme.h6]}>I tuoi bisogni</Text>}
-                        textR={<MaterialIcons name="help" size={30} color={theme.colors.green11} />}
+                        textR={<MaterialIcons name="help" size={24} color={theme.colors.green11} />}
                         onPressRightIcon={() => navigation.navigate('HelpHome')}
                     />
                 </View>
@@ -65,7 +65,6 @@ const HomeScreen = ({ route, navigation }) => {
             }
         >
             <View style={[theme.body, { borderTopColor: theme.colors.slate7, borderTopWidth: 1, paddingTop: 10 }]}>
-
                 <View style={[theme.mb20]}>
                     <FlexibleView
                         format="iconaTesto"
@@ -73,8 +72,6 @@ const HomeScreen = ({ route, navigation }) => {
                         text={<Text style={[theme.text, theme.ml20]}>Clicca su un bisogno per soddisfarlo</Text> }
                     />
                 </View>
-
-                {/*<SectionListComponent session={session} setFabAction={setFabAction} />*/}
                 <SectionListComponent session={session} setFabAction={setFabAction} showModalAddBisogno={route.params?.showModalAddBisogno} />
             </View>
         </Layout>

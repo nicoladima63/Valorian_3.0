@@ -34,10 +34,7 @@ function AuthLoadingScreen({ navigation }) {
         const checkWelcomePage = async () => {
             const hasSeenWelcome = await AsyncStorage.getItem('seeWelcome');
 
-            console.log(hasSeenWelcome)
-            console.log(session)
-
-            if (!hasSeenWelcome) {
+            if (hasSeenWelcome) {
                 navigation.replace('WelcomePage');
             } else if (session) {
                 navigation.replace('Tabs');

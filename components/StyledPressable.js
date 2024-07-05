@@ -7,7 +7,7 @@ const StyledPressable = ({ title, onPress, backgroundColor }) => {
 
     return (
         <Pressable style={[styles.pressable, { backgroundColor: backgroundColor }]} onPress={onPress}>
-            <Text style={[theme.text, theme.text16, {color: theme.colors.onPrimary}]}>{title}</Text>
+            <Text style={[theme.text, theme.text14, {color: theme.colors.onPrimary}]}>{title}</Text>
         </Pressable>
     );
 };

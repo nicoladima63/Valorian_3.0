@@ -104,10 +104,14 @@ const WelcomeTest = () => {
                         <View style={[theme.article]}>
                             <Text style={theme.text}>esempio 1 2 3 pressable</Text>
                             <View style={theme.article}>
-                                <OnePress title="Single" onPress={() => alert('Single Pressed')} />
+                                <OnePress
+                                    title="Single"
+                                    onPress={() => alert('Single Pressed')}
+                                    backgroundColor={theme.colors.primary} />
                                 <TwoPress
                                     titles={['First', 'Second']}
                                     onPresses={[() => alert('First Pressed'), () => alert('Second Pressed')]}
+                                    backgroundColors={[theme.colors.primary, theme.colors.red10]}
                                 />
                                 <ThreePress
                                     titles={['First', 'Second', 'Third']}
@@ -116,6 +120,7 @@ const WelcomeTest = () => {
                                         () => alert('Second Pressed'),
                                         () => alert('Third Pressed'),
                                     ]}
+                                    backgroundColors={[theme.colors.primary,theme.colors.red10,theme.colors.purple10]}
                                 />
 
                             </View>

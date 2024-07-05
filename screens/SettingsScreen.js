@@ -52,6 +52,8 @@ const SettingsScreen = ({ navigation }) => {
         fetchWelcomeStatus();
     }, []);
     const handlePress = async (value) => {
+        console.log('seeWelcome:', value);
+
         try {
             await AsyncStorage.setItem('seeWelcome', value.toString());
             setHasSeenWelcome(value);
@@ -61,8 +63,8 @@ const SettingsScreen = ({ navigation }) => {
     };
     const getTextStyle = (isHighlighted) => ({
         ...theme.text,
-        color: isHighlighted ? theme.colors.green10: theme.colors.textTertiary, // Imposta il colore
-        fontWeight: isHighlighted ? 'extraBold' : 'normal', // Imposta il grassetto
+        color: isHighlighted ? theme.colors.green11: theme.colors.textTertiary, // Imposta il colore
+        fontWeight: isHighlighted ? 'Bold' : 'normal', // Imposta il grassetto
     });
 
 
@@ -82,7 +84,7 @@ const SettingsScreen = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="adjust" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={[theme.text]}>Automatico</Text>
+                                    <Text style={[theme.text12]}>Automatico</Text>
                                 </View>
                                 <RadioButton value="auto" />
                             </View>
@@ -93,7 +95,7 @@ const SettingsScreen = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="sun-o" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={[theme.text]}>Chiaro</Text>
+                                    <Text style={[theme.text12]}>Chiaro</Text>
                                 </View>
                                 <RadioButton value="light" color={theme.colors.slate12} />
                             </View>
@@ -104,7 +106,7 @@ const SettingsScreen = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="moon-o" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
-                                    <Text style={[theme.text]}>Scuro</Text>
+                                    <Text style={[theme.text12]}>Scuro</Text>
                                 </View>
                                 <RadioButton value="dark" />
                             </View>
