@@ -9,6 +9,8 @@ import { OnePress, TwoPress, ThreePress } from '../components/Pressables';
 import FlexibleView from '../components/FlexibleComponent';
 import { MaterialIcons } from '@expo/vector-icons'; // Puoi cambiare la libreria di icone se preferisci
 import * as Font from 'expo-font';
+import LoginGPT from './LoginGPT';
+
 
 const WelcomeTest = () => {
     const [loading, setLoading] = useState(true);
@@ -38,10 +40,14 @@ const WelcomeTest = () => {
                 barStyle="light-content" // Stile delle icone (può essere 'default', 'light-content', 'dark-content')
                 backgroundColor={colors.background} // Colore di sfondo della Status Bar (solo Android)
             />
+
+            <LoginGPT />
+
             <View style={[theme.header]}>
                 <Image source={logo} style={[theme.articleDefault, theme.logo, theme.mr20]} resizeMode='contain' />
                 <Text style={[theme.h6, theme.fwb]}>Expo Go</Text>
             </View>
+
             <View style={theme.content}>
                 <View style={theme.body}>
                     <ScrollView>
@@ -401,8 +407,6 @@ const WelcomeTest = () => {
                 </View>
             </View >
 
-
-
             <View style={theme.bodyFooter}>
                 <TouchableOpacity style={theme.buttonCancel}>
                     <Text style={theme.buttonText}>Annulla</Text>
@@ -417,11 +421,6 @@ const WelcomeTest = () => {
                     <Text style={theme.buttonText}>Salva</Text>
                 </TouchableOpacity>
             </View>
-
-
-
-
-
 
             <View style={theme.footer} >
                 <View style={theme.iconContainer}>
