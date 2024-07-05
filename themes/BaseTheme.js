@@ -31,8 +31,9 @@ export const BaseTheme = (colors) => ({
         paddingHorizontal: 20,
     },
     article: {
-        paddingTop: 15,
-        paddingBottom: 17,
+        //paddingTop: 15,
+        //paddingBottom: 17,
+        padding:14,
         paddingHorizontal: 16,
         borderRadius: 8,
         borderWidth: 1,

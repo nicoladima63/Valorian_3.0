@@ -136,7 +136,7 @@ const SettingsScreen = ({ navigation }) => {
 
 
                 <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10,theme.mt20]}>User</Text>
-                <View style={theme.article}>
+                <View style={[theme.article]}>
                     <FlexibleView
                         format="testoIcona"
                         rightIcon={<MaterialIcons name="chevron-right" size={24} color={theme.colors.slate11} />}
