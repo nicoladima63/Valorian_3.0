@@ -114,7 +114,7 @@ export default function LoginScreen({ navigation }) {
                     <View style={theme.body}>
                         <View style={theme.column}>
                             <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
-                            <Text style={[theme.text, theme.h4, theme.fwb, theme.mb20]}>Form di accesso</Text>
+                            <Text style={[theme.text, theme.h4 ,theme.mb20]}>Form di accesso</Text>
                         </View>
 
                         <Input
@@ -174,14 +174,15 @@ export default function LoginScreen({ navigation }) {
                         </View>
                         <View style={[theme.mt40,theme.center]}>
                             <Pressable onPress={() => signInWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { alignContent: 'center' , paddingHorizontal:60,paddingVertical:12}]}>
-                                <Text style={theme.h5}>Accedi</Text>
+                                <Text style={theme.text14}>Accedi</Text>
                             </Pressable>
                         </View>
 
                         <View style={[theme.article, theme.mt40, theme.mb20, theme.grid]}>
                             <Pressable onPress={() => navigation.navigate('Register')}>
-                                <Text style={[theme.text,]}>Non hai un Account?</Text>
-                                <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>
+                                <Text style={[theme.text,]}>Non hai un Account?
+                                    <Text style={[theme.link, theme.alignRight]}>  Registrati</Text>
+                                </Text>
                             </Pressable>
                         </View>
                         <Spinner

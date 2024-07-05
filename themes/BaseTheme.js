@@ -216,7 +216,16 @@ export const BaseTheme = (colors) => ({
     p32: { padding: 32 },
     p40: { padding: 40 },
     pv2: { paddingVertical: 2 },
+    pv4: { paddingVertical: 4 },
+    pv8: { paddingVertical: 8 },
+    pv16: { paddingVertical: 16 },
+    pv32: { paddingVertical: 32 },
     ph2: { paddingHorizontal: 2 },
+    ph4: { paddingHorizontal: 4 },
+    ph8: { paddingHorizontal: 8 },
+    ph16: { paddingHorizontal: 16 },
+    pv32: { paddingHorizontal: 32 },
+
     //logo
     logo: { width: 28, height: 28, },
     logoImage40: { width: 40, height: 40, },

@@ -100,7 +100,7 @@ export default function RegisterScreen({ navigation }) {
                         <View style={theme.articl}>
                             <View style={theme.column}>
                                 <Image source={logo} style={[theme.logoImage60, theme.mb20]} resizeMode='contain' />
-                                <Text style={[theme.text, theme.h5, theme.fwb, theme.mb20]}>Form di registrazione</Text>
+                                <Text style={[theme.text, theme.h4, theme.mb20]}>Form di registrazione</Text>
                             </View>
 
                             <Input
@@ -149,18 +149,17 @@ export default function RegisterScreen({ navigation }) {
                                 <Text style={theme.textDanger}>{passwordError}</Text>
                                 : null}
 
-                            <View style={[theme.articl, theme.mt20]}>
-                                <Pressable onPress={() => signUpWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { justifyContent: 'space-evenly' }]}>
-                                    <Text style={theme.h5}>Registrati</Text>
+                            <View style={[theme.mt40, theme.center]}>
+                                <Pressable onPress={() => signUpWithEmail()} style={[theme.grid, theme.TouchablebuttonPrimary, theme.br6, { alignContent: 'center', paddingHorizontal: 60, paddingVertical: 12 }]}>
+                                    <Text style={theme.text14}>Registrati</Text>
                                 </Pressable>
                             </View>
 
-
-                            <View style={[theme.article, theme.mt40, theme.mb20,{alignContent:'center'}]}>
+                            <View style={[theme.article, theme.mt40, theme.mb20,theme.grid]}>
                                 <Pressable onPress={() => navigation.navigate('Login')}>
-                                    <Text style={[theme.text, theme.mt20]}>Hai un Account?<Text style={[theme.link, theme.alignRight]}>  Accedi</Text></Text>
-
-                                    
+                                    <Text style={[theme.text]}>Hai un Account?
+                                        <Text style={[theme.link, theme.alignRight]}>  Accedi</Text>
+                                    </Text>
                                 </Pressable>
                             </View>
                         </View>
