@@ -7,6 +7,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RadioButton } from 'react-native-paper';
 import { OnePress } from '../components/Pressables';
+import FlexibleView from '../components/FlexibleComponent';
+import { MaterialIcons } from '@expo/vector-icons';
 //biometria expo
 import * as LocalAuthentication from 'expo-local-authentication'
 //biometria reactnative
@@ -120,7 +122,7 @@ const SettingsScreen = ({ navigation }) => {
                     </Text>
                 </Text>
 
-                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb15]}>Welcome Page</Text>
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10]}>Welcome Page</Text>
                 <View style={[theme.article]}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                         <TouchableOpacity onPress={() => handlePress(false)}>
@@ -133,41 +135,57 @@ const SettingsScreen = ({ navigation }) => {
                 </View>
 
 
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10,theme.mt20]}>User</Text>
+                <View style={theme.article}>
+                    <FlexibleView
+                        format="testoIcona"
+                        rightIcon={<MaterialIcons name="chevron-right" size={24} color={theme.colors.slate11} />}
+                        text="Vai alle impostazioni"
+                        onPressRightIcon={() => navigation.navigate('UserNotifications')}
+                    />
+                </View>
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10,theme.mt20]}>Admin</Text>
+                <View style={theme.article}>
+                    <FlexibleView
+                        format="testoIcona"
+                        rightIcon={<MaterialIcons name="chevron-right" size={24} color={theme.colors.slate11} />}
+                        text="Vai alle impostazioni"
+                        onPressRightIcon={() => navigation.navigate('AdminNotifications')}
+                    />
+                </View>
 
 
 
 
 
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10,theme.mt20]}>Biometria</Text>
 
+                {/*{isBiometricSupported ?*/}
+                {/*    <View style={[theme.article, theme.articleInfo]}>*/}
+                {/*        <Text style={[theme.text, theme.text12, { color: theme.colors.blue10 }]}>Il tuo dispositovo &egrave; compatibile con la biometria.</Text>*/}
+                {/*        <Text style={[theme.text, theme.text12, { color: theme.colors.slate10 }]}>Clicca per abilitare la biometria.</Text>*/}
+                {/*        <OnePress title="Abilita" backgroundColor={theme.colors.blue11}*/}
+                {/*            onPress={() => {*/}
+                {/*                LocalAuthentication.authenticateAsync({ promptMessage: 'Autenticazione biometrica' })*/}
+                {/*                    .then((result) => {*/}
+                {/*                        if (result.success) {*/}
+                {/*                            console.log('Autenticazione riuscita');*/}
+                {/*                        } else {*/}
+                {/*                            console.log('Autenticazione fallita');*/}
+                {/*                        }*/}
+                {/*                    })*/}
+                {/*                    .catch((error) => {*/}
+                {/*                        console.log('Autenticazione fallita', error);*/}
+                {/*                    });*/}
+                {/*            }}*/}
+                {/*        />*/}
 
-                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb15]}>Biometria</Text>
-
-                {isBiometricSupported ?
-                    <View style={[theme.article, theme.articleInfo]}>
-                        <Text style={[theme.text, theme.text12, { color: theme.colors.blue10 }]}>Il tuo dispositovo &egrave; compatibile con la biometria.</Text>
-                        <Text style={[theme.text, theme.text12, { color: theme.colors.slate10 }]}>Clicca per abilitare la biometria.</Text>
-                        <OnePress title="Abilita" backgroundColor={theme.colors.blue11}
-                            onPress={() => {
-                                LocalAuthentication.authenticateAsync({ promptMessage: 'Autenticazione biometrica' })
-                                    .then((result) => {
-                                        if (result.success) {
-                                            console.log('Autenticazione riuscita');
-                                        } else {
-                                            console.log('Autenticazione fallita');
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        console.log('Autenticazione fallita', error);
-                                    });
-                            }}
-                        />
-
-                    </View>
-                    :
-                    <View style={[theme.article, theme.articleDanger,]}>
-                        <Text style={[theme.text, theme.text12, { color: theme.colors.red10 }]}>Il tuo dispositovo non &egrave; compatibile con la biometria.</Text>
-                    </View>
-                }
+                {/*    </View>*/}
+                {/*    :*/}
+                {/*    <View style={[theme.article, theme.articleDanger,]}>*/}
+                {/*        <Text style={[theme.text, theme.text12, { color: theme.colors.red10 }]}>Il tuo dispositovo non &egrave; compatibile con la biometria.</Text>*/}
+                {/*    </View>*/}
+                {/*}*/}
 
             </View>
 

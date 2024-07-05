@@ -17,7 +17,8 @@ import HelpHomeScreen from './screens/HelpHomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
-
+import AdminNotificationsManager from './screens/AdminNotificationsManager';
+import UserNotificationsSubscription from './screens/UserNotificationsSubscription';
 //import RecoveryPassword from './screens/RecoveryPassword';
 //import SetNewPassword from './screens/SetNewPasswordScreen';
 //import PasswordResetScreen from './screens/PasswordResetScreen';
@@ -184,6 +185,16 @@ function AppWithTheme() {
                                 name='HelpHome'
                                 component={HelpHomeScreen}
                                 options={{ headerShown: true, title: 'Aiuto' }}
+                            />
+                            <Stack.Screen
+                                name='AdminNotifications'
+                                component={AdminNotificationsManager}
+                                options={{ headerShown: true, title: 'Admin Impostazioni manager' }}
+                            />
+                            <Stack.Screen
+                                name='UserNotifications'
+                                component={UserNotificationsSubscription}
+                                options={{ headerShown: true, title: 'Impostazioni notifiche' }}
                             />
                             <Stack.Screen
                                 name="Tabs"

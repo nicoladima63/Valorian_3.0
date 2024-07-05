@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     textx: {
-        fontSize: 16, color: '#ccc'
+        fontSize: 14, color: '#ccc'
     },
     spacer: {
         flex: 1,
