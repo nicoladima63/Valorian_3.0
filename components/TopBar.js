@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { supabase } from '../lib/supabase';
-import { TouchableOpacity, View, Image, Text } from 'react-native';
+import { TouchableOpacity, View, Image, Text,Alert } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import { useNavigationState } from '@react-navigation/native';
 import FlexibleView from '../components/FlexibleComponent';

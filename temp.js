@@ -177,3 +177,49 @@ const ResetPasswordScreen = ({ route, navigation }) => {
 };
 
 export default ResetPasswordScreen;
+
+
+
+
+function useAuth() {
+    const [session, setSession] = useState(null);
+
+    useEffect(() => {
+        // Simula il recupero della sessione, ad esempio da AsyncStorage o da una chiamata API
+        const fetchSession = async () => {
+            const storedSession = await AsyncStorage.getItem('session');
+            if (storedSession) {
+                setSession(JSON.parse(storedSession));
+            }
+        };
+        fetchSession();
+    }, []);
+
+    return { session };
+}
+
+
+
+useEffect(() => {
+    const getSession = async () => {
+        try {
+            // Ottieni la sessione attuale da Supabase
+            const { data: currentSession, error } = await supabase.auth.getSession();
+
+            if (error) {
+                throw error;
+            }
+
+            if (currentSession) {
+                // Memorizza la sessione in SecureStore se è presente
+                setSession(currentSession);
+                await SecureStore.setItemAsync('session', JSON.stringify(currentSession));
+            }
+        } catch (error) {
+            console.error('Error fetching or storing session:', error);
+        }
+    };
+
+    getSession();
+
+}, []);

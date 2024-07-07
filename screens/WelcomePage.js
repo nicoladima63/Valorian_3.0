@@ -11,16 +11,17 @@ const WelcomePage = ({ navigation }) => {
     const { theme } = useTheme();
     const logo = require("../assets/images/logo.png")
 
-    const handleStart = async () => {
+    const toggleSwitch = async () => {
+        const value = !showNextTime;
         try {
-            if (!showNextTime) {
-                await AsyncStorage.setItem('seeWelcome', 'true');
-            }
-        } catch (e) {
-            console.error(e);
+            await AsyncStorage.setItem('seeWelcome', value.toString());
+            setShowNextTime(value);
+        } catch (error) {
+            console.error('Errore nel salvare seeWelcome:', error);
         }
-        navigation.replace('Tabs');
     };
+
+
     //  &egrave;  &agrave; pi&#249; 
     return (
         <Layout
@@ -70,7 +71,7 @@ const WelcomePage = ({ navigation }) => {
                             <Text style={[theme.text, theme.ml20]}>Mostra la prossima volta</Text>
                             <Switch style={theme.gap10}
                                 value={showNextTime}
-                                onValueChange={setShowNextTime}
+                                onValueChange={toggleSwitch}
                                 thumbColor={showNextTime ? theme.colors.primary : '#f4f3f4'}
                                 trackColor={{ false: '#767577', true: theme.colors.secondary }}
                             />
@@ -78,7 +79,7 @@ const WelcomePage = ({ navigation }) => {
                     </View>
 
                     <View style={[theme.article, theme.articleBottom]}>
-                        <OnePress title={<Text style={theme.text12 }>Inizia a conoscerti...</Text>} onPress={handleStart} backgroundColor={theme.colors.primary}/>
+                        <OnePress title={<Text style={theme.text12}>Inizia a conoscerti...</Text>} onPress={()=>navigation.replace('Tabs')} backgroundColor={theme.colors.primary}/>
                     </View>
                 </View>
             </ScrollView>

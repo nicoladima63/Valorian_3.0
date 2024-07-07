@@ -3,7 +3,7 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { AppContext } from './context/AppContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
-import { StatusBar, AppState,Linking } from 'react-native';
+import { StatusBar, AppState, Linking, View, ActivityIndicator } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -28,27 +28,49 @@ import CategorieScreen from './screens/CategorieScreen';
 import { Tabs } from './navigation/Tabs';
 
 const Stack = createNativeStackNavigator();
-function AuthLoadingScreen({ navigation }) {
+const AuthLoadingScreen = ({ navigation }) => {
     const { session } = useAuth();
+    const [isChecking, setIsChecking] = useState(true);
 
     useEffect(() => {
         const checkWelcomePage = async () => {
-            const hasSeenWelcome = await AsyncStorage.getItem('seeWelcome');
+            try {
+                const seeWelcome = JSON.parse(await AsyncStorage.getItem('seeWelcome'));
+                console.log('seeWelcome:', seeWelcome);
+                console.log('session:', session);
 
-            if (hasSeenWelcome) {
-                navigation.replace('WelcomePage');
-            } else if (session) {
-                navigation.replace('Tabs');
-            } else {
-                navigation.replace('Login');
+                if (seeWelcome) {
+                    navigation.replace('WelcomePage');
+                } else if (session) {
+                    navigation.replace('Tabs');
+                } else {
+                    navigation.replace('Login');
+                }
+            } catch (error) {
+                console.error('Error reading value from AsyncStorage', error);
+                navigation.replace('Login'); // Fallback in case of error
+            } finally {
+                setIsChecking(false); // Stop the loading indicator
             }
         };
 
-        checkWelcomePage();
+        // Ensure that we only check the welcome page after the session is loaded
+        if (session !== undefined) {
+            checkWelcomePage();
+        }
     }, [session, navigation]);
 
+    if (isChecking) {
+        // Render a loading indicator while we are checking the session and welcome state
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" />
+            </View>
+        );
+    }
+
     return null;
-}
+};
 
 export default function App() {
     return (

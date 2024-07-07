@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
+
 import Layout from './Layout';
 import {
     View, Text, Alert, Pressable, Image,
@@ -12,7 +14,7 @@ import * as SecureStore from 'expo-secure-store';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function LoginScreen({ navigation }) {
-    const [click, setClick] = useState(false);
+    const [click, setClick] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +24,8 @@ export default function LoginScreen({ navigation }) {
     const [passwordError, setPasswordError] = useState('');
     const passwordRef = useRef(null);
     const logo = require("../assets/images/logo.png")
+    const [session, setSession] = useState(null);
+
 
     useEffect(() => {
         const loadSavedData = async () => {
@@ -50,6 +54,10 @@ export default function LoginScreen({ navigation }) {
 
         saveData();
     }, [email, password]);
+
+
+
+
 
     const handlePressEmptySpace = () => {
         Keyboard.dismiss(); // Nascondi la tastiera quando si tocca uno spazio vuoto
@@ -80,6 +88,8 @@ export default function LoginScreen({ navigation }) {
             password: password,
         });
 
+        getSession();
+
         if (error) {
             Alert.alert(error.message);
         } else {
@@ -87,6 +97,13 @@ export default function LoginScreen({ navigation }) {
         }
         setLoading(false);
     }
+
+    const getSession = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+        console.log('login session:', session);
+    };
+
 
     const handleEmailChange = (text) => {
         setEmail(text);

@@ -14,13 +14,12 @@ export const AuthProvider = ({ children }) => {
         };
 
         getSession();
-
+        console.log('auth session', session);
         const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
         });
 
         return () => {
-            //authListener?.unsubscribe();
             authListener.subscription.unsubscribe()
         };
     }, []);

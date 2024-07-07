@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Switch, FlatList, StyleSheet } from 'react-native';
 import { supabase } from '../lib/supabase';
-
+import { useAuth } from '../context/AuthContext';
 export default function UserNotificationsSubscription() {
     const [notifications, setNotifications] = useState([]);
     const [subscriptions, setSubscriptions] = useState({});
-
+    const[user, setUser ] = useState({});
+    const { session } = useAuth();
     useEffect(() => {
         fetchNotificationsAndSubscriptions();
     }, []);
+
+    useEffect(() => {
+        if (session) getCurrentUser()
+    }, [session])
+
+    const getCurrentUser = async () => {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (error) throw new Error('User not authenticated');
+        setUser( user);
+    };
 
     async function fetchNotificationsAndSubscriptions() {
         const { data: notificationsData, error: notificationsError } = await supabase
@@ -23,7 +34,7 @@ export default function UserNotificationsSubscription() {
         const { data: subscriptionsData, error: subscriptionsError } = await supabase
             .from('user_subscriptions')
             .select('*')
-            .eq('user_id', supabase.auth.user().id);
+            .eq('user_id',user.id);
 
         if (subscriptionsError) {
             console.error('Error fetching subscriptions:', subscriptionsError);

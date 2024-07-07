@@ -32,20 +32,16 @@ const SettingsScreen = ({ navigation }) => {
 
     //biometria reactnative
     //const rnBiometrics = new ReactNativeBiometrics()
-   // console.log('biometria reactnative:', rnBiometrics)
+    // console.log('biometria reactnative:', rnBiometrics)
     //const { biometryType } = await rnBiometrics.isSensorAvailable()
     //console.log('biometria reactnative:', biometryType)
 
-    const [hasSeenWelcome, setHasSeenWelcome] = useState(null);
+    const [seeWelcome, setSeeWelcome] = useState(null);
     useEffect(() => {
         const fetchWelcomeStatus = async () => {
             try {
-                const value = await AsyncStorage.getItem('seeWelcome');
-                if (value !== null) {
-                    setHasSeenWelcome(value === 'true'); // Converte la stringa in booleano
-                } else {
-                    setHasSeenWelcome(false); // Default value if not set
-                }
+                const value = JSON.parse(await AsyncStorage.getItem('seeWelcome'));
+                setSeeWelcome(value); // Converte la stringa in booleano
             } catch (error) {
                 console.error('Errore nel leggere hasSeenWelcome:', error);
             }
@@ -58,15 +54,15 @@ const SettingsScreen = ({ navigation }) => {
 
         try {
             await AsyncStorage.setItem('seeWelcome', value.toString());
-            setHasSeenWelcome(value);
+            setSeeWelcome(value);
         } catch (error) {
             console.error('Errore nel salvare seeWelcome:', error);
         }
     };
     const getTextStyle = (isHighlighted) => ({
         ...theme.text,
-        color: isHighlighted ? theme.colors.green11: theme.colors.textTertiary, // Imposta il colore
-        fontWeight: isHighlighted ? 'Bold' : 'normal', // Imposta il grassetto
+        color: isHighlighted ? theme.colors.green11 : theme.colors.textTertiary, // Imposta il colore
+        fontWeight: isHighlighted ?  '900' : 'normal', // Imposta il grassetto
     });
 
 
@@ -104,7 +100,7 @@ const SettingsScreen = ({ navigation }) => {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => toggleTheme('dark')}>
-                        <View style={[theme.article,theme.articleBottom]}>
+                        <View style={[theme.article, theme.articleBottom]}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Icon name="moon-o" size={20} color={theme.colors.slate12} style={{ marginRight: 20 }} />
@@ -115,27 +111,27 @@ const SettingsScreen = ({ navigation }) => {
                         </View>
                     </TouchableOpacity>
                 </RadioButton.Group>
-                <Text style={[theme.mt10,theme.mb30,theme.ml15]}>
+                <Text style={[theme.mt10, theme.mb30, theme.ml15]}>
                     <Text style={[theme.text, theme.fwb, { color: theme.colors.slate12 }]}>Automatico </Text>
                     <Text style={[theme.text, theme.textSecondary]}>
                         &egrave; supportato solo sui sistemi operativi che consentono di controllare i colori a livello di sistema.
                     </Text>
                 </Text>
 
-                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10]}>Welcome Page</Text>
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10]}>Pagina iniziale</Text>
                 <View style={[theme.article]}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
                         <TouchableOpacity onPress={() => handlePress(false)}>
-                            <Text style={getTextStyle(hasSeenWelcome === false)}>Nascondi</Text>
+                            <Text style={getTextStyle(seeWelcome === false)}>Non mostrare</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => handlePress(true)}>
-                            <Text style={getTextStyle(hasSeenWelcome === true)}>Mostra</Text>
+                            <Text style={getTextStyle(seeWelcome === true)}>Mostra</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
 
-                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10,theme.mt20]}>User</Text>
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10, theme.mt20]}>User</Text>
                 <View style={[theme.article]}>
                     <FlexibleView
                         format="testoIcona"
@@ -144,7 +140,7 @@ const SettingsScreen = ({ navigation }) => {
                         onPressRightIcon={() => navigation.navigate('UserNotifications')}
                     />
                 </View>
-                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10,theme.mt20]}>Admin</Text>
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10, theme.mt20]}>Admin</Text>
                 <View style={theme.article}>
                     <FlexibleView
                         format="testoIcona"
@@ -158,7 +154,7 @@ const SettingsScreen = ({ navigation }) => {
 
 
 
-                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10,theme.mt20]}>Biometria</Text>
+                <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10, theme.mt20]}>Biometria</Text>
 
                 {/*{isBiometricSupported ?*/}
                 {/*    <View style={[theme.article, theme.articleInfo]}>*/}
