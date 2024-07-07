@@ -130,6 +130,15 @@ export default function AdminNotificationsManager({ navigation }) {
                         onChange={onChangeTime}
                     />
                 )}
+                <Picker
+                    selectedValue={scheduleType}
+                    onValueChange={(itemValue) => setScheduleType(itemValue)}
+                >
+                    <Picker.Item label="Mattiniera" value="mattiniera" />
+                    <Picker.Item label="Serale" value="serale" />
+                    <Picker.Item label="Settimanale" value="settimanale" />
+                    <Picker.Item label="Mensile" value="mensile" />
+                </Picker>
 
                 <Picker style={{ borderBottomColor: theme.colors.red9, borderBottomWidth: 1, marginBottom: 10 }}
                     selectedValue={newNotification.tipo_id}

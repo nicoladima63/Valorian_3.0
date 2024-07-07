@@ -17,8 +17,8 @@ import HelpHomeScreen from './screens/HelpHomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
-import AdminNotificationsManager from './screens/AdminNotificationsManager';
-import UserNotificationsSubscription from './screens/UserNotificationsSubscription';
+import AdminNotificationsScreen from './screens/AdminNotificationsScreen';
+import UserSubscriptionScreen from './screens/UserSubscriptionScreen';
 //import RecoveryPassword from './screens/RecoveryPassword';
 //import SetNewPassword from './screens/SetNewPasswordScreen';
 //import PasswordResetScreen from './screens/PasswordResetScreen';
@@ -210,12 +210,12 @@ function AppWithTheme() {
                             />
                             <Stack.Screen
                                 name='AdminNotifications'
-                                component={AdminNotificationsManager}
+                                component={AdminNotificationsScreen}
                                 options={{ headerShown: true, title: 'Admin Impostazioni manager' }}
                             />
                             <Stack.Screen
-                                name='UserNotifications'
-                                component={UserNotificationsSubscription}
+                                name='UserSubscription'
+                                component={UserSubscriptionScreen}
                                 options={{ headerShown: true, title: 'Impostazioni notifiche' }}
                             />
                             <Stack.Screen

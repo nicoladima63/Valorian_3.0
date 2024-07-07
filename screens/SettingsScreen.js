@@ -137,7 +137,7 @@ const SettingsScreen = ({ navigation }) => {
                         format="testoIcona"
                         rightIcon={<MaterialIcons name="chevron-right" size={24} color={theme.colors.slate11} />}
                         text="Vai alle impostazioni"
-                        onPressRightIcon={() => navigation.navigate('UserNotifications')}
+                        onPressRightIcon={() => navigation.navigate('UserSubscriptions')}
                     />
                 </View>
                 <Text style={[theme.text, theme.text12, theme.textSecondary, theme.mb10, theme.mt20]}>Admin</Text>
