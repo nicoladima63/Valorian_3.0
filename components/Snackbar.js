@@ -3,19 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Snackbar = ({
-    message,
-    actionText,
-    onActionPress,
+    message,    actionText,    onActionPress,
     duration = 1500, // Default duration in milliseconds
     position = "bottom", // Default position
-    containerStyle,
-    messageStyle,
-    actionTextStyle,
-    backgroundColor,
-    textColor,
-    actionTextColor,
-    isVisible,
-    onDismiss,
+    containerStyle,    messageStyle,    actionTextStyle,    backgroundColor,    textColor,    actionTextColor,    isVisible,    onDismiss,
 }) => {
     useEffect(() => {
         let timeout;

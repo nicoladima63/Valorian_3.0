@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { RefreshControl, View, Text, SectionList, Pressable, StyleSheet } from 'react-native';
+import { RefreshControl, View, Text, SectionList, StyleSheet } from 'react-native';
 import * as BisogniController from '../controllers/bisogniController';
 import * as CategorieController from '../controllers/categorieController';
 import * as DettagliController from '../controllers/dettagliController';
@@ -9,7 +9,6 @@ import EditBisogno from '../components/EditBisogno';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Snackbar from '../components/Snackbar';
-import { Color } from 'react-native';
 import IconaTestoIconaView from '../components/IconaTestoIconaView';
 
 const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
@@ -24,6 +23,7 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
     const [snackbarVisible, setSnackbarVisible] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [refreshing, setRefreshing] = useState(false);
+    const [DATA, setDATA] = useState([]);
 
     useEffect(() => {
         if (setFabAction) {
@@ -31,7 +31,6 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
         }
     }, [setFabAction]);
 
-    // Apre il modal se showModalAddBisogno è vero
     useEffect(() => {
         if (showModalAddBisogno) {
             setModalVisibleAdd(true);
@@ -39,94 +38,62 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
     }, [showModalAddBisogno]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Ottieni le categorie
-                const categorie = await getCategorie();
-
-                // Ottieni i bisogni
-                const fetchedBisogni = await getBisogni();
-
-                // Se ci sono bisogni, ottieni le associazioni categorie-bisogni
-                if (fetchedBisogni && fetchedBisogni.length > 0) {
-                    const fetchedBisInCat = await CategorieController.getBisInCat();
-
-                    // Mappa le associazioni di categorie per ogni bisogno
-                    const bisogniConAssociazioni = fetchedBisogni.map(bisogno => {
-                        const associazioni = fetchedBisInCat.filter(associazione => associazione.bisognoid === bisogno.id);
-                        console.log(bisogno.nome, ', associato in:', associazioni);
-                        return { ...bisogno, associazioni };
-                    });
-
-                    // Imposta lo stato di bisInCat con i bisogni contenenti le associazioni
-                    setBisInCat(bisogniConAssociazioni);
-                }
-                onRefresh
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
         fetchData();
     }, []);
 
-    const getCategorie = async () => {
+    const fetchData = async () => {
         setLoading(true);
         try {
-            const data = await CategorieController.getCategorie();
-            if (Array.isArray(data)) {
-                setCategorie(data);
-            } else {
-                console.error('getCategorie non ha restituito un array:', data);
-                setCategorie([]);
-            }
+            const fetchedCategorie = await getCategorie();
+            const fetchedBisogni = await getBisogni();
+            const fetchedBisInCat = await CategorieController.getBisInCat();
+
+            setCategorie(fetchedCategorie);
+            setBisogni(fetchedBisogni);
+            setBisInCat(fetchedBisInCat);
+
+            const newData = transformData(fetchedCategorie, fetchedBisogni, fetchedBisInCat);
+            setDATA(newData);
         } catch (error) {
-            console.error('Errore nel recupero delle categorie:', error);
-            setCategorie([]);
+            console.error('Error fetching data:', error);
+            setSnackbarMessage('Errore nel caricamento dei dati');
+            setSnackbarVisible(true);
         } finally {
             setLoading(false);
         }
     };
 
-    const getBisInCat = async () => {
-        setLoading(true);
+    const getCategorie = async () => {
         try {
-            const data = await CategorieController.getBisInCat();
+            const data = await CategorieController.getCategorie();
             if (Array.isArray(data)) {
-                setBisInCat(data);
+                return data;
             } else {
-                console.error('getBisInCat non ha restituito un array:', data);
-                setBisInCat([]);
+                console.error('getCategorie non ha restituito un array:', data);
+                return [];
             }
         } catch (error) {
-            console.error('Errore nel recupero delle associazioni:', error);
-            setBisInCat([]);
-        } finally {
-            setLoading(false);
+            console.error('Errore nel recupero delle categorie:', error);
+            return [];
         }
     };
 
     const getBisogni = async () => {
-        setLoading(true);
         try {
             const data = await BisogniController.getBisogni();
-            //console.log('SectionListBisogni:', data    );
             if (Array.isArray(data)) {
-                setBisogni(data);
+                return data;
             } else {
                 console.error('getBisogni non ha restituito un array:', data);
-                setBisogni([]);
+                return [];
             }
         } catch (error) {
             console.error('Errore nel recupero dei bisogni:', error);
-            setBisogni([]);
-        } finally {
-            setLoading(false);
+            return [];
         }
     };
 
     const transformData = (categorie, bisogni, bisInCat) => {
-        //console.log('categorie:', categorie.length, 'bisogni:', bisogni, 'bisInCat:', bisInCat);
         if (!bisogni || bisogni.length === 0) {
             return [];
         }
@@ -155,8 +122,6 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
         return transformedData;
     };
 
-    const DATA = transformData(categorie, bisogni, bisInCat);
-
     const selectBisogno = (bisogno) => {
         setBisogno(bisogno);
         setModalVisibleEdit(true);
@@ -164,56 +129,25 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
 
     const handleModalAddClose = () => {
         setModalVisibleAdd(false);
-        getBisogni(); // Aggiorna i bisogni dopo la chiusura della modal di aggiunta
+        fetchData(); // Aggiorna tutti i dati dopo la chiusura della modal di aggiunta
     };
 
     const handleModalEditClose = () => {
         setModalVisibleEdit(false);
-        getBisogni(); // Aggiorna i bisogni dopo la chiusura della modal di modifica
+        fetchData(); // Aggiorna tutti i dati dopo la chiusura della modal di modifica
     };
 
-    const updateBisognoOld = async (bisogno) => {
-        setLoading(true);
-        try {
-            const updatedBisogno = { ...bisogno, soddisfattoil: new Date() };
-            const { id, nome, soddisfattoil, colore } = updatedBisogno;
-            const dataToUpdate = { nome, soddisfattoil, colore };
-
-            await BisogniController.updateBisogno(id, dataToUpdate);
-
-            const dettaglio = {
-                bisognoid: bisogno.id,
-                soddisfattoil: new Date(),
-            };
-            await DettagliController.createDettaglio(dettaglio);
-
-            setSnackbarMessage(`Bisogno "${nome}" aggiornato`);
-            setSnackbarVisible(true);
-
-            getBisogni();
-        } catch (error) {
-            console.error('Error updating bisogno:', error);
-            setSnackbarMessage('Error updating bisogno:', error.message || 'Unknown error');
-            setSnackbarVisible(true);
-        } finally {
-            setLoading(false);
-        }
-    };
     const updateBisogno = async (bisogno) => {
         setLoading(true);
         try {
-            // Aggiungi una condizione per verificare se il bisogno è già stato aggiornato oggi
             const today = new Date();
             const todayStart = new Date(today.setHours(0, 0, 0, 0));
             const bisognoUpdatedDate = new Date(bisogno.soddisfattoil);
             const bisognoUpdatedStart = new Date(bisognoUpdatedDate.setHours(0, 0, 0, 0));
 
-            // Verifica se il bisogno è già stato aggiornato oggi
             if (bisognoUpdatedStart.getTime() === todayStart.getTime()) {
                 setSnackbarMessage(`Bisogno "${bisogno.nome}" è già stato aggiornato oggi`);
                 setSnackbarVisible(true);
-                setLoading(false);
-                console.log(snackbarMessage)
                 return;
             }
 
@@ -232,21 +166,19 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
             setSnackbarMessage(`Bisogno "${nome}" aggiornato`);
             setSnackbarVisible(true);
 
-            getBisogni();
+            fetchData(); // Aggiorna tutti i dati dopo l'aggiornamento di un bisogno
         } catch (error) {
             console.error('Error updating bisogno:', error);
-            setSnackbarMessage('Error updating bisogno:', error.message || 'Unknown error');
+            setSnackbarMessage('Errore nell\'aggiornamento del bisogno: ' + (error.message || 'Errore sconosciuto'));
             setSnackbarVisible(true);
         } finally {
             setLoading(false);
         }
     };
 
-
-
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        getBisInCat().then(() => {
+        fetchData().then(() => {
             setRefreshing(false);
         });
     }, []);
@@ -274,11 +206,11 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
     };
 
     return (
-        <View  >
+        <View>
             <SectionList
                 sections={DATA}
-                keyExtractor={(item, index) => item.uniqueKey}
-                renderItem={({ item, index, section }) => (
+                keyExtractor={(item) => item.uniqueKey}
+                renderItem={({ item }) => (
                     <View style={[theme.grid, theme.mb10]}>
                         <View style={{ width: 8, alignSelf: 'stretch', backgroundColor: item.colore, height: '100%', borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
                         <View style={{ flex: 1, backgroundColor: theme.colors.slate5, height: 50, justifyContent: 'center', borderTopRightRadius: 8, borderBottomRightRadius: 8, borderWidth: 1, borderColor: theme.colors.slate9 }}>
@@ -302,7 +234,6 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
                             />
                         </View>
                     </View>
-
                 )}
                 ListEmptyComponent={renderEmptyComponent}
                 ListFooterComponent={<View style={theme.contentPadding} />}
@@ -316,48 +247,33 @@ const BisogniList = ({ session, setFabAction, showModalAddBisogno }) => {
             <AddBisogno
                 visible={modalVisibleAdd}
                 onClose={handleModalAddClose}
-                onAdd={getBisogni} // Passiamo getBisogni come prop onAdd
+                onAdd={fetchData}
                 userId={session.user.id}
             />
-
             <EditBisogno
                 visible={modalVisibleEdit}
                 onClose={handleModalEditClose}
                 bisogno={bisogno}
                 userId={session.user.id}
             />
-
             <Spinner
                 visible={loading}
                 textContent={'Aggiornamento in corso...'}
                 textStyle={styles.spinnerTextStyle}
             />
-
             <Snackbar
-                //visible={snackbarVisible}
-                visible={true}
+                visible={snackbarVisible}
                 onDismiss={() => setSnackbarVisible(false)}
             >
+                {snackbarMessage}
             </Snackbar>
         </View>
-
     );
 };
 
 const styles = StyleSheet.create({
     spinnerTextStyle: {
         color: '#FFF'
-    },
-    itemContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'white', // o qualsiasi colore di sfondo desideri
-    },
-    colorBar: {
-        width: 5, alignSelf: 'stretch',
-    },
-    contentContainer: {
-        flex: 1,
     },
 });
 
